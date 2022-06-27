@@ -77,19 +77,26 @@
                                         <div class="invalid-feedback">Full name is required</div>
                                     </div>
                                     <div class="form-floating mb-3">
+                                        <input type="text" class="form-control form-input-bg" id="tb-raddress" placeholder="john deo" name="user_address" required />
+                                        <label for="tb-raddress">Address</label>
+                                        <div class="invalid-feedback">Address is required</div>
+                                    </div>
+                                    <div class="form-floating mb-3">
                                         <input type="text" class="form-control form-input-bg" id="tb-remail" placeholder="john@gmail.com" required />
                                         <label for="tb-remail">Username</label>
                                         <div class="invalid-feedback">Username is required</div>
                                     </div>
-                                    <div class="form-floating mb-3">
-                                        <input type="password" class="form-control form-input-bg" id="text-rpassword" placeholder="*****" required />
-                                        <label for="text-rpassword">Password</label>
-                                        <div class="invalid-feedback">Password is required</div>
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        <input type="password" class="form-control form-input-bg" id="text-rcpassword" placeholder="*****" required />
-                                        <label for="text-rcpassword">Confirm Password</label>
-                                        <div class="invalid-feedback">Password is required</div>
+                                    <div class="row col-lg-12">
+                                        <div class="col-lg-6 form-floating mb-3">
+                                            <input type="password" class="form-control form-input-bg" id="text-rpassword" placeholder="*****" required />
+                                            <label for="text-rpassword">Password</label>
+                                            <div class="invalid-feedback">Password is required</div>
+                                        </div>
+                                        <div class="col-lg-6 form-floating mb-3">
+                                            <input type="password" class="form-control form-input-bg" id="text-rcpassword" placeholder="*****" required />
+                                            <label for="text-rcpassword">Confirm Password</label>
+                                            <div class="invalid-feedback">Password is required</div>
+                                        </div>
                                     </div>
                                     <div class="form-check mb-4 pb-2">
                                         <input class="form-check-input" type="checkbox" value="" id="r-me" required />

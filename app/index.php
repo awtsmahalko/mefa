@@ -1,4 +1,5 @@
 <?php
+include 'core/config.php';
 $views_file = isset($_GET['q']) ?  $_GET['q'] : 'dashboard';
 ?>
 <!DOCTYPE html>
@@ -28,6 +29,31 @@ $views_file = isset($_GET['q']) ?  $_GET['q'] : 'dashboard';
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- apps -->
+    <script src="../dist/js/app.min.js"></script>
+    <script src="../dist/js/app.init.dark.js"></script>
+    <script src="../dist/js/app-style-switcher.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="../assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <script src="../assets/extra-libs/sparkline/sparkline.js"></script>
+    <!--Wave Effects -->
+    <script src="../dist/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="../dist/js/sidebarmenu.js"></script>
+    <!--Custom JavaScript -->
+    <script src="../dist/js/feather.min.js"></script>
+    <script src="../dist/js/custom.min.js"></script>
+
+    <style>
+        #main-wrapper[data-layout=horizontal] .left-sidebar[data-sidebarbg=skin5] .sidebar-nav ul .sidebar-item.selected>.sidebar-link,
+        #main-wrapper[data-layout=vertical] .left-sidebar[data-sidebarbg=skin5] .sidebar-nav ul .sidebar-item.selected>.sidebar-link {
+            background-color: #f64b6c;
+        }
+    </style>
 </head>
 
 <body>
@@ -77,7 +103,7 @@ $views_file = isset($_GET['q']) ?  $_GET['q'] : 'dashboard';
             <!-- footer -->
             <!-- ============================================================== -->
             <footer class="footer">
-                All Rights Reserved by Materialpro admin.
+                All Rights Reserved by MEFA.
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->
@@ -527,32 +553,6 @@ $views_file = isset($_GET['q']) ?  $_GET['q'] : 'dashboard';
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
-    <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap tether Core JavaScript -->
-    <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- apps -->
-    <script src="../dist/js/app.min.js"></script>
-    <script src="../dist/js/app.init.dark.js"></script>
-    <script src="../dist/js/app-style-switcher.js"></script>
-    <!-- slimscrollbar scrollbar JavaScript -->
-    <script src="../assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
-    <script src="../assets/extra-libs/sparkline/sparkline.js"></script>
-    <!--Wave Effects -->
-    <script src="../dist/js/waves.js"></script>
-    <!--Menu sidebar -->
-    <script src="../dist/js/sidebarmenu.js"></script>
-    <!--Custom JavaScript -->
-    <script src="../dist/js/feather.min.js"></script>
-    <script src="../dist/js/custom.min.js"></script>
-    <!--This page JavaScript -->
-    <!-- chartist chart -->
-    <script src="../assets/libs/apexcharts/dist/apexcharts.min.js"></script>
-    <!-- Chart JS -->
-    <script src="../dist/js/pages/dashboards/dashboard5.js"></script>
-    <!--This page plugins -->
-    <script src="../assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="../assets/extra-libs/datatables.net-bs4/js/dataTables.responsive.min.js"></script>
-    <script src="../dist/js/pages/datatable/datatable-basic.init.js"></script>
 </body>
 
 </html>
