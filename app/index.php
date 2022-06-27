@@ -1,5 +1,8 @@
 <?php
 include 'core/config.php';
+if (!isset($_SESSION['user']['id'])) {
+    header("location:authentication.php");
+}
 $views_file = isset($_GET['q']) ?  $_GET['q'] : 'dashboard';
 ?>
 <!DOCTYPE html>

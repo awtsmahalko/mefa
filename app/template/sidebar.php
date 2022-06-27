@@ -12,7 +12,7 @@
             </div>
             <!-- User profile text-->
             <div class="profile-text pt-1 ">
-                <a href="#" class="w-100 text-white d-block position-relative">Markarn Doe</a>
+                <a href="#" class="w-100 text-white d-block position-relative"><?= $_SESSION['user']['name'] ?></a>
             </div>
         </div>
         <!-- End User profile text-->
@@ -66,7 +66,7 @@
                 <li class="sidebar-item">
                     <a class="sidebar-link waves-effect waves-dark" href="index.php?q=sensorsmap">
                         <i class="mdi mdi-google-maps"></i>
-                        <span class="hide-menu">GIS MAPPING </span>
+                        <span class="hide-menu">SENSOR MAPPING </span>
                     </a>
                 </li>
 
