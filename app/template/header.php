@@ -11,18 +11,11 @@
                 <b class="logo-icon">
                     <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                     <!-- Dark Logo icon -->
-                    <img src="../assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
-                    <!-- Light Logo icon -->
-                    <img src="../assets/images/logo-light-icon.png" alt="homepage" class="light-logo" />
+                    <span class="round rounded-circle text-white d-inline-block text-center bg-primary">M</span>
                 </b>
                 <!--End Logo icon -->
                 <!-- Logo text -->
-                <span class="logo-text">
-                    <!-- dark Logo text -->
-                    <img src="../assets/images/logo-text.png" alt="homepage" class="dark-logo" />
-                    <!-- Light Logo text -->
-                    <img src="../assets/images/logo-light-text.png" class="light-logo" alt="homepage" />
-                </span>
+                <span class="logo-text" style="font-weight: 900;font-size: xx-large;">MEFA</span>
             </a>
             <!-- ============================================================== -->
             <!-- End Logo -->
@@ -49,147 +42,6 @@
                     waves-effect waves-dark
                   " href="javascript:void(0)"><i class="ti-menu"></i></a>
                 </li>
-                <!-- ============================================================== -->
-                <!-- Search -->
-                <!-- ============================================================== -->
-                <li class="nav-item d-none d-md-block search-box">
-                    <a class="nav-link d-none d-md-block waves-effect waves-dark" href="javascript:void(0)"><i class="ti-search"></i></a>
-                    <form class="app-search">
-                        <input type="text" class="form-control" placeholder="Search & enter" />
-                        <a class="srh-btn"><i class="ti-close"></i></a>
-                    </form>
-                </li>
-                <!-- ============================================================== -->
-                <!-- Mega Menu -->
-                <!-- ============================================================== -->
-                <li class="nav-item dropdown mega-dropdown">
-                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="mdi mdi-view-grid"></i></a>
-                    <div class="dropdown-menu dropdown-menu-animate-up">
-                        <div class="mega-dropdown-menu row">
-                            <div class="col-lg-3 col-xl-2 mb-4">
-                                <h4 class="mb-3">CAROUSEL</h4>
-                                <!-- CAROUSEL -->
-                                <div id="carouselExampleControls" class="carousel slide carousel-dark" data-bs-ride="carousel">
-                                    <div class="carousel-inner">
-                                        <div class="carousel-item active">
-                                            <img class="d-block img-fluid" src="assets/images/big/img1.jpg" alt="First slide" />
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img class="d-block img-fluid" src="assets/images/big/img2.jpg" alt="Second slide" />
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img class="d-block img-fluid" src="assets/images/big/img3.jpg" alt="Third slide" />
-                                        </div>
-                                    </div>
-                                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Previous</span>
-                                    </a>
-                                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Next</span>
-                                    </a>
-                                </div>
-                                <!-- End CAROUSEL -->
-                            </div>
-                            <div class="col-lg-3 mb-4">
-                                <h4 class="mb-3">ACCORDION</h4>
-                                <!-- Accordian -->
-                                <div class="accordion accordion-flush" id="accordionFlushExample">
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header" id="flush-headingOne">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                                                Accordion Item #1
-                                            </button>
-                                        </h2>
-                                        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                                            <div class="accordion-body">
-                                                Anim pariatur cliche reprehenderit, enim eiusmod
-                                                high life accusamus terry richardson ad squid.
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header" id="flush-headingTwo">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                                                Accordion Item #2
-                                            </button>
-                                        </h2>
-                                        <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                                            <div class="accordion-body">
-                                                Anim pariatur cliche reprehenderit, enim eiusmod
-                                                high life accusamus terry richardson ad squid.
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header" id="flush-headingThree">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-                                                Accordion Item #3
-                                            </button>
-                                        </h2>
-                                        <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-                                            <div class="accordion-body">
-                                                Anim pariatur cliche reprehenderit, enim eiusmod
-                                                high life accusamus terry richardson ad squid.
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 mb-4">
-                                <h4 class="mb-3">CONTACT US</h4>
-                                <!-- Contact -->
-                                <form>
-                                    <div class="mb-3 form-floating">
-                                        <input type="text" class="form-control" id="exampleInputname1" placeholder="Enter Name" />
-                                        <label>Enter Name</label>
-                                    </div>
-                                    <div class="mb-3 form-floating">
-                                        <input type="email" class="form-control" placeholder="Enter email" />
-                                        <label>Enter Email address</label>
-                                    </div>
-                                    <div class="mb-3 form-floating">
-                                        <textarea class="form-control" id="exampleTextarea" rows="3" placeholder="Message"></textarea>
-                                        <label>Enter Message</label>
-                                    </div>
-                                    <button type="submit" class="btn px-4 rounded-pill btn-info">
-                                        Submit
-                                    </button>
-                                </form>
-                            </div>
-                            <div class="col-lg-3 col-xlg-4 mb-4">
-                                <h4 class="mb-3">List style</h4>
-                                <!-- List style -->
-                                <ul class="list-style-none">
-                                    <li>
-                                        <a href="#" class="font-weight-medium"><i data-feather="check-circle" class="feather-sm text-success me-2"></i>
-                                            You can give link</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="font-weight-medium"><i data-feather="check-circle" class="feather-sm text-success me-2"></i>
-                                            Give link</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="font-weight-medium"><i data-feather="check-circle" class="feather-sm text-success me-2"></i>
-                                            Another Give link</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="font-weight-medium"><i data-feather="check-circle" class="feather-sm text-success me-2"></i>
-                                            Forth link</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="font-weight-medium"><i data-feather="check-circle" class="feather-sm text-success me-2"></i>
-                                            Another fifth link</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <!-- ============================================================== -->
-                <!-- End Mega Menu -->
-                <!-- ============================================================== -->
             </ul>
             <!-- ============================================================== -->
             <!-- Right side toggle and nav items -->
@@ -608,19 +460,10 @@
                 <li class="nav-item dropdown">
                     <a class="
                     nav-link
-                    dropdown-toggle
                     text-muted
                     waves-effect waves-dark
-                  " href="" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  " href="">
                         <i class="flag-icon flag-icon-ph"></i></a>
-                    <div class="
-                    dropdown-menu dropdown-menu-end dropdown-menu-animate-up
-                  ">
-                        <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-in"></i> India</a>
-                        <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-fr"></i> French</a>
-                        <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-cn"></i> China</a>
-                        <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-de"></i> Dutch</a>
-                    </div>
                 </li>
             </ul>
         </div>
