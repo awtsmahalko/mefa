@@ -1,3 +1,22 @@
+<?php
+session_start();
+if (isset($_SESSION['login_error'])) {
+    $login_error = $_SESSION['login_error'];
+    $old_login_value = $_SESSION['login'];
+} else {
+    $login_error = '';
+    $old_login_value = ['username' => '', 'password' => ''];
+}
+
+if (isset($_SESSION['signup_error'])) {
+    $signup_error = $_SESSION['signup_error'];
+    $old_value = $_SESSION['signup'];
+} else {
+    $signup_error = '';
+    $old_value = ['username' => '', 'name' => '', 'address' => ''];
+}
+session_destroy();
+?>
 <!DOCTYPE html>
 <html dir="ltr">
 
@@ -63,49 +82,47 @@
             </div>
             <div class="col-lg-8 col-xl-9 d-flex align-items-center justify-content-center">
                 <div class="row justify-content-center w-100 mt-4 mt-lg-0">
-                    <div class="col-lg-6 col-xl-3 col-md-7">
+                    <div class="col-lg-8 col-xl-3 col-md-7">
                         <div class="card" id="registerform">
                             <div class="card-body">
                                 <h2>Sign Up Form</h2>
                                 <p class="text-muted fs-4">
                                     Enter given details for new account
                                 </p>
-                                <form class="form-horizontal mt-4 pt-4 needs-validation" novalidate action="auth/signup.php">
+                                <form class="form-horizontal mt-4 pt-4 needs-validation" novalidate action="auth/signup.php" method="POST">
                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control form-input-bg" id="tb-rfname" placeholder="john deo" name="user_fullname" required />
+                                        <input type="text" class="form-control form-input-bg" autocomplete="off" id="tb-rfname" placeholder="john deo" name="user_fullname" value="<?= $old_value['name']; ?>" required />
                                         <label for="tb-rfname">Full Name</label>
                                         <div class="invalid-feedback">Full name is required</div>
                                     </div>
                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control form-input-bg" id="tb-raddress" placeholder="john deo" name="user_address" required />
+                                        <input type="text" class="form-control form-input-bg" autocomplete="off" id="tb-raddress" placeholder="john deo" name="user_address" value="<?= $old_value['address']; ?>" required />
                                         <label for="tb-raddress">Address</label>
                                         <div class="invalid-feedback">Address is required</div>
                                     </div>
                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control form-input-bg" id="tb-remail" placeholder="john@gmail.com" required />
+                                        <input type="text" class="form-control form-input-bg" autocomplete="off" id="tb-remail" placeholder="john@gmail.com" name="username" value="<?= $old_value['username']; ?>" required />
                                         <label for="tb-remail">Username</label>
                                         <div class="invalid-feedback">Username is required</div>
                                     </div>
-                                    <div class="row col-lg-12">
-                                        <div class="col-lg-6 form-floating mb-3">
-                                            <input type="password" class="form-control form-input-bg" id="text-rpassword" placeholder="*****" required />
-                                            <label for="text-rpassword">Password</label>
-                                            <div class="invalid-feedback">Password is required</div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3">
+                                                <input type="password" name="password" autocomplete="off" class="form-control form-input-bg" id="text-rpassword" placeholder="*****" required />
+                                                <label for="text-rpassword">Password</label>
+                                                <div class="invalid-feedback">Password is required</div>
+                                            </div>
                                         </div>
-                                        <div class="col-lg-6 form-floating mb-3">
-                                            <input type="password" class="form-control form-input-bg" id="text-rcpassword" placeholder="*****" required />
-                                            <label for="text-rcpassword">Confirm Password</label>
-                                            <div class="invalid-feedback">Password is required</div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3">
+                                                <input type="password" class="form-control form-input-bg" autocomplete="off" id="text-rcpassword" placeholder="*****" required />
+                                                <label for="text-rcpassword">Confirm Password</label>
+                                                <div class="invalid-feedback">Password is required</div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-check mb-4 pb-2">
-                                        <input class="form-check-input" type="checkbox" value="" id="r-me" required />
-                                        <label class="form-check-label" for="r-me">
-                                            Remember me
-                                        </label>
-                                        <div class="invalid-feedback">
-                                            You must agree before submitting.
-                                        </div>
+                                        <div><?= $signup_error ?></div>
                                     </div>
                                     <div class="d-flex align-items-stretch button-group">
                                         <button type="submit" class="btn btn-info btn-lg px-4">
@@ -127,32 +144,21 @@
                                     New Here?
                                     <a href="javascript:void(0)" id="to-register">Create an account</a>
                                 </p>
-                                <form class="form-horizontal mt-4 pt-4 needs-validation" novalidate action="auth/login.php">
+                                <form class="form-horizontal mt-4 pt-4 needs-validation" novalidate action="auth/login.php" method="POST">
                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control form-input-bg" id="tb-email" autocomplete="off" placeholder="Username" name="username" required />
+                                        <input type="text" class="form-control form-input-bg" id="tb-email" autocomplete="off" placeholder="Username" name="username" value="<?= $old_login_value['username'] ?>" required />
                                         <label for="tb-email">Username</label>
                                         <div class="invalid-feedback">Username is required</div>
                                     </div>
 
                                     <div class="form-floating mb-3">
-                                        <input type="password" class="form-control form-input-bg" id="text-password" placeholder="*****" name="password" required />
+                                        <input type="password" class="form-control form-input-bg" id="text-password" placeholder="*****" name="password" value="<?= $old_login_value['password'] ?>" required />
                                         <label for="text-password">Password</label>
                                         <div class="invalid-feedback">Password is required</div>
                                     </div>
 
                                     <div class="d-flex align-items-center mb-3">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="r-me1" required />
-                                            <label class="form-check-label" for="r-me1">
-                                                Remember me
-                                            </label>
-                                            <div class="invalid-feedback">
-                                                You must agree before submitting.
-                                            </div>
-                                        </div>
-                                        <div class="ms-auto">
-                                            <a href="javascript:void(0)" id="to-recover" class="fw-bold">Forgot Password?</a>
-                                        </div>
+                                        <div><?= $login_error; ?></div>
                                     </div>
                                     <div class="d-flex align-items-stretch button-group mt-4 pt-2">
                                         <button type="submit" class="btn btn-info btn-lg px-4">
@@ -213,6 +219,12 @@
         // ---------------------------
         // Login and Recover Password
         // ---------------------------
+
+        <?php if ($signup_error != '') { ?>
+            $("#loginform").hide();
+            $("#registerform").fadeIn();
+        <?php } ?>
+
         $("#to-recover").on("click", function() {
             $("#loginform").hide();
             $("#recoverform").fadeIn();
