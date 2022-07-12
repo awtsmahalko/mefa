@@ -21,693 +21,28 @@
         <div class="container-fluid note-has-grid">
             <ul class="nav nav-pills p-3 bg-white mb-3 align-items-center">
                 <li class="nav-item">
-                    <a href="javascript:void(0)" class="
-                  nav-link
-                  rounded-pill
-                  note-link
-                  d-flex
-                  align-items-center
-                  justify-content-center
-                  active
-                  px-3 px-md-3
-                  me-0 me-md-2
-                " id="all-category">
-                        <i data-feather="list" class="feather-sm fill-white me-0 me-md-1"></i><span class="d-none d-md-block font-weight-medium">All Notes</span></a>
+                    <a href="javascript:void(0)" class="nav-link rounded-pill note-link d-flex align-items-center justify-content-center active px-3 px-md-3 me-0 me-md-2" id="all-category">
+                        <i data-feather="list" class="feather-sm fill-white me-0 me-md-1"></i><span class="d-none d-md-block font-weight-medium">All Posts</span></a>
                 </li>
                 <li class="nav-item">
-                    <a href="javascript:void(0)" class="
-                  nav-link
-                  rounded-pill
-                  note-link
-                  d-flex
-                  align-items-center
-                  justify-content-center
-                  px-3 px-md-3
-                  me-0 me-md-2
-                " id="note-business">
-                        <i data-feather="briefcase" class="feather-sm fill-white me-0 me-md-1"></i><span class="d-none d-md-block font-weight-medium">Business</span></a>
+                    <a href="javascript:void(0)" class="nav-link rounded-pill note-link d-flex align-items-center justify-content-center px-3 px-md-3 me-0 me-md-2" id="note-announcement">
+                        <i data-feather="briefcase" class="feather-sm fill-white me-0 me-md-1"></i><span class="d-none d-md-block font-weight-medium">Announcement</span></a>
                 </li>
                 <li class="nav-item">
-                    <a href="javascript:void(0)" class="
-                  nav-link
-                  rounded-pill
-                  note-link
-                  d-flex
-                  align-items-center
-                  justify-content-center
-                  px-3 px-md-3
-                  me-0 me-md-2
-                " id="note-social">
-                        <i data-feather="share-2" class="feather-sm fill-white me-0 me-md-1"></i><span class="d-none d-md-block font-weight-medium">Social</span></a>
+                    <a href="javascript:void(0)" class="nav-link rounded-pill note-link d-flex align-items-center justify-content-center px-3 px-md-3 me-0 me-md-2" id="note-alerts">
+                        <i data-feather="share-2" class="feather-sm fill-white me-0 me-md-1"></i><span class="d-none d-md-block font-weight-medium">Alerts</span></a>
                 </li>
                 <li class="nav-item">
-                    <a href="javascript:void(0)" class="
-                  nav-link
-                  rounded-pill
-                  note-link
-                  d-flex
-                  align-items-center
-                  justify-content-center
-                  px-3 px-md-3
-                  me-0 me-md-2
-                " id="note-important">
+                    <a href="javascript:void(0)" class="nav-link rounded-pill note-link d-flex align-items-center justify-content-center px-3 px-md-3 me-0 me-md-2" id="note-important">
                         <i data-feather="star" class="feather-sm fill-white me-0 me-md-1"></i><span class="d-none d-md-block font-weight-medium">Important</span></a>
                 </li>
                 <li class="nav-item ms-auto">
-                    <a href="javascript:void(0)" class="
-                  nav-link
-                  btn-primary
-                  rounded-pill
-                  d-flex
-                  align-items-center
-                  px-3
-                " id="add-notes">
-                        <i data-feather="file" class="feather-sm fill-white me-0 me-md-1"></i><span class="d-none d-md-block font-weight-medium fs-3">Add Notes</span></a>
+                    <a href="javascript:void(0)" class="nav-link btn-primary rounded-pill d-flex align-items-center px-3" id="add-notes">
+                        <i data-feather="file" class="feather-sm fill-white me-0 me-md-1"></i><span class="d-none d-md-block font-weight-medium fs-3">Add Post</span></a>
                 </li>
             </ul>
             <div class="tab-content">
-                <div id="note-full-container" class="note-has-grid row">
-                    <div class="col-md-4 single-note-item all-category">
-                        <div class="card card-body">
-                            <span class="side-stick"></span>
-                            <h5 class="note-title text-truncate w-75 mb-0" data-noteHeading="Book a Ticket for Movie">
-                                Book a Ticket for Movie
-                                <i class="point fas fa-circle ms-1 fs-1"></i>
-                            </h5>
-                            <p class="note-date fs-2 text-muted">11 March 2009</p>
-                            <div class="note-content">
-                                <p class="note-inner-content text-muted" data-noteContent="Blandit tempus porttitor aasfs. Integer posuere erat a ante venenatis.">
-                                    Blandit tempus porttitor aasfs. Integer posuere erat a
-                                    ante venenatis.
-                                </p>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <a href="javascript:void(0)" class="link me-1"><i class="far fa-star favourite-note"></i></a>
-                                <a href="javascript:void(0)" class="link text-danger ms-2"><i class="far fa-trash-alt remove-note"></i></a>
-                                <div class="ms-auto">
-                                    <div class="category-selector btn-group">
-                                        <a class="
-                            nav-link
-                            dropdown-toggle
-                            category-dropdown
-                            label-group
-                            p-0
-                          " data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">
-                                            <div class="category">
-                                                <div class="category-business"></div>
-                                                <div class="category-social"></div>
-                                                <div class="category-important"></div>
-                                                <span class="more-options text-dark"><i class="icon-options-vertical"></i></span>
-                                            </div>
-                                        </a>
-                                        <div class="
-                            dropdown-menu dropdown-menu-right
-                            category-menu
-                          ">
-                                            <a class="
-                              note-business
-                              badge-group-item badge-business
-                              dropdown-item
-                              position-relative
-                              category-business
-                              text-success
-                            " href="javascript:void(0);"><i class="mdi mdi-checkbox-blank-circle-outline me-1"></i>Business</a>
-                                            <a class="
-                              note-social
-                              badge-group-item badge-social
-                              dropdown-item
-                              position-relative
-                              category-social
-                              text-info
-                            " href="javascript:void(0);"><i class="mdi mdi-checkbox-blank-circle-outline me-1"></i>
-                                                Social</a>
-                                            <a class="
-                              note-important
-                              badge-group-item badge-important
-                              dropdown-item
-                              position-relative
-                              category-important
-                              text-danger
-                            " href="javascript:void(0);"><i class="mdi mdi-checkbox-blank-circle-outline me-1"></i>
-                                                Important</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 single-note-item all-category note-important">
-                        <div class="card card-body">
-                            <span class="side-stick"></span>
-                            <h5 class="note-title text-truncate w-75 mb-0" data-noteHeading="Go for lunch">
-                                Go for lunch <i class="point fas fa-circle ms-1 fs-1"></i>
-                            </h5>
-                            <p class="note-date fs-2 text-muted">01 April 2002</p>
-                            <div class="note-content">
-                                <p class="note-inner-content text-muted" data-noteContent="Blandit tempus porttitor aasfs. Integer posuere erat a ante venenatis.">
-                                    Blandit tempus porttitor aasfs. Integer posuere erat a
-                                    ante venenatis.
-                                </p>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <a href="javascript:void(0)" class="link me-1"><i class="far fa-star favourite-note"></i></a>
-                                <a href="javascript:void(0)" class="link text-danger ms-2"><i class="far fa-trash-alt remove-note"></i></a>
-                                <div class="ms-auto">
-                                    <div class="category-selector btn-group">
-                                        <a class="
-                            nav-link
-                            dropdown-toggle
-                            category-dropdown
-                            label-group
-                            p-0
-                          " data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">
-                                            <div class="category">
-                                                <div class="category-business"></div>
-                                                <div class="category-social"></div>
-                                                <div class="category-important"></div>
-                                                <span class="more-options text-dark"><i class="icon-options-vertical"></i></span>
-                                            </div>
-                                        </a>
-                                        <div class="
-                            dropdown-menu dropdown-menu-right
-                            category-menu
-                          ">
-                                            <a class="
-                              note-business
-                              badge-group-item badge-business
-                              dropdown-item
-                              position-relative
-                              category-business
-                              text-success
-                            " href="javascript:void(0);"><i class="mdi mdi-checkbox-blank-circle-outline me-1"></i>Business</a>
-                                            <a class="
-                              note-social
-                              badge-group-item badge-social
-                              dropdown-item
-                              position-relative
-                              category-social
-                              text-info
-                            " href="javascript:void(0);"><i class="mdi mdi-checkbox-blank-circle-outline me-1"></i>
-                                                Social</a>
-                                            <a class="
-                              note-important
-                              badge-group-item badge-important
-                              dropdown-item
-                              position-relative
-                              category-important
-                              text-danger
-                            " href="javascript:void(0);"><i class="mdi mdi-checkbox-blank-circle-outline me-1"></i>
-                                                Important</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 single-note-item all-category note-social">
-                        <div class="card card-body">
-                            <span class="side-stick"></span>
-                            <h5 class="note-title text-truncate w-75 mb-0" data-noteHeading="Meeting with Mr.Jojo">
-                                Meeting with Mr.Jojo
-                                <i class="point fas fa-circle ms-1 fs-1"></i>
-                            </h5>
-                            <p class="note-date fs-2 text-muted">19 October 2021</p>
-                            <div class="note-content">
-                                <p class="note-inner-content text-muted" data-noteContent="Blandit tempus porttitor aasfs. Integer posuere erat a ante venenatis.">
-                                    Blandit tempus porttitor aasfs. Integer posuere erat a
-                                    ante venenatis.
-                                </p>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <a href="javascript:void(0)" class="link me-1"><i class="far fa-star favourite-note"></i></a>
-                                <a href="javascript:void(0)" class="link text-danger ms-2"><i class="far fa-trash-alt remove-note"></i></a>
-                                <div class="ms-auto">
-                                    <div class="category-selector btn-group">
-                                        <a class="
-                            nav-link
-                            dropdown-toggle
-                            category-dropdown
-                            label-group
-                            p-0
-                          " data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">
-                                            <div class="category">
-                                                <div class="category-business"></div>
-                                                <div class="category-social"></div>
-                                                <div class="category-important"></div>
-                                                <span class="more-options text-dark"><i class="icon-options-vertical"></i></span>
-                                            </div>
-                                        </a>
-                                        <div class="
-                            dropdown-menu dropdown-menu-right
-                            category-menu
-                          ">
-                                            <a class="
-                              note-business
-                              badge-group-item badge-business
-                              dropdown-item
-                              position-relative
-                              category-business
-                              text-success
-                            " href="javascript:void(0);"><i class="mdi mdi-checkbox-blank-circle-outline me-1"></i>Business</a>
-                                            <a class="
-                              note-social
-                              badge-group-item badge-social
-                              dropdown-item
-                              position-relative
-                              category-social
-                              text-info
-                            " href="javascript:void(0);"><i class="mdi mdi-checkbox-blank-circle-outline me-1"></i>
-                                                Social</a>
-                                            <a class="
-                              note-important
-                              badge-group-item badge-important
-                              dropdown-item
-                              position-relative
-                              category-important
-                              text-danger
-                            " href="javascript:void(0);"><i class="mdi mdi-checkbox-blank-circle-outline me-1"></i>
-                                                Important</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 single-note-item all-category note-business">
-                        <div class="card card-body">
-                            <span class="side-stick"></span>
-                            <h5 class="note-title text-truncate w-75 mb-0" data-noteHeading="Give Review for design">
-                                Give Review for design
-                                <i class="point fas fa-circle ms-1 fs-1"></i>
-                            </h5>
-                            <p class="note-date fs-2 text-muted">02 January 2000</p>
-                            <div class="note-content">
-                                <p class="note-inner-content text-muted" data-noteContent="Blandit tempus porttitor aasfs. Integer posuere erat a ante venenatis.">
-                                    Blandit tempus porttitor aasfs. Integer posuere erat a
-                                    ante venenatis.
-                                </p>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <a href="javascript:void(0)" class="link me-1"><i class="far fa-star favourite-note"></i></a>
-                                <a href="javascript:void(0)" class="link text-danger ms-2"><i class="far fa-trash-alt remove-note"></i></a>
-                                <div class="ms-auto">
-                                    <div class="category-selector btn-group">
-                                        <a class="
-                            nav-link
-                            dropdown-toggle
-                            category-dropdown
-                            label-group
-                            p-0
-                          " data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">
-                                            <div class="category">
-                                                <div class="category-business"></div>
-                                                <div class="category-social"></div>
-                                                <div class="category-important"></div>
-                                                <span class="more-options text-dark"><i class="icon-options-vertical"></i></span>
-                                            </div>
-                                        </a>
-                                        <div class="
-                            dropdown-menu dropdown-menu-right
-                            category-menu
-                          ">
-                                            <a class="
-                              note-business
-                              badge-group-item badge-business
-                              dropdown-item
-                              position-relative
-                              category-business
-                              text-success
-                            " href="javascript:void(0);"><i class="mdi mdi-checkbox-blank-circle-outline me-1"></i>Business</a>
-                                            <a class="
-                              note-social
-                              badge-group-item badge-social
-                              dropdown-item
-                              position-relative
-                              category-social
-                              text-info
-                            " href="javascript:void(0);"><i class="mdi mdi-checkbox-blank-circle-outline me-1"></i>
-                                                Social</a>
-                                            <a class="
-                              note-important
-                              badge-group-item badge-important
-                              dropdown-item
-                              position-relative
-                              category-important
-                              text-danger
-                            " href="javascript:void(0);"><i class="mdi mdi-checkbox-blank-circle-outline me-1"></i>
-                                                Important</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 single-note-item all-category note-social">
-                        <div class="card card-body">
-                            <span class="side-stick"></span>
-                            <h5 class="note-title text-truncate w-75 mb-0" data-noteHeading="Nightout with friends">
-                                Nightout with friends
-                                <i class="point fas fa-circle ms-1 fs-1"></i>
-                            </h5>
-                            <p class="note-date fs-2 text-muted">01 August 1999</p>
-                            <div class="note-content">
-                                <p class="note-inner-content text-muted" data-noteContent="Blandit tempus porttitor aasfs. Integer posuere erat a ante venenatis.">
-                                    Blandit tempus porttitor aasfs. Integer posuere erat a
-                                    ante venenatis.
-                                </p>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <a href="javascript:void(0)" class="link me-1"><i class="far fa-star favourite-note"></i></a>
-                                <a href="javascript:void(0)" class="link text-danger ms-2"><i class="far fa-trash-alt remove-note"></i></a>
-                                <div class="ms-auto">
-                                    <div class="category-selector btn-group">
-                                        <a class="
-                            nav-link
-                            dropdown-toggle
-                            category-dropdown
-                            label-group
-                            p-0
-                          " data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">
-                                            <div class="category">
-                                                <div class="category-business"></div>
-                                                <div class="category-social"></div>
-                                                <div class="category-important"></div>
-                                                <span class="more-options text-dark"><i class="icon-options-vertical"></i></span>
-                                            </div>
-                                        </a>
-                                        <div class="
-                            dropdown-menu dropdown-menu-right
-                            category-menu
-                          ">
-                                            <a class="
-                              note-business
-                              badge-group-item badge-business
-                              dropdown-item
-                              position-relative
-                              category-business
-                              text-success
-                            " href="javascript:void(0);"><i class="mdi mdi-checkbox-blank-circle-outline me-1"></i>Business</a>
-                                            <a class="
-                              note-social
-                              badge-group-item badge-social
-                              dropdown-item
-                              position-relative
-                              category-social
-                              text-info
-                            " href="javascript:void(0);"><i class="mdi mdi-checkbox-blank-circle-outline me-1"></i>
-                                                Social</a>
-                                            <a class="
-                              note-important
-                              badge-group-item badge-important
-                              dropdown-item
-                              position-relative
-                              category-important
-                              text-danger
-                            " href="javascript:void(0);"><i class="mdi mdi-checkbox-blank-circle-outline me-1"></i>
-                                                Important</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 single-note-item all-category note-important">
-                        <div class="card card-body">
-                            <span class="side-stick"></span>
-                            <h5 class="note-title text-truncate w-75 mb-0" data-noteHeading="Launch new template">
-                                Launch new template
-                                <i class="point fas fa-circle ms-1 fs-1"></i>
-                            </h5>
-                            <p class="note-date fs-2 text-muted">21 January 2015</p>
-                            <div class="note-content">
-                                <p class="note-inner-content text-muted" data-noteContent="Blandit tempus porttitor aasfs. Integer posuere erat a ante venenatis.">
-                                    Blandit tempus porttitor aasfs. Integer posuere erat a
-                                    ante venenatis.
-                                </p>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <a href="javascript:void(0)" class="link me-1"><i class="far fa-star favourite-note"></i></a>
-                                <a href="javascript:void(0)" class="link text-danger ms-2"><i class="far fa-trash-alt remove-note"></i></a>
-                                <div class="ms-auto">
-                                    <div class="category-selector btn-group">
-                                        <a class="
-                            nav-link
-                            dropdown-toggle
-                            category-dropdown
-                            label-group
-                            p-0
-                          " data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">
-                                            <div class="category">
-                                                <div class="category-business"></div>
-                                                <div class="category-social"></div>
-                                                <div class="category-important"></div>
-                                                <span class="more-options text-dark"><i class="icon-options-vertical"></i></span>
-                                            </div>
-                                        </a>
-                                        <div class="
-                            dropdown-menu dropdown-menu-right
-                            category-menu
-                          ">
-                                            <a class="
-                              note-business
-                              badge-group-item badge-business
-                              dropdown-item
-                              position-relative
-                              category-business
-                              text-success
-                            " href="javascript:void(0);"><i class="mdi mdi-checkbox-blank-circle-outline me-1"></i>Business</a>
-                                            <a class="
-                              note-social
-                              badge-group-item badge-social
-                              dropdown-item
-                              position-relative
-                              category-social
-                              text-info
-                            " href="javascript:void(0);"><i class="mdi mdi-checkbox-blank-circle-outline me-1"></i>
-                                                Social</a>
-                                            <a class="
-                              note-important
-                              badge-group-item badge-important
-                              dropdown-item
-                              position-relative
-                              category-important
-                              text-danger
-                            " href="javascript:void(0);"><i class="mdi mdi-checkbox-blank-circle-outline me-1"></i>
-                                                Important</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 single-note-item all-category note-social">
-                        <div class="card card-body">
-                            <span class="side-stick"></span>
-                            <h5 class="note-title text-truncate w-75 mb-0" data-noteHeading="Change a Design">
-                                Change a Design
-                                <i class="point fas fa-circle ms-1 fs-1"></i>
-                            </h5>
-                            <p class="note-date fs-2 text-muted">25 December 2016</p>
-                            <div class="note-content">
-                                <p class="note-inner-content text-muted" data-noteContent="Blandit tempus porttitor aasfs. Integer posuere erat a ante venenatis.">
-                                    Blandit tempus porttitor aasfs. Integer posuere erat a
-                                    ante venenatis.
-                                </p>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <a href="javascript:void(0)" class="link me-1"><i class="far fa-star favourite-note"></i></a>
-                                <a href="javascript:void(0)" class="link text-danger ms-2"><i class="far fa-trash-alt remove-note"></i></a>
-                                <div class="ms-auto">
-                                    <div class="category-selector btn-group">
-                                        <a class="
-                            nav-link
-                            dropdown-toggle
-                            category-dropdown
-                            label-group
-                            p-0
-                          " data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">
-                                            <div class="category">
-                                                <div class="category-business"></div>
-                                                <div class="category-social"></div>
-                                                <div class="category-important"></div>
-                                                <span class="more-options text-dark"><i class="icon-options-vertical"></i></span>
-                                            </div>
-                                        </a>
-                                        <div class="
-                            dropdown-menu dropdown-menu-right
-                            category-menu
-                          ">
-                                            <a class="
-                              note-business
-                              badge-group-item badge-business
-                              dropdown-item
-                              position-relative
-                              category-business
-                              text-success
-                            " href="javascript:void(0);"><i class="mdi mdi-checkbox-blank-circle-outline me-1"></i>Business</a>
-                                            <a class="
-                              note-social
-                              badge-group-item badge-social
-                              dropdown-item
-                              position-relative
-                              category-social
-                              text-info
-                            " href="javascript:void(0);"><i class="mdi mdi-checkbox-blank-circle-outline me-1"></i>
-                                                Social</a>
-                                            <a class="
-                              note-important
-                              badge-group-item badge-important
-                              dropdown-item
-                              position-relative
-                              category-important
-                              text-danger
-                            " href="javascript:void(0);"><i class="mdi mdi-checkbox-blank-circle-outline me-1"></i>
-                                                Important</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 single-note-item all-category note-business">
-                        <div class="card card-body">
-                            <span class="side-stick"></span>
-                            <h5 class="note-title text-truncate w-75 mb-0" data-noteHeading="Give review for foods">
-                                Give review for foods
-                                <i class="point fas fa-circle ms-1 fs-1"></i>
-                            </h5>
-                            <p class="note-date fs-2 text-muted">18 December 2021</p>
-                            <div class="note-content">
-                                <p class="note-inner-content text-muted" data-noteContent="Blandit tempus porttitor aasfs. Integer posuere erat a ante venenatis.">
-                                    Blandit tempus porttitor aasfs. Integer posuere erat a
-                                    ante venenatis.
-                                </p>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <a href="javascript:void(0)" class="link me-1"><i class="far fa-star favourite-note"></i></a>
-                                <a href="javascript:void(0)" class="link text-danger ms-2"><i class="far fa-trash-alt remove-note"></i></a>
-                                <div class="ms-auto">
-                                    <div class="category-selector btn-group">
-                                        <a class="
-                            nav-link
-                            dropdown-toggle
-                            category-dropdown
-                            label-group
-                            p-0
-                          " data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">
-                                            <div class="category">
-                                                <div class="category-business"></div>
-                                                <div class="category-social"></div>
-                                                <div class="category-important"></div>
-                                                <span class="more-options text-dark"><i class="icon-options-vertical"></i></span>
-                                            </div>
-                                        </a>
-                                        <div class="
-                            dropdown-menu dropdown-menu-right
-                            category-menu
-                          ">
-                                            <a class="
-                              note-business
-                              badge-group-item badge-business
-                              dropdown-item
-                              position-relative
-                              category-business
-                              text-success
-                            " href="javascript:void(0);"><i class="mdi mdi-checkbox-blank-circle-outline me-1"></i>Business</a>
-                                            <a class="
-                              note-social
-                              badge-group-item badge-social
-                              dropdown-item
-                              position-relative
-                              category-social
-                              text-info
-                            " href="javascript:void(0);"><i class="mdi mdi-checkbox-blank-circle-outline me-1"></i>
-                                                Social</a>
-                                            <a class="
-                              note-important
-                              badge-group-item badge-important
-                              dropdown-item
-                              position-relative
-                              category-important
-                              text-danger
-                            " href="javascript:void(0);"><i class="mdi mdi-checkbox-blank-circle-outline me-1"></i>
-                                                Important</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 single-note-item all-category note-important">
-                        <div class="card card-body">
-                            <span class="side-stick"></span>
-                            <h5 class="note-title text-truncate w-75 mb-0" data-noteHeading="Give salary to employee">
-                                Give salary to employee
-                                <i class="point fas fa-circle ms-1 fs-1"></i>
-                            </h5>
-                            <p class="note-date fs-2 text-muted">15 Fabruary 2021</p>
-                            <div class="note-content">
-                                <p class="note-inner-content text-muted" data-noteContent="Blandit tempus porttitor aasfs. Integer posuere erat a ante venenatis.">
-                                    Blandit tempus porttitor aasfs. Integer posuere erat a
-                                    ante venenatis.
-                                </p>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <a href="javascript:void(0)" class="link me-1"><i class="far fa-star favourite-note"></i></a>
-                                <a href="javascript:void(0)" class="link text-danger ms-2"><i class="far fa-trash-alt remove-note"></i></a>
-                                <div class="ms-auto">
-                                    <div class="category-selector btn-group">
-                                        <a class="
-                            nav-link
-                            dropdown-toggle
-                            category-dropdown
-                            label-group
-                            p-0
-                          " data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">
-                                            <div class="category">
-                                                <div class="category-business"></div>
-                                                <div class="category-social"></div>
-                                                <div class="category-important"></div>
-                                                <span class="more-options text-dark"><i class="icon-options-vertical"></i></span>
-                                            </div>
-                                        </a>
-                                        <div class="
-                            dropdown-menu dropdown-menu-right
-                            category-menu
-                          ">
-                                            <a class="
-                              note-business
-                              badge-group-item badge-business
-                              dropdown-item
-                              position-relative
-                              category-business
-                              text-success
-                            " href="javascript:void(0);"><i class="mdi mdi-checkbox-blank-circle-outline me-1"></i>Business</a>
-                                            <a class="
-                              note-social
-                              badge-group-item badge-social
-                              dropdown-item
-                              position-relative
-                              category-social
-                              text-info
-                            " href="javascript:void(0);"><i class="mdi mdi-checkbox-blank-circle-outline me-1"></i>
-                                                Social</a>
-                                            <a class="
-                              note-important
-                              badge-group-item badge-important
-                              dropdown-item
-                              position-relative
-                              category-important
-                              text-danger
-                            " href="javascript:void(0);"><i class="mdi mdi-checkbox-blank-circle-outline me-1"></i>
-                                                Important</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div id="note-full-container" class="note-has-grid row"></div>
             </div>
 
             <!-- Modal Add notes -->
@@ -715,7 +50,7 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content border-0">
                         <div class="modal-header bg-info text-white">
-                            <h5 class="modal-title text-white">Add Notes</h5>
+                            <h5 class="modal-title text-white">Add Posts</h5>
                             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -725,15 +60,27 @@
                                         <div class="row">
                                             <div class="col-md-12 mb-3">
                                                 <div class="note-title">
-                                                    <label>Note Title</label>
+                                                    <label>Title</label>
                                                     <input type="text" id="note-has-title" class="form-control" minlength="25" placeholder="Title" />
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-12">
+                                            <div class="col-md-12 mb-3">
                                                 <div class="note-description">
-                                                    <label>Note Description</label>
+                                                    <label>Description</label>
                                                     <textarea id="note-has-description" class="form-control" minlength="60" placeholder="Description" rows="3"></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <div class="note-category">
+                                                    <label>Category</label>
+                                                    <select id="note-has-category" class="form-select">
+                                                        <option value=""> Please Select </option>
+                                                        <option value="A"> Announcement </option>
+                                                        <option value="I"> Important </option>
+                                                    </select>
+                                                    <div style="font-size: .875em;color: #fc4b6c;display:none;" id="category-error">Please select a category!</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -756,6 +103,35 @@
 
         <script>
             $(function() {
+
+                function showData() {
+                    $.post("controller/ajax.php?q=Posts&m=show", {}, function(data, status) {
+                        var res = JSON.parse(data);
+                        var content = "";
+                        if (res.data.length > 0) {
+                            for (let pIndex = 0; pIndex < res.data.length; pIndex++) {
+                                const pElem = res.data[pIndex];
+                                var title = pElem.post_title;
+                                var desc = pElem.post_content;
+                                var date = pElem.post_date;
+                                var category = pElem.category;
+                                content += '<div class="col-md-4 single-note-item all-category ' + category + '">' +
+                                    '<div class="card card-body">' +
+                                    '<span class="side-stick"></span>' +
+                                    '<h5 class="note-title text-truncate w-75 mb-0" data-noteHeading="' + title + '"> ' + title + ' <i class="point fas fa-circle ms-1 fs-1"></i>' +
+                                    '</h5>' +
+                                    '<p class="note-date fs-2 text-muted">' + date + '</p>' +
+                                    '<div class="note-content">' +
+                                    '<p class="note-inner-content text-muted" data-noteContent="' + desc + '">' + desc + '</p>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</div>';
+                            }
+                        }
+                        $("#note-full-container").html(content);
+                    });
+                }
+
                 function removeNote() {
                     $(".remove-note")
                         .off("click")
@@ -782,8 +158,8 @@
                             /* Act on the event */
                             var getclass = this.className;
                             var getSplitclass = getclass.split(" ")[0];
-                            if ($(this).hasClass("badge-business")) {
-                                $(this).parents(".single-note-item").removeClass("note-social");
+                            if ($(this).hasClass("badge-announcement")) {
+                                $(this).parents(".single-note-item").removeClass("note-announcement");
                                 $(this).parents(".single-note-item").removeClass("note-important");
                                 $(this).parents(".single-note-item").toggleClass(getSplitclass);
                             } else if ($(this).hasClass("badge-social")) {
@@ -791,7 +167,7 @@
                                 $(this).parents(".single-note-item").removeClass("note-important");
                                 $(this).parents(".single-note-item").toggleClass(getSplitclass);
                             } else if ($(this).hasClass("badge-important")) {
-                                $(this).parents(".single-note-item").removeClass("note-social");
+                                $(this).parents(".single-note-item").removeClass("note-announcement");
                                 $(this).parents(".single-note-item").removeClass("note-business");
                                 $(this).parents(".single-note-item").toggleClass(getSplitclass);
                             }
@@ -824,85 +200,41 @@
                 $("#btn-n-add").on("click", function(event) {
                     event.preventDefault();
                     /* Act on the event */
-                    var today = new Date();
-                    var dd = String(today.getDate()).padStart(2, "0");
-                    var mm = String(today.getMonth()); //January is 0!
-                    var yyyy = today.getFullYear();
-                    var monthNames = [
-                        "Jan",
-                        "Feb",
-                        "Mar",
-                        "Apr",
-                        "May",
-                        "Jun",
-                        "Jul",
-                        "Aug",
-                        "Sep",
-                        "Oct",
-                        "Nov",
-                        "Dec",
-                    ];
-                    today = dd + " " + monthNames[mm] + " " + yyyy;
 
                     var $_noteTitle = document.getElementById("note-has-title").value;
-                    var $_noteDescription = document.getElementById(
-                        "note-has-description"
-                    ).value;
+                    var $_noteDescription = document.getElementById("note-has-description").value;
+                    var $_noteCategory = document.getElementById("note-has-category").value;
 
-                    $html =
-                        '<div class="col-md-4 single-note-item all-category"><div class="card card-body">' +
-                        '<span class="side-stick"></span>' +
-                        '<h5 class="note-title text-truncate w-75 mb-0" data-noteHeading="' +
-                        $_noteTitle +
-                        '">' +
-                        $_noteTitle +
-                        '<i class="point fas fa-circle ms-1 fs-1"></i></h5>' +
-                        '<p class="note-date fs-2 text-muted">' +
-                        today +
-                        "</p>" +
-                        '<div class="note-content">' +
-                        '<p class="note-inner-content text-muted" data-noteContent="' +
-                        $_noteDescription +
-                        '">' +
-                        $_noteDescription +
-                        "</p>" +
-                        "</div>" +
-                        '<div class="d-flex align-items-center">' +
-                        '<a href="javascript:void(0)" class="link me-1"><i class="far fa-star favourite-note"></i></a>' +
-                        '<a href="javascript:void(0)" class="link text-danger ms-2"><i class="far fa-trash-alt remove-note"></i></a>' +
-                        '<div class="ms-auto">' +
-                        '<div class="category-selector btn-group">' +
-                        '<a class="nav-link dropdown-toggle category-dropdown label-group p-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">' +
-                        '<div class="category">' +
-                        '<div class="category-business"></div>' +
-                        '<div class="category-social"></div>' +
-                        '<div class="category-important"></div>' +
-                        '<span class="more-options text-dark"><i class="icon-options-vertical"></i></span>' +
-                        "</div>" +
-                        "</a>" +
-                        '<div class="dropdown-menu dropdown-menu-right category-menu">' +
-                        '<a class="note-business badge-group-item badge-business dropdown-item position-relative category-business text-success" href="javascript:void(0);"><i class="mdi mdi-checkbox-blank-circle-outline me-1"></i>Business</a>' +
-                        '<a class="note-social badge-group-item badge-social dropdown-item position-relative category-social text-info" href="javascript:void(0);"><i class="mdi mdi-checkbox-blank-circle-outline me-1"></i> Social</a>' +
-                        '<a class="note-important badge-group-item badge-important dropdown-item position-relative category-important text-danger" href="javascript:void(0);"><i class="mdi mdi-checkbox-blank-circle-outline me-1"></i> Important</a>' +
-                        "</div>" +
-                        "</div>" +
-                        "</div>" +
-                        "</div>" +
-                        "</div></div> ";
+                    var $_noteCategoryError = document.getElementById("category-error");
+                    if ($_noteCategory != "") {
+                        $_noteCategoryError.style.display = "none";
+                        $.post("controller/ajax.php?q=Posts&m=add", {
+                            post_title: $_noteTitle,
+                            post_content: $_noteDescription,
+                            post_category: $_noteCategory,
+                        }, function(data, status) {
+                            $("#addnotesmodal").modal("hide");
 
-                    $("#note-full-container").prepend($html);
-                    $("#addnotesmodal").modal("hide");
+                            showData();
 
-                    removeNote();
-                    favouriteNote();
-                    addLabelGroups();
+                            removeNote();
+                            favouriteNote();
+                            addLabelGroups();
+                        });
+                    } else {
+                        $_noteCategoryError.style.display = "block";
+                    }
                 });
 
                 $("#addnotesmodal").on("hidden.bs.modal", function(event) {
                     event.preventDefault();
                     document.getElementById("note-has-title").value = "";
                     document.getElementById("note-has-description").value = "";
+                    document.getElementById("note-has-category").value = "";
+                    document.getElementById("category-error").style.display = "none";
                 });
+
+                showData();
 
                 removeNote();
                 favouriteNote();

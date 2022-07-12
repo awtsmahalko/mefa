@@ -35,6 +35,12 @@
                         <span class="hide-menu">Profile </span>
                     </a>
                 </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark" href="index.php?q=posttimeline">
+                        <i class="mdi mdi-content-paste"></i>
+                        <span class="hide-menu">Posts </span>
+                    </a>
+                </li>
 
                 <li class="nav-small-cap">
                     <i class="mdi mdi-dots-horizontal"></i>
