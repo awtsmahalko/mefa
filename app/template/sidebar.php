@@ -47,6 +47,12 @@
                     <span class="hide-menu">MASTER DATA</span>
                 </li>
                 <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark" href="index.php?q=properties">
+                        <i class="mdi mdi-home-modern"></i>
+                        <span class="hide-menu">PROPERTIES </span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
                     <a class="sidebar-link waves-effect waves-dark" href="index.php?q=users">
                         <i class="mdi mdi-account-multiple"></i>
                         <span class="hide-menu">USERS </span>
