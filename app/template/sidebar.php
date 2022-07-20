@@ -53,6 +53,12 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark" href="index.php?q=department">
+                        <i class="mdi mdi-office"></i>
+                        <span class="hide-menu">FIRE STATION </span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
                     <a class="sidebar-link waves-effect waves-dark" href="index.php?q=users">
                         <i class="mdi mdi-account-multiple"></i>
                         <span class="hide-menu">USERS </span>

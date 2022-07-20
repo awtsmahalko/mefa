@@ -8,4 +8,5 @@ $classes = array(
     'Users'             => $pre_class . 'user.php',
     'Sensors'           => $pre_class . 'sensor.php',
     'Properties'        => $pre_class . 'property.php',
+    'Departments'       => $pre_class . 'department.php',
 );
