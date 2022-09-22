@@ -1,7 +1,7 @@
 <?php
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: access");
-header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Allow-Methods: GET");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
@@ -16,7 +16,7 @@ while ($row = $fetch->fetch_array()) {
     $list['user_id'] = $row['user_id'];
     $list['post_title'] = $row['post_title'];
     $list['post_content'] = $row['post_content'];
-    $list['post_date'] = $row['post_date'];
+    $list['post_date'] = date('D M d, Y h:i A', strtotime($row['post_date']));
     array_push($response, $list);
 }
 
