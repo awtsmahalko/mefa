@@ -52,6 +52,12 @@
                         <span class="hide-menu">PROPERTIES </span>
                     </a>
                 </li>
+                <!-- <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark" href="index.php?q=properties_location&property_id=2">
+                        <i class="mdi mdi-home-modern"></i>
+                        <span class="hide-menu">PROPERTIES </span>
+                    </a>
+                </li> -->
                 <li class="sidebar-item">
                     <a class="sidebar-link waves-effect waves-dark" href="index.php?q=department">
                         <i class="mdi mdi-office"></i>

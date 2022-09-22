@@ -152,7 +152,7 @@
                 },
                 {
                     "render": function(data, type, row, meta) {
-                        return '<button class="btn btn-success rounded-pill"><i data-feather="map-pin" class="feather-sm fill-white me-0 me-md-1"></i></button>';
+                        return '<button class="btn btn-success rounded-pill" onclick="showLocation(' + row.property_id + ')"><i data-feather="map-pin" class="feather-sm fill-white me-0 me-md-1"></i></button>';
                     },
                 },
                 {
@@ -194,4 +194,9 @@
             });
         }
     });
+
+
+    function showLocation(property_id) {
+        window.location = "index.php?q=properties_location&property_id=" + property_id;
+    }
 </script>

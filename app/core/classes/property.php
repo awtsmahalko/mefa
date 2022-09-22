@@ -33,6 +33,7 @@ class Properties extends Connection
             $map = "<a href='index.php?q=view_map&coord=$row[property_coordinates]'><i class='mdi mdi-google-maps'></i></a>";
             array_push($response['data'], [
                 'count'         => $count++,
+                'property_id'   => $row['property_id'],
                 'property_code' => $row['property_code'],
                 'property_name' => $row['property_name'],
                 'holder'        => Users::name($row['user_id']),
