@@ -8,7 +8,6 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 require_once '../core/config.php';
 
 $data = json_decode(file_get_contents("php://input"));
-   // $r_id = $mysqli_connect->real_escape_string($data->r_id);
 $fetch = $mysqli_connect->query("SELECT * FROM tbl_posts");
 $response = array();
 while ($row = $fetch->fetch_array()) {
