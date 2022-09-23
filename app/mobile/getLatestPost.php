@@ -16,7 +16,7 @@ while ($row = $fetch->fetch_array()) {
     $list['user_id'] = $row['user_id'];
     $list['post_title'] = $row['post_title'];
     $list['post_content'] = $row['post_content'];
-    $list['post_date'] = date('D M d, Y h:i A', strtotime($row['post_date']));
+    $list['post_date'] = date('M d, Y h:i A', strtotime($row['post_date']));
     array_push($response, $list);
 }
 
