@@ -160,6 +160,7 @@ CREATE TABLE `tbl_users` (
   `user_location` text,
   `user_category` varchar(1) NOT NULL DEFAULT '',
   `user_mobile` varchar(15) NOT NULL DEFAULT '',
+  `date_updated` datetime NOT NULL DEFAULT '',
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
