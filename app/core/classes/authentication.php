@@ -54,6 +54,7 @@ class Authentication extends Connection
                 'id'        => $row['user_id'],
                 'name'      => $row['user_fullname'],
                 'category'  => $row['user_category'],
+                'username'  => $row['username'],
             ];
             return 1;
         } else {

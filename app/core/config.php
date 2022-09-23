@@ -9,9 +9,9 @@ define("PASSWORD", "");
 define("DBNAME", "mefa_db");*/
 
 define("HOST", "localhost");
-define("USER", "u981310152_mefa_root");
-define("PASSWORD", "Mefa211!");
-define("DBNAME", "u981310152_mefa_db");
+define("USER", "root");
+define("PASSWORD", "");
+define("DBNAME", "mefa_db");
 
 
 session_start();

@@ -24,4 +24,12 @@ class Users extends Connection
         $row = $result->fetch_assoc();
         return $row[$self->name];
     }
+
+    public static function dataOf($primary_id, $field = '*')
+    {
+        $self = new self;
+        $result = $self->select($self->table, $field, "$self->pk = '$primary_id'");
+        $row = $result->fetch_assoc();
+        return $field == '*' ? $row : $row[$field];
+    }
 }

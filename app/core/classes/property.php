@@ -10,7 +10,7 @@ class Properties extends Connection
     {
         $property_code        = $this->generateRandomString(6);
         $property_name        = $this->clean($this->inputs['property_name']);
-        $property_owner       = $this->clean($this->inputs['property_owner']);
+        $property_owner       = $_SESSION['user']['id']; //$this->clean($this->inputs['property_owner']);
         $property_coordinates = $this->clean($this->inputs['property_coordinates']);
         $property_address     = $this->clean($this->inputs['property_address']);
 
@@ -27,7 +27,7 @@ class Properties extends Connection
     public function datatable()
     {
         $response['data'] = [];
-        $result = $this->select($this->table);
+        $result = $this->select($this->table, '*', "user_id = '" . $_SESSION['user']['id'] . "'");
         $count = 1;
         while ($row = $result->fetch_assoc()) {
             $map = "<a href='index.php?q=view_map&coord=$row[property_coordinates]'><i class='mdi mdi-google-maps'></i></a>";

@@ -41,8 +41,8 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Sensor Code</th>
-                                    <th>Holder</th>
-                                    <th>Property</th>
+                                    <!-- <th>Holder</th>
+                                    <th>Property</th> -->
                                     <th>Address</th>
                                     <th>Map</th>
                                     <th>Date Added</th>
@@ -80,6 +80,20 @@
                                     </div>
 
                                     <div class="col-md-12 mb-3">
+                                        <div class="sensor-location">
+                                            <label>Location</label>
+                                            <input type="text" id="sensor-has-location" class="form-control" minlength="6" maxlength="6" autocomplete="off" placeholder="Sensor location" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 mb-3">
+                                        <div class="sensor-coordinates">
+                                            <label>Coordinates</label>
+                                            <input type="text" id="sensor-has-coordinates" class="form-control" minlength="6" maxlength="6" autocomplete="off" placeholder="Sensor Coordinates" />
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="col-md-12 mb-3">
                                         <div class="sensor-owner">
                                             <label>Owner</label>
                                             <select id="sensor-has-owner" class="form-select"><?= Users::combo() ?></select>
@@ -93,7 +107,7 @@
                                             <select id="sensor-has-property" class="form-select"><?= Users::combo() ?></select>
                                             <div style="font-size: .875em;color: #fc4b6c;display:none;" id="property-error">Please select a Property!</div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </form>
                         </div>
@@ -134,12 +148,12 @@
                 {
                     "data": "sensor_code"
                 },
-                {
-                    "data": "holder"
-                },
-                {
-                    "data": "property"
-                },
+                // {
+                //     "data": "holder"
+                // },
+                // {
+                //     "data": "property"
+                // },
                 {
                     "data": "address"
                 },
@@ -164,28 +178,32 @@
         /* Act on the event */
 
         var $_sensorCode = document.getElementById("sensor-has-code").value;
-        var $_sensorOwner = document.getElementById("sensor-has-owner").value;
-        var $_sensorProperty = document.getElementById("sensor-has-property").value;
+        var $_sensorLocation = document.getElementById("sensor-has-location").value;
+        var $_sensorCoordinates = document.getElementById("sensor-has-coordinates").value;
+        // var $_sensorOwner = document.getElementById("sensor-has-owner").value;
+        // var $_sensorProperty = document.getElementById("sensor-has-property").value;
 
-        var $_sensorOwnerError = document.getElementById("owner-error");
-        var $_sensorPropertyError = document.getElementById("property-error");
-        if ($_sensorOwner == "") {
-            $_sensorOwnerError.style.display = "block";
-        } else if ($_sensorProperty == "") {
-            $_sensorPropertyError.style.display = "block";
-        } else {
-            $_sensorOwnerError.style.display = "none";
-            $_sensorPropertyError.style.display = "none";
-            $.post("controller/ajax.php?q=Sensors&m=add", {
-                sensor_code: $_sensorCode,
-                sensor_owner: $_sensorOwner,
-                sensor_property: $_sensorProperty,
-            }, function(data, status) {
-                $("#addsensormodal").modal("hide");
+        // var $_sensorOwnerError = document.getElementById("owner-error");
+        // var $_sensorPropertyError = document.getElementById("property-error");
+        // if ($_sensorOwner == "") {
+        //     $_sensorOwnerError.style.display = "block";
+        // } else if ($_sensorProperty == "") {
+        //     $_sensorPropertyError.style.display = "block";
+        // } else {
+        // $_sensorOwnerError.style.display = "none";
+        // $_sensorPropertyError.style.display = "none";
+        $.post("controller/ajax.php?q=Sensors&m=add", {
+            sensor_code: $_sensorCode,
+            sensor_location: $_sensorLocation,
+            sensor_coordinates: $_sensorCoordinates,
+            // sensor_owner: $_sensorOwner,
+            // sensor_property: $_sensorProperty,
+        }, function(data, status) {
+            $("#addsensormodal").modal("hide");
 
-                showSensors();
+            showSensors();
 
-            });
-        }
+        });
+        // }
     });
 </script>
