@@ -14,7 +14,7 @@ function getUser($id){
 
 	$fetch = $mysqli_connect->query("SELECT * from tbl_users where user_id='$id' ");
 	$row = $fetch->fetch_array();
-	$user_name = $row['user_fname'].' '.$row['user_mname'].' '.$row['user_lname'];
+	$user_name = $row['user_fullname'];
 
 	return $user_name;
 }
