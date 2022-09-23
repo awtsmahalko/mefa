@@ -24,7 +24,7 @@ if(isset($data->user_id) && $data->user_id > 0){
 	}else if($newPassword != $newPasswordConfirm){
 		echo 3; // pw dont match
 	}else{
-		$sql = $mysqli_connect->query("UPDATE `tbl_users` SET password=md5('$newPassword') ,date_added='$date' WHERE user_id='$user_id'") or die(mysqli_error());
+		$sql = $mysqli_connect->query("UPDATE `tbl_users` SET password=md5('$newPassword') ,date_updated='$date' WHERE user_id='$user_id'") or die(mysqli_error());
 
 		if($sql){
 			echo 1;

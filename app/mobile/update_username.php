@@ -21,7 +21,7 @@ if(isset($data->user_id) && $data->user_id > 0){
 	if($count_row[0] == 0){
 		echo -1;
 	}else{
-		$sql = $mysqli_connect->query("UPDATE `tbl_users` SET `username`='$username',`date_added`='$date' WHERE user_id='$user_id' ");
+		$sql = $mysqli_connect->query("UPDATE `tbl_users` SET `username`='$username',`date_updated`='$date' WHERE user_id='$user_id' ");
 
 		if($sql){
 			echo 1;
