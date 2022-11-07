@@ -138,7 +138,7 @@
                 },
                 {
                     "render": function(data, type, row, meta) {
-                        return '<button class="btn btn-info rounded-pill"><i data-feather="edit" class="feather-sm fill-white me-0 me-md-1"></i></button> <button class="btn btn-danger rounded-pill"><i data-feather="trash-2" class="feather-sm fill-white me-0 me-md-1"></i></button>';
+                        return '<button class="btn btn-info rounded-pill"><span class="fa fa-edit"></span></button> <button class="btn btn-danger rounded-pill"><i data-feather="trash-2" class="feather-sm fill-white me-0 me-md-1"></i></button>';
                     },
                 },
                 {

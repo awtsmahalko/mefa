@@ -26,6 +26,8 @@ $views_file = isset($_GET['q']) ?  $_GET['q'] : 'dashboard';
     <link rel="stylesheet" type="text/css" href="../assets/extra-libs/datatables.net-bs4/css/responsive.dataTables.min.css" />
     <!-- Custom CSS -->
     <link href="../dist/css/style.min.css" rel="stylesheet" />
+    <!-- container-scroller -->
+    <link rel="stylesheet" href="../assets/plugins/sweet-alert/sweetalert.css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -50,7 +52,82 @@ $views_file = isset($_GET['q']) ?  $_GET['q'] : 'dashboard';
     <!--Custom JavaScript -->
     <script src="../dist/js/feather.min.js"></script>
     <script src="../dist/js/custom.min.js"></script>
+    <script src="../assets/plugins/sweet-alert/sweetalert.js"></script>
+    <script>
+        var global_coords = '';
+        getLocation();
 
+        function success_add() {
+            swal("Success!", "Successfully added entry!", "success");
+        }
+
+        function success_update() {
+            swal("Success!", "Successfully updated entry!", "success");
+        }
+
+        function success_delete() {
+            swal("Success!", "Successfully deleted entry!", "success");
+        }
+
+        function entry_already_exists() {
+            swal("Cannot proceed!", "Entry already exists!", "warning");
+        }
+
+        function amount_is_greater() {
+            swal("Cannot proceed!", "Amount is greater than balance!", "warning");
+        }
+
+        function release_first() {
+            swal("Cannot proceed!", "Save transaction first!", "warning");
+        }
+
+        function failed_query(data) {
+            swal("Failed to execute query!", data, "warning");
+            //alert('Something is wrong. Failed to execute query. Please try again.');
+        }
+
+        function logout() {
+            swal({
+                    title: "Are you sure?",
+                    text: "Your session will expire!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonClass: "btn-danger",
+                    confirmButtonText: "Yes, sign me out!",
+                    cancelButtonText: "No, stay me in!",
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                },
+                function(isConfirm) {
+                    if (isConfirm) {
+
+                        $.ajax({
+                            type: "POST",
+                            url: "controllers/sql.php?c=Users&q=logout",
+                            success: function(data) {
+                                window.location = "./";
+                            }
+                        });
+
+
+                    } else {
+                        swal("Cancelled", "Entries are safe :)", "error");
+                    }
+                });
+        }
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        function showPosition(position) {
+            global_coords = position.coords.latitude + "," + position.coords.longitude;
+        }
+    </script>
     <style>
         #main-wrapper[data-layout=horizontal] .left-sidebar[data-sidebarbg=skin5] .sidebar-nav ul .sidebar-item.selected>.sidebar-link,
         #main-wrapper[data-layout=vertical] .left-sidebar[data-sidebarbg=skin5] .sidebar-nav ul .sidebar-item.selected>.sidebar-link {

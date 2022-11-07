@@ -46,7 +46,7 @@ $user_data = Users::dataOf($_SESSION['user']['id']);
                     <small class="text-muted pt-4 db">Address</small>
                     <h6><?= $user_data['user_address'] ?></h6>
                     <div class="map-box">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d470029.1604841957!2d72.29955005258641!3d23.019996818380896!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e848aba5bd449%3A0x4fcedd11614f6516!2sAhmedabad%2C+Gujarat!5e0!3m2!1sen!2sin!4v1493204785508" width="100%" height="150" frameborder="0" style="border: 0" allowfullscreen></iframe>
+                        <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d470029.1604841957!2d72.29955005258641!3d23.019996818380896!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e848aba5bd449%3A0x4fcedd11614f6516!2sAhmedabad%2C+Gujarat!5e0!3m2!1sen!2sin!4v1493204785508" width="100%" height="150" frameborder="0" style="border: 0" allowfullscreen></iframe> -->
                     </div>
                 </div>
             </div>
@@ -149,25 +149,17 @@ $user_data = Users::dataOf($_SESSION['user']['id']);
                     <div class="notes-content">
                         <form action="javascript:void(0);" id="addnotesmodalTitle">
                             <div class="row">
+                                <input type="hidden" id="property_id" />
                                 <div class="col-md-12 mb-3">
                                     <div class="property-name">
                                         <label>Property Name</label>
                                         <input type="text" id="property-has-name" class="form-control" minlength="6" autocomplete="off" placeholder="Property Name" />
                                     </div>
                                 </div>
-                                <!-- 
-                                <div class="col-md-12 mb-3">
-                                    <div class="property-owner">
-                                        <label>Owner</label>
-                                        <select id="property-has-owner" class="form-select"><?= Users::combo() ?></select>
-                                        <div style="font-size: .875em;color: #fc4b6c;display:none;" id="owner-error">Please select an Owner!</div>
-                                    </div>
-                                </div> -->
-
                                 <div class="col-md-12 mb-3">
                                     <div class="property-coordinates">
                                         <label>Coordinates</label>
-                                        <input type="text" id="property-has-coordinates" class="form-control" autocomplete="off" placeholder="100.01215,121.021" />
+                                        <input type="text" id="property-has-coordinates" class="form-control" autocomplete="off" readonly placeholder="100.01215,121.021" />
                                     </div>
                                 </div>
 
@@ -216,7 +208,7 @@ $user_data = Users::dataOf($_SESSION['user']['id']);
                 },
                 {
                     "render": function(data, type, row, meta) {
-                        return '<button class="btn btn-info rounded-pill"><i data-feather="edit" class="feather-sm fill-white me-0 me-md-1"></i></button> <button class="btn btn-danger rounded-pill"><i data-feather="trash-2" class="feather-sm fill-white me-0 me-md-1"></i></button>';
+                        return '<button class="btn btn-info rounded-pill" onclick=\'editProperty("' + row.property_id + '","' + row.property_name + '","' + row.address + '","' + row.coordinates + '")\'><span class="fa fa-edit"></span></button> <button class="btn btn-danger rounded-pill"><span class="fa fa-trash"></span></button>';
                     },
                 },
                 {
@@ -227,7 +219,7 @@ $user_data = Users::dataOf($_SESSION['user']['id']);
                 },
                 {
                     "render": function(data, type, row, meta) {
-                        return '<button class="btn btn-success rounded-pill" onclick="showLocation(' + row.property_id + ')"><i data-feather="map-pin" class="feather-sm fill-white me-0 me-md-1"></i></button>';
+                        return '<button class="btn btn-success rounded-pill" onclick="showLocation(' + row.property_id + ')"><span class="fa fa-map-marker"></span></button>';
                     },
                 },
                 {
@@ -237,9 +229,14 @@ $user_data = Users::dataOf($_SESSION['user']['id']);
         });
     }
     $("#add-property").on("click", function(event) {
+        proprtyAssign();
         $("#addpropertymodal").modal("show");
+
         $("#btn-n-save").hide();
-        $("#btn-add-property").show();
+        var btn_property = document.getElementById("btn-add-property");
+        btn_property.innerHTML = "Add";
+        btn_property.style.display = "block";
+
     });
 
     // Button add
@@ -247,6 +244,7 @@ $user_data = Users::dataOf($_SESSION['user']['id']);
         event.preventDefault();
         /* Act on the event */
 
+        var $_propertyId = document.getElementById("property_id").value;
         var $_propertyName = document.getElementById("property-has-name").value;
         // var $_propertyOwner = document.getElementById("property-has-owner").value;
         var $_propertyCoordinates = document.getElementById("property-has-coordinates").value;
@@ -263,12 +261,29 @@ $user_data = Users::dataOf($_SESSION['user']['id']);
             // property_owner: $_propertyOwner,
             property_coordinates: $_propertyCoordinates,
             property_address: $_propertyAddress,
+            property_id: $_propertyId
         }, function(data, status) {
             $("#addpropertymodal").modal("hide");
             showProperties();
         });
         // }
     });
+
+    function editProperty(id, name, address, coordinates) {
+        var btn_property = document.getElementById("btn-add-property");
+        btn_property.innerHTML = "Edit";
+
+        proprtyAssign(id, name, address, coordinates);
+
+        $("#addpropertymodal").modal("show");
+    }
+
+    function proprtyAssign(id = 0, name = "", address = "", coordinates = global_coords) {
+        document.getElementById("property_id").value = id;
+        document.getElementById("property-has-name").value = name;
+        document.getElementById("property-has-coordinates").value = coordinates;
+        document.getElementById("property-has-address").value = address;
+    }
 
 
     function showLocation(property_id) {

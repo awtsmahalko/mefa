@@ -24,6 +24,13 @@ class Users extends Connection
         $row = $result->fetch_assoc();
         return $row[$self->name];
     }
+    public static function token($primary_id)
+    {
+        $self = new self;
+        $result = $self->select($self->table, 'user_token', "$self->pk = '$primary_id'");
+        $row = $result->fetch_assoc();
+        return $row['user_token'];
+    }
 
     public static function dataOf($primary_id, $field = '*')
     {
