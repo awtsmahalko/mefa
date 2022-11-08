@@ -20,6 +20,22 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
+                <div class="border-bottom title-part-padding">
+                    <div class="row col-md-12">
+                        <h2>Today's live Fire Alerts </h2>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div style="border: 1px solid #ddd;width: 100%;padding: 0px;">
+                        <div id="map_canvas" style="height:600px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
                 <div class="row">
                     <div class="col-lg-6 col-md-12">
                         <div class="card-body">
@@ -80,8 +96,73 @@
             </div>
         </div>
     </div>
+    <div id="result"></div>
 </div>
 
+<script>
+    // if (typeof(EventSource) !== "undefined") {
+    //     var source = new EventSource("api/sse.php");
+    //     source.onmessage = function(event) {
+    //         document.getElementById("result").innerHTML += event.data + "<br>";
+    //     };
+    // } else {
+    //     document.getElementById("result").innerHTML = "Sorry, your browser does not support server-sent events...";
+    // }
+    $(document).ready(function() {
+        init_map();
+    });
+
+    function init_map() {
+        var property_radius = 2;
+        if (global_coords != '') {
+            var split_coords = global_coords.split(",");
+            var lat = split_coords[0] * 1;
+            var lng = split_coords[1] * 1;
+            var pos = {
+                lat: lat,
+                lng: lng
+            };
+
+            // center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+            var options = {
+                zoom: 14,
+                center: pos,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                styles: [{
+                    featureType: "poi",
+                    elementType: "labels",
+                    stylers: [{
+                        visibility: "off"
+                    }]
+
+                }]
+            };
+
+            map = new google.maps.Map(document.getElementById("map_canvas"), options);
+
+            var marker;
+            marker = new google.maps.Marker({
+                position: pos, //new google.maps.LatLng(lat, long),
+                map: map,
+                draggable: true,
+                animation: google.maps.Animation.DROP,
+                label: "9 AM"
+            });
+
+            circle_radius = property_radius * 1000;
+            var circle = new google.maps.Circle({
+                radius: circle_radius,
+                center: pos, //new google.maps.LatLng(lat, long),
+                fillColor: '#FF0000',
+                fillOpacity: 0.2,
+                strokeColor: '#FF0000',
+                strokeOpacity: 0.6
+            });
+
+            circle.setMap(map);
+        }
+    }
+</script>
 <!--This page JavaScript -->
 <!-- chartist chart -->
 <script src="../assets/libs/apexcharts/dist/apexcharts.min.js"></script>
@@ -194,3 +275,5 @@
         chart_line_overview.render();
     });
 </script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC232qKEVqI5x0scuj9UGEVUNdB98PiMX0&callback=init_map"></script>

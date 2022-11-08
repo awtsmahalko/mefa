@@ -134,10 +134,10 @@
                         <a class="dropdown-item" href="index.php?q=profile"><i data-feather="user" class="feather-sm text-info me-1 ms-1"></i>
                             My Profile</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#"><i data-feather="settings" class="feather-sm text-warning me-1 ms-1"></i>
+                        <!-- <a class="dropdown-item" href="#"><i data-feather="settings" class="feather-sm text-warning me-1 ms-1"></i>
                             Account Setting</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#"><i data-feather="log-out" class="feather-sm text-danger me-1 ms-1"></i>
+                        <div class="dropdown-divider"></div> -->
+                        <a class="dropdown-item" href="#" onclick="logout()"><i data-feather="log-out" class="feather-sm text-danger me-1 ms-1"></i>
                             Logout</a>
                         <div class="dropdown-divider"></div>
                     </div>

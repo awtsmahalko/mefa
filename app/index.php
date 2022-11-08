@@ -100,18 +100,15 @@ $views_file = isset($_GET['q']) ?  $_GET['q'] : 'dashboard';
                 },
                 function(isConfirm) {
                     if (isConfirm) {
-
                         $.ajax({
                             type: "POST",
-                            url: "controllers/sql.php?c=Users&q=logout",
+                            url: "controller/ajax.php?q=Authentication&m=logout",
                             success: function(data) {
-                                window.location = "./";
+                                location.reload();
                             }
                         });
-
-
                     } else {
-                        swal("Cancelled", "Entries are safe :)", "error");
+                        swal("Cancelled", "Your session still active", "warning");
                     }
                 });
         }

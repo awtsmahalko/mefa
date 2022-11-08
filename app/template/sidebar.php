@@ -95,14 +95,6 @@
                     </li>
 
                 <?php } ?>
-
-                <li class="nav-small-cap">
-                    <i class="mdi mdi-dots-horizontal"></i>
-                    <span class="hide-menu">Extra</span>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false" onclick="logout()"><i class="mdi mdi-directions"></i><span class="hide-menu">Log Out</span></a>
-                </li>
             </ul>
         </nav>
         <!-- End Sidebar navigation -->
