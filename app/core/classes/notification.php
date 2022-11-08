@@ -12,7 +12,7 @@ class Notifications extends Connection
         $url = 'https://fcm.googleapis.com/fcm/send';
 
         /*api_key available in:
-    Firebase Console -> Project Settings -> CLOUD MESSAGING -> Server key*/
+        Firebase Console -> Project Settings -> CLOUD MESSAGING -> Server key*/
         $api_key = 'AAAAMMyIlI0:APA91bEq8wlsqm_gffhxQJvfT4vG0Oo-NV7xGwCtpbgYuzszSJOAnLms8dBB-xj6t1Tf9FyohA_5Gkqdl3AKKKL-e6ffHXlJXirAO0afXXX2tRsHFWXPJ0ZsOVdu0MVWY4urlvZpu0eL';
 
         $fields = array(
@@ -55,13 +55,21 @@ class Notifications extends Connection
         return $result;
     }
 
+    public function webNotif($notif_id, $user_id)
+    {
+    }
+
     public function add()
     {
+        $sensor_smoke   = $this->clean($this->inputs['smokereading']);
+        $sensor_heat    = $this->clean($this->inputs['heatreading']);
         $notif_title    = $this->clean($this->inputs['notif_title']);
         $notif_message  = $this->clean($this->inputs['notif_message']);
         $coordinates    = $this->clean($this->inputs['coordinates']);
 
         $form = array(
+            'sensor_smoke'  => $sensor_smoke,
+            'sensor_heat'   => $sensor_heat,
             'notif_title'   => $notif_title,
             'notif_message' => $notif_message,
             'coordinates'   => $coordinates,
@@ -91,6 +99,20 @@ class Notifications extends Connection
                     $response[] = $this->pushNotif($row['notif_title'], $message, $user_token);
                 }
             }
+
+            $result3 = $this->select('tbl_users', '*', "user_category = 'R' AND user_coordinates !=''");
+            while ($row3 = $result3->fetch_assoc()) {
+                $user_coordinates = explode(",", $row3['user_coordinates']);
+                $_lat = $user_coordinates[0] * 1;
+                $_lng = $user_coordinates[1] * 1;
+
+                if ($this->getDistance($fire_lat, $fire_lng, $_lat, $_lng, 2) == 1) {
+                    $message = "There is a fire near in your location.";
+                    $response[] = $this->pushNotif($row['notif_title'], $message, $row3['user_token']);
+                }
+            }
+
+
             $this->update($this->table, ['notif_status' => 1], "notif_id = '$row[notif_id]'");
         }
         echo json_encode($response);

@@ -60,31 +60,34 @@ $user_data = Users::dataOf($_SESSION['user']['id']);
                     <li class="nav-item">
                         <a class="nav-link active" id="pills-profile-tab" data-bs-toggle="pill" href="#last-month" role="tab" aria-controls="pills-profile" aria-selected="false">Profile</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="pills-property-tab" data-bs-toggle="pill" href="#user-property" role="tab" aria-controls="pills-setting" aria-selected="false">Properties</a>
-                    </li>
+                    <?php if ($_SESSION['user']['category'] == 'R') { ?>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-property-tab" data-bs-toggle="pill" href="#user-property" role="tab" aria-controls="pills-setting" aria-selected="false">Properties</a>
+                        </li>
+                    <?php } ?>
                 </ul>
                 <!-- Tabs -->
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="last-month" role="tabpanel" aria-labelledby="pills-profile-tab">
                         <div class="card-body">
-                            <form class="form-horizontal form-material" autocomplete="off">
+                            <form id="frm_profile" class="form-horizontal form-material" autocomplete="off">
+                                <input type="hidden" value="<?= $user_data['user_id'] ?>" name="user_id">
                                 <div class="mb-3">
                                     <label class="col-md-12">Full Name</label>
                                     <div class="col-md-12">
-                                        <input type="text" value="<?= $user_data['user_fullname'] ?>" class="form-control form-control-line" name="user_fullname" />
+                                        <input type="text" value="<?= $user_data['user_fullname'] ?>" class="form-control form-control-line" name="user_fullname" required />
                                     </div>
                                 </div>
                                 <div class="mb-3">
                                     <label class="col-md-12">Phone No</label>
                                     <div class="col-md-12">
-                                        <input type="text" value="<?= $user_data['user_mobile'] ?>" class="form-control form-control-line" name="user_mobile" />
+                                        <input type="text" value="<?= $user_data['user_mobile'] ?>" class="form-control form-control-line" name="user_mobile" required />
                                     </div>
                                 </div>
                                 <div class="mb-3">
                                     <label class="col-md-12">Address</label>
                                     <div class="col-md-12">
-                                        <input type="text" value="<?= $user_data['user_address'] ?>" class="form-control form-control-line" name="user_address" />
+                                        <input type="text" value="<?= $user_data['user_address'] ?>" class="form-control form-control-line" name="user_address" required />
                                     </div>
                                 </div>
                                 <div class="mb-3">
@@ -237,6 +240,17 @@ $user_data = Users::dataOf($_SESSION['user']['id']);
         btn_property.innerHTML = "Add";
         btn_property.style.display = "block";
 
+    });
+
+    $("#frm_profile").on("submit", function(e) {
+        e.preventDefault();
+        $.post("controller/ajax.php?q=Users&m=updateProfile", $("#frm_profile").serialize(), function(data, status) {
+            if (data == 1) {
+                success_update();
+            } else {
+                failed_query(data);
+            }
+        });
     });
 
     // Button add

@@ -24,10 +24,10 @@ $views_file = isset($_GET['q']) ?  $_GET['q'] : 'dashboard';
 
     <link href="../assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="../assets/extra-libs/datatables.net-bs4/css/responsive.dataTables.min.css" />
-    <!-- Custom CSS -->
-    <link href="../dist/css/style.min.css" rel="stylesheet" />
     <!-- container-scroller -->
     <link rel="stylesheet" href="../assets/plugins/sweet-alert/sweetalert.css">
+    <!-- Custom CSS -->
+    <link href="../dist/css/style.min.css" rel="stylesheet" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -120,12 +120,17 @@ $views_file = isset($_GET['q']) ?  $_GET['q'] : 'dashboard';
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(showPosition);
             } else {
-                x.innerHTML = "Geolocation is not supported by this browser.";
+                global_coords = "";
             }
         }
 
         function showPosition(position) {
             global_coords = position.coords.latitude + "," + position.coords.longitude;
+            $.post("controller/ajax.php?q=Users&m=updateCurrenLocation", {
+                coordinates: global_coords
+            }, function(data, status) {
+
+            });
         }
     </script>
     <style>

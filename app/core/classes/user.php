@@ -6,6 +6,30 @@ class Users extends Connection
     public $name = 'user_fullname';
     public $session = array();
 
+    public function updateCurrenLocation()
+    {
+        $coordinates = $this->clean($this->inputs['coordinates']);
+        $user_id = $_SESSION['user']['id'];
+        return $this->update($this->table, ['coordinates' => $coordinates], "user_id = '$user_id'");
+    }
+
+    public function updateProfile()
+    {
+        $user_id        = $this->clean($this->inputs['user_id']);
+        $user_fullname  = $this->clean($this->inputs['user_fullname']);
+        $user_address   = $this->clean($this->inputs['user_address']);
+        $user_mobile    = $this->clean($this->inputs['user_mobile']);
+
+        $form = array(
+            'user_id' => $user_id,
+            'user_fullname' => $user_fullname,
+            'user_address' => $user_address,
+            'user_mobile' => $user_mobile,
+        );
+
+        return $this->update($this->table, $form, "user_id = '$user_id'");
+    }
+
     public static function combo()
     {
         $self = new self;
