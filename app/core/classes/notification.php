@@ -5,7 +5,8 @@ class Notifications extends Connection
     public $pk = 'notif_id';
     public $name = 'notif_message';
 
-    private $api_key = "AAAAMMyIlI0:APA91bEq8wlsqm_gffhxQJvfT4vG0Oo-NV7xGwCtpbgYuzszSJOAnLms8dBB-xj6t1Tf9FyohA_5Gkqdl3AKKKL-e6ffHXlJXirAO0afXXX2tRsHFWXPJ0ZsOVdu0MVWY4urlvZpu0eL";
+    private $table_web = 'tbl_web_notifications';
+
     public function pushNotif($title, $message, $device_id)
     {
         //API URL of FCM
@@ -57,6 +58,11 @@ class Notifications extends Connection
 
     public function webNotif($notif_id, $user_id)
     {
+        $form = array(
+            'notif_id'  => $notif_id,
+            'user_id'   => $user_id,
+        );
+        return $this->insert($this->table_web, $form);
     }
 
     public function add()
@@ -66,6 +72,7 @@ class Notifications extends Connection
         $notif_title    = $this->clean($this->inputs['notif_title']);
         $notif_message  = $this->clean($this->inputs['notif_message']);
         $coordinates    = $this->clean($this->inputs['coordinates']);
+        $notif_address  = $this->clean($this->inputs['notif_address']);
 
         $form = array(
             'sensor_smoke'  => $sensor_smoke,
@@ -73,6 +80,7 @@ class Notifications extends Connection
             'notif_title'   => $notif_title,
             'notif_message' => $notif_message,
             'coordinates'   => $coordinates,
+            'notif_address' => $notif_address
         );
         return $this->insert($this->table, $form);
     }
@@ -97,6 +105,7 @@ class Notifications extends Connection
                     $user_token = Users::token($row2['user_id']);
                     $message = "There is a fire near in your property " . $row2['property_name'];
                     $response[] = $this->pushNotif($row['notif_title'], $message, $user_token);
+                    $this->webNotif($row['notif_id'], $row2['user_id']);
                 }
             }
 
@@ -118,6 +127,75 @@ class Notifications extends Connection
         echo json_encode($response);
     }
 
+    public function dailyAlert()
+    {
+        $response['data']['lists'] = array();
+        if ($_SESSION['user']['category'] == 'R') {
+            $result = $this->table("tbl_web_notifications AS w")
+                ->join("tbl_notifications AS n", "w.notif_id", "=", "n.notif_id")
+                ->selectRaw("coordinates", "n.date_added", "notif_address")
+                ->where("w.user_id", $_SESSION['user']['id'])
+                ->orderBy("n.date_added ASC")
+                ->get();
+        } else {
+            $result = $this->select($this->table, "*", "notif_id > 0 ORDER BY date_added ASC");
+        }
+
+        $last_time = date("Y-m-d H:i:s");
+        while ($row = $result->fetch_assoc()) {
+            $coords = explode(",", $row['coordinates']);
+            $form = [
+                'lat' => (float) $coords[0],
+                'lng' => (float) $coords[1],
+                'label' => date("h:i A", strtotime($row['date_added'])),
+                'date_time' => date("F d, Y h:i A", strtotime($row['date_added'])),
+                'address' => $row['notif_address']
+            ];
+            array_push($response['data']['lists'], $form);
+            $last_time = $row['date_added'];
+        }
+        $_SESSION['alert']['live_last_time'] = $last_time;
+        return json_encode($response);
+    }
+
+    public function liveAlert()
+    {
+        $last_time = $_SESSION['alert']['live_last_time'];
+
+        $response['data']['lists'] = array();
+        if ($_SESSION['user']['category'] == 'R') {
+            $result = $this->table("tbl_web_notifications AS w")
+                ->join("tbl_notifications AS n", "w.notif_id", "=", "n.notif_id")
+                ->selectRaw("coordinates", "n.date_added", "notif_address")
+                ->where("w.user_id", $_SESSION['user']['id'])
+                ->where("n.date_added", ">", $last_time)
+                ->orderBy("n.date_added ASC")
+                ->get();
+        } else {
+            $result = $this->select($this->table, "*", "notif_id > 0 AND date_added > '$last_time' ORDER BY date_added ASC");
+        }
+
+
+        while ($row = $result->fetch_assoc()) {
+            $coords = explode(",", $row['coordinates']);
+            $form = [
+                'lat' => (float) $coords[0],
+                'lng' => (float) $coords[1],
+                'label' => date("h:i A", strtotime($row['date_added'])),
+                'date_time' => date("F d, Y h:i A", strtotime($row['date_added'])),
+                'address' => $row['notif_address'], //$this->getAddress($coords[0], $coords[1])
+            ];
+            array_push($response['data']['lists'], $form);
+            $last_time = $row['date_added'];
+        }
+        $_SESSION['alert']['live_last_time'] = $last_time;
+        return json_encode($response['data']);
+    }
+
+    public function userAlert()
+    {
+    }
+
     public function getDistance($gpsLat, $gpsLong, $userLat, $userLong, $userRadius)
     {
         $isInsideRadius = 0;
@@ -136,5 +214,17 @@ class Notifications extends Connection
         }
 
         return $isInsideRadius;
+    }
+
+    public function getAddress($latitude, $longitude)
+    {
+        //google map api url
+        $url = "http://maps.google.com/maps/api/geocode/json?latlng=$latitude,$longitude&key=AIzaSyC232qKEVqI5x0scuj9UGEVUNdB98PiMX0&sensor=false";
+
+        // send http request
+        $geocode = file_get_contents($url);
+        $json = json_decode($geocode);
+        $address = $json->status == 'REQUEST_DENIED' ? "Bacolod City" : $json->results[0]->formatted_address;
+        return $this->clean($address);
     }
 }

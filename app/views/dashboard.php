@@ -1,3 +1,12 @@
+<style>
+    .timeline {
+        position: relative;
+        padding: 5px;
+        list-style: none;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+</style>
 <div class="row page-titles">
     <div class="col-md-5 col-12 align-self-center">
         <h3 class="text-themecolor mb-0">Dashboard</h3>
@@ -26,8 +35,16 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div style="border: 1px solid #ddd;width: 100%;padding: 0px;">
-                        <div id="map_canvas" style="height:600px;"></div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div id="dashboard_map_canvas" style="height:600px;"></div>
+                        </div>
+                        <div class="col-md-4">
+                            <div style="max-height:600px;overflow-x:hidden;">
+                                <ul class="timeline timeline-left" id="result">
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -96,73 +113,150 @@
             </div>
         </div>
     </div>
-    <div id="result"></div>
 </div>
+<style type="text/css">
+    .labels {
+        color: white;
+        background-color: red;
+        font-family: "Lucida Grande", "Arial", sans-serif;
+        font-size: 10px;
+        text-align: center;
+        width: 10px;
+        white-space: nowrap;
+    }
+</style>
 
 <script>
-    // if (typeof(EventSource) !== "undefined") {
-    //     var source = new EventSource("api/sse.php");
-    //     source.onmessage = function(event) {
-    //         document.getElementById("result").innerHTML += event.data + "<br>";
-    //     };
-    // } else {
-    //     document.getElementById("result").innerHTML = "Sorry, your browser does not support server-sent events...";
-    // }
+    if (typeof(EventSource) !== "undefined") {
+        var source = new EventSource("api/sse.php");
+        source.onmessage = function(event) {
+            var json_data = JSON.parse(event.data);
+            if (json_data.lists.length > 0) {
+                for (let listIndex = 0; listIndex < json_data.lists.length; listIndex++) {
+                    const listElem = json_data.lists[listIndex];
+                    dashboard_map_marker(listElem.lat, listElem.lng, listElem.label, listElem.address);
+                }
+                // swal("Fire Alert!", "New Fire alert is being detected!", "warning");
+
+            }
+        };
+    } else {
+        document.getElementById("result").innerHTML = "Sorry, your browser does not support server-sent events...";
+    }
     $(document).ready(function() {
-        init_map();
+        dashboard_init_map();
+        // swal({
+        //     title: 'Custom width, padding, color, background.',
+        //     width: 600,
+        //     padding: '3em',
+        //     color: '#716add',
+        //     background: '#fff url(/images/trees.png)',
+        //     backdrop: `
+        //             rgba(0,0,123,0.4)
+        //             url("../assets/images/fire-joypixels.gif")
+        //             left top
+        //             no-repeat
+        //             `
+        // })
     });
 
-    function init_map() {
+    function dashboard_map_marker(lat, lng, label, address = '') {
+        var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+
+        var icon = {
+            url: "../assets/images/fire-joypixels.gif", // url
+            scaledSize: new google.maps.Size(50, 50), // scaled size
+            // origin: new google.maps.Point(0, 0), // origin
+            // anchor: new google.maps.Point(0, 0) // anchor
+        };
+
+        marker = new google.maps.Marker({
+            icon: icon, //'http://localhost/mefa/assets/images/fire-joypixels.gif',
+            // icon: iconBase + 'parking_lot_maps.png',
+            position: new google.maps.LatLng(lat, lng),
+            map: dashboard_map,
+            draggable: false,
+            animation: google.maps.Animation.DROP,
+            // label: label,
+            // labelClass: 'labels',
+        });
+
+        // circle_radius = 15;
+        // var circle = new google.maps.Circle({
+        //     radius: circle_radius,
+        //     center: new google.maps.LatLng(lat, lng),
+        //     fillColor: '#FF0000',
+        //     fillOpacity: 1,
+        //     strokeColor: '#FF0000',
+        //     strokeOpacity: 1
+        // });
+
+        // circle.setMap(dashboard_map);
+
+        //document.getElementById("result").innerHTML += label + "<br>";
+        // const address = await getCoordinates3(lat + "," + lng);
+        var li_label = '<li class="timeline-inverted timeline-item">' +
+            '<div class="timeline-badge success">' +
+            '<img src="../assets/images/fire-joypixels.gif" alt="img" class="img-fluid">' +
+            '</div>' +
+            '<div class="timeline-panel">' +
+            '<div class="timeline-heading">' +
+            // '<h4 class="timeline-title">' + address + '</h4>' +
+            '<p>' +
+            '<small class="text-muted"><i class="fa fa-clock-o"></i> ' + label + '</small>' +
+            '</p>' +
+            '</div>' +
+            '<div class="timeline-body">' +
+            '<p>' + address + '</p>' +
+            '</div>' +
+            '</div>' +
+            '</li>';
+        $("#result").prepend(li_label);
+    }
+
+    function dashboard_init_map() {
         var property_radius = 2;
-        if (global_coords != '') {
-            var split_coords = global_coords.split(",");
-            var lat = split_coords[0] * 1;
-            var lng = split_coords[1] * 1;
-            var pos = {
-                lat: lat,
-                lng: lng
-            };
+        var coordinates = global_coords != '' ? global_coords : "10.64321246383103,122.93943335498288";
+        var split_coords = coordinates.split(",");
+        var lat = split_coords[0] * 1;
+        var lng = split_coords[1] * 1;
+        var pos = {
+            lat: lat,
+            lng: lng
+        };
 
-            // center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
-            var options = {
-                zoom: 14,
-                center: pos,
-                mapTypeId: google.maps.MapTypeId.ROADMAP,
-                styles: [{
-                    featureType: "poi",
-                    elementType: "labels",
-                    stylers: [{
-                        visibility: "off"
-                    }]
-
+        // center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+        var options = {
+            zoom: 14,
+            center: pos,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            styles: [{
+                featureType: "poi",
+                elementType: "labels",
+                stylers: [{
+                    visibility: "off"
                 }]
-            };
 
-            map = new google.maps.Map(document.getElementById("map_canvas"), options);
+            }]
+        };
 
-            var marker;
-            marker = new google.maps.Marker({
-                position: pos, //new google.maps.LatLng(lat, long),
-                map: map,
-                draggable: true,
-                animation: google.maps.Animation.DROP,
-                label: "9 AM"
-            });
+        dashboard_map = new google.maps.Map(document.getElementById("dashboard_map_canvas"), options);
+        var marker;
 
-            circle_radius = property_radius * 1000;
-            var circle = new google.maps.Circle({
-                radius: circle_radius,
-                center: pos, //new google.maps.LatLng(lat, long),
-                fillColor: '#FF0000',
-                fillOpacity: 0.2,
-                strokeColor: '#FF0000',
-                strokeOpacity: 0.6
-            });
+        $.post("controller/ajax.php?q=Notifications&m=dailyAlert", {}, function(data, status) {
 
-            circle.setMap(map);
-        }
+            var response = JSON.parse(data);
+            for (let mapIndex = 0; mapIndex < response.data.lists.length; mapIndex++) {
+                const mapElem = response.data.lists[mapIndex];
+
+                dashboard_map_marker(mapElem.lat, mapElem.lng, mapElem.label, mapElem.address);
+            }
+
+        });
     }
 </script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC232qKEVqI5x0scuj9UGEVUNdB98PiMX0"></script>
 <!--This page JavaScript -->
 <!-- chartist chart -->
 <script src="../assets/libs/apexcharts/dist/apexcharts.min.js"></script>
@@ -275,5 +369,3 @@
         chart_line_overview.render();
     });
 </script>
-
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC232qKEVqI5x0scuj9UGEVUNdB98PiMX0&callback=init_map"></script>

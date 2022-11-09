@@ -58,8 +58,8 @@ $property_data = Properties::dataOf($_GET['property_id']);
     </div>
 </div>
 
-<script src=" https://demos.wrappixel.com/premium-admin-templates/bootstrap/materialpro-bootstrap/package/assets/libs/gmaps/gmaps.min.js">
-</script>
+<!-- <script src=" https://demos.wrappixel.com/premium-admin-templates/bootstrap/materialpro-bootstrap/package/assets/libs/gmaps/gmaps.min.js">
+</script> -->
 <script type="text/javascript">
     var property_name = $("#property_name").val();
     var zoom = 14;

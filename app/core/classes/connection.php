@@ -220,6 +220,7 @@ class Connection
     public $select2 = array();
     public $where = array();
     public $groupBy = '';
+    public $orderBy = '';
 
     public function table($table)
     {
@@ -254,10 +255,16 @@ class Connection
         return $this;
     }
 
+    public function orderBy($column)
+    {
+        $this->orderBy = "ORDER BY $column";
+        return $this;
+    }
+
     public function get()
     {
         $where = count($this->where) > 0 ? "WHERE " . implode(' AND ', $this->where) : '';
-        $sql = "SELECT " . (count($this->select2) > 0 ? implode(",", $this->select2) : '*') . " FROM $this->tablename " . implode(' ', $this->join) . " $where $this->groupBy";
+        $sql = "SELECT " . (count($this->select2) > 0 ? implode(",", $this->select2) : '*') . " FROM $this->tablename " . implode(' ', $this->join) . " $where $this->groupBy $this->orderBy";
 
         return $this->mysqli->query($sql);
     }
