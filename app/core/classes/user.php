@@ -6,6 +6,26 @@ class Users extends Connection
     public $name = 'user_fullname';
     public $session = array();
 
+    public function datatable()
+    {
+        $response['data'] = [];
+        $result = $this->select($this->table);
+        $count = 1;
+        while ($row = $result->fetch_assoc()) {
+            array_push($response['data'], [
+                'count' => $count++,
+                'user_id' => $row['user_id'],
+                'user_fullname' => $row['user_fullname'],
+                'user_address' => $row['user_address'],
+                'user_location' => $row['user_location'],
+                'user_category' => $row['user_category'],
+                'user_mobile' => $row['user_mobile'],
+                'date_added' => date("F d, Y", strtotime($row['date_added'])),
+            ]);
+        }
+
+        return json_encode($response);
+    }
     public function updateCurrenLocation()
     {
         $coordinates = $this->clean($this->inputs['coordinates']);

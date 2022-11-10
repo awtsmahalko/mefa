@@ -24,75 +24,31 @@
         <div class="col-12">
             <div class="card">
                 <div class="border-bottom title-part-padding">
-                    <h4 class="card-title mb-0">Manage Users Data</h4>
+                    <div class="row col-md-12">
+                        <div class="col-md-9">
+                            <h4 class="card-title mb-0">Manage Users</h4>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-primary rounded-pill pull-right" id="add-department" style="float: right;"><i data-feather="plus" class="feather-sm fill-white me-0 me-md-1"></i> <span class="font-weight-medium fs-3">Add User</span></button>
+                            <!-- <a href="javascript:void(0)" class="nav-link btn-primary rounded-pill d-flex align-items-center px-3" id="add-department">
+                                <i data-feather="plus" class="feather-sm fill-white me-0 me-md-1"></i><span class="d-none d-md-block font-weight-medium fs-3">Add Department</span></a>
+                            <a href="javascript:void(0)" class="nav-link btn-primary rounded-pill d-flex align-items-center px-3" id="add-department">
+                                <i data-feather="plus" class="feather-sm fill-white me-0 me-md-1"></i><span class="d-none d-md-block font-weight-medium fs-3">Add Department</span></a> -->
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="zero_config" class="table table-striped table-bordered">
+                        <table id="dt_users" class="table table-striped table-bordered" width="100%">
                             <thead>
                                 <tr>
                                     <th>#</th>
                                     <th>Name</th>
                                     <th>Address</th>
-                                    <th>Age</th>
+                                    <th>Date Added</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <img src="../assets/images/users/default-user.jpeg" class="rounded-circle" alt="user" width="45">
-                                            <div class="ms-3">
-                                                <div class="user-meta-info">
-                                                    <h6 class="user-name mb-0 font-weight-medium" data-name="Olivia Allen">
-                                                        Onir C. Arton
-                                                    </h6>
-                                                    <small class="user-work text-muted" data-occupation="Web Designer">Resident</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Bacolod City</td>
-                                    <td>27</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <img src="../assets/images/users/default-user.jpeg" class="rounded-circle" alt="user" width="45">
-                                            <div class="ms-3">
-                                                <div class="user-meta-info">
-                                                    <h6 class="user-name mb-0 font-weight-medium" data-name="Olivia Allen">
-                                                        Ed U. Ard
-                                                    </h6>
-                                                    <small class="user-work text-muted" data-occupation="Web Designer">Fire Officer</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Bacolod City</td>
-                                    <td>24</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <img src="../assets/images/users/default-user.jpeg" class="rounded-circle" alt="user" width="45">
-                                            <div class="ms-3">
-                                                <div class="user-meta-info">
-                                                    <h6 class="user-name mb-0 font-weight-medium" data-name="Olivia Allen">
-                                                        Admin Istrator
-                                                    </h6>
-                                                    <small class="user-work text-muted" data-occupation="Web Designer">Administrator</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Bacolod City</td>
-                                    <td>24</td>
-                                </tr>
-                            </tbody>
+                            <tbody></tbody>
                         </table>
                     </div>
                 </div>
@@ -107,4 +63,50 @@
 <!--This page plugins -->
 <script src="../assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="../assets/extra-libs/datatables.net-bs4/js/dataTables.responsive.min.js"></script>
-<script src="../dist/js/pages/datatable/datatable-basic.init.js"></script>
+<script>
+    showUsers();
+
+    function showUsers() {
+        $("#dt_users").DataTable().destroy();
+        $('#dt_users').DataTable({
+            "processing": true,
+            "ajax": {
+                "type": "POST",
+                "url": "controller/ajax.php?q=Users&m=datatable",
+                "dataSrc": "data",
+            },
+            "columns": [{
+                    "data": "count"
+                },
+                {
+                    "render": function(data, type, row) {
+                        return '<div class="d-flex align-items-center">' +
+                            '<img src="../assets/images/users/default-user.jpeg" class="rounded-circle" alt="user" width="45">' +
+                            '<div class="ms-3">' +
+                            '<div class="user-meta-info">' +
+                            '<h6 class="user-name mb-0 font-weight-medium">' + row.user_fullname + '</h6>' +
+                            '<small class="user-work text-muted">' + (row.user_category == 'R' ? 'Resident' : row.user_category == 'F' ? 'Fire Officer' : 'Admin') + '</small>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>';
+                    },
+                },
+                {
+                    "render": function(data, type, row) {
+                        return '<div class="d-flex align-items-center">' +
+                            '<button class="btn btn-success rounded-pill" onclick="showLocation(' + row.user_id + ')"><span class="fa fa-map-marker"></span></button>' +
+                            '<div class="ms-3">' +
+                            '<div class="user-meta-info">' +
+                            '<h6 class="user-name mb-0 font-weight-medium">' + row.user_address + '</h6>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>';
+                    },
+                },
+                {
+                    "data": "date_added"
+                }
+            ]
+        });
+    }
+</script>

@@ -29,7 +29,7 @@
                             <h4 class="card-title mb-0">Manage Fire Departments</h4>
                         </div>
                         <div class="col-md-3">
-                            <button class="btn btn-primary rounded-pill" id="add-department"><i data-feather="plus" class="feather-sm fill-white me-0 me-md-1"></i> <span class="font-weight-medium fs-3">Add Department</span></button>
+                            <button class="btn btn-primary rounded-pill pull-right" id="add-department" style="float: right;"><i data-feather="plus" class="feather-sm fill-white me-0 me-md-1"></i> <span class="font-weight-medium fs-3">Add Department</span></button>
                             <!-- <a href="javascript:void(0)" class="nav-link btn-primary rounded-pill d-flex align-items-center px-3" id="add-department">
                                 <i data-feather="plus" class="feather-sm fill-white me-0 me-md-1"></i><span class="d-none d-md-block font-weight-medium fs-3">Add Department</span></a>
                             <a href="javascript:void(0)" class="nav-link btn-primary rounded-pill d-flex align-items-center px-3" id="add-department">
@@ -74,6 +74,7 @@
                     <div class="notes-box">
                         <div class="notes-content">
                             <form action="javascript:void(0);" id="addnotesmodalTitle">
+                                <input type="hidden" id="department_id" />
                                 <div class="row">
                                     <div class="col-md-12 mb-3">
                                         <div class="department-name">
@@ -85,7 +86,7 @@
                                     <div class="col-md-12 mb-3">
                                         <div class="department-coordinates">
                                             <label>Coordinates</label>
-                                            <input type="text" id="department-has-coordinates" class="form-control" autocomplete="off" placeholder="100.01215,121.021" />
+                                            <input type="text" id="department-has-coordinates" class="form-control" autocomplete="off" placeholder="100.01215,121.021" readonly />
                                         </div>
                                     </div>
 
@@ -134,7 +135,7 @@
                 },
                 {
                     "render": function(data, type, row, meta) {
-                        return '<button class="btn btn-info rounded-pill"><span class="fa fa-edit"></span></button> <button class="btn btn-danger rounded-pill"><span class="fa fa-trash"></span></button>';
+                        return '<button class="btn btn-info rounded-pill" onclick=\'editDepartment("' + row.department_id + '","' + row.department_name + '","' + row.address + '","' + row.coordinates + '")\'><span class="fa fa-edit"></span></button> <button class="btn btn-danger rounded-pill"><span class="fa fa-trash"></span></button>';
                     },
                 },
                 {
@@ -148,7 +149,7 @@
                 },
                 {
                     "render": function(data, type, row, meta) {
-                        return '<button class="btn btn-success rounded-pill"><span class="fa fa-map-marker"></span></button>';
+                        return '<button class="btn btn-success rounded-pill" onclick="showLocation(' + row.department_id + ')"><span class="fa fa-map-marker"></span></button>';
                     },
                 },
                 {
@@ -157,10 +158,32 @@
             ]
         });
     }
+
+    function editDepartment(id, name, address, coordinates) {
+        var btn_department = document.getElementById("btn-add-department");
+        btn_department.innerHTML = "Edit";
+
+        proprtyAssign(id, name, address, coordinates);
+        $("#adddepartmentmodal").modal("show");
+
+    }
+
+    function proprtyAssign(id = 0, name = "", address = "", coordinates = global_coords) {
+        document.getElementById("department_id").value = id;
+        document.getElementById("department-has-name").value = name;
+        document.getElementById("department-has-coordinates").value = coordinates;
+        document.getElementById("department-has-address").value = address;
+    }
+
+    function showLocation(department_id) {
+        window.location = "index.php?q=department_location&department_id=" + department_id;
+    }
+
     $("#add-department").on("click", function(event) {
         $("#adddepartmentmodal").modal("show");
         $("#btn-n-save").hide();
         $("#btn-add-department").show();
+        proprtyAssign();
     });
 
     // Button add
@@ -168,11 +191,13 @@
         event.preventDefault();
         /* Act on the event */
 
+        var $_departmentId = document.getElementById("department_id").value;
         var $_departmentName = document.getElementById("department-has-name").value;
         var $_departmentCoordinates = document.getElementById("department-has-coordinates").value;
         var $_departmentAddress = document.getElementById("department-has-address").value;
 
         $.post("controller/ajax.php?q=Departments&m=add", {
+            department_id: $_departmentId,
             department_name: $_departmentName,
             department_coordinates: $_departmentCoordinates,
             department_address: $_departmentAddress,
