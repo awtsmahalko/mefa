@@ -73,8 +73,8 @@ $views_file = isset($_GET['q']) ?  $_GET['q'] : 'dashboard';
             swal("Cannot proceed!", "Entry already exists!", "warning");
         }
 
-        function amount_is_greater() {
-            swal("Cannot proceed!", "Amount is greater than balance!", "warning");
+        function username_exists() {
+            swal("Cannot proceed!", "Username already taken!", "warning");
         }
 
         function release_first() {
@@ -123,11 +123,24 @@ $views_file = isset($_GET['q']) ?  $_GET['q'] : 'dashboard';
 
         function showPosition(position) {
             global_coords = position.coords.latitude + "," + position.coords.longitude;
+
+
             $.post("controller/ajax.php?q=Users&m=updateCurrenLocation", {
                 coordinates: global_coords
             }, function(data, status) {
 
             });
+            // var google_map_pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            // var google_maps_geocoder = new google.maps.Geocoder();
+            // google_maps_geocoder.geocode({
+            //         'latLng': google_map_pos
+            //     },
+            //     function(results, status) {
+            //         if (status == google.maps.GeocoderStatus.OK && results[0]) {
+            //             console.log(results[0].formatted_address);
+            //         }
+            //     }
+            // );
         }
     </script>
     <style>

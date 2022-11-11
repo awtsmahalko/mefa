@@ -160,26 +160,59 @@
         // })
     });
 
-    function dashboard_map_marker(lat, lng, label, address = '') {
+    function dashboard_map_marker(lat, lng, label, address = '', is_location = 0, radius = 2) {
         var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-
+        var pos = {
+            lat: lat,
+            lng: lng
+        };
         var icon = {
             url: "../assets/images/fire-joypixels.gif", // url
-            scaledSize: new google.maps.Size(50, 50), // scaled size
-            // origin: new google.maps.Point(0, 0), // origin
-            // anchor: new google.maps.Point(0, 0) // anchor
+            scaledSize: new google.maps.Size(25, 25), // scaled size
         };
-
-        marker = new google.maps.Marker({
-            icon: icon, //'http://localhost/mefa/assets/images/fire-joypixels.gif',
-            // icon: iconBase + 'parking_lot_maps.png',
-            position: new google.maps.LatLng(lat, lng),
+        var marker_option = {
+            position: pos,
             map: dashboard_map,
             draggable: false,
             animation: google.maps.Animation.DROP,
-            // label: label,
-            // labelClass: 'labels',
-        });
+        };
+
+        if (is_location == 1) {
+            marker_option['label'] = label;
+            marker = new google.maps.Marker(marker_option);
+
+            circle_radius = radius * 1000;
+            var circle = new google.maps.Circle({
+                radius: circle_radius,
+                center: pos, //new google.maps.LatLng(lat, long),
+                fillColor: '#FF0000',
+                fillOpacity: 0.2,
+                strokeColor: '#FF0000',
+                strokeOpacity: 0.6
+            });
+            circle.setMap(dashboard_map);
+        } else {
+            marker_option['icon'] = icon;
+            marker = new google.maps.Marker(marker_option);
+            var li_label = '<li class="timeline-inverted timeline-item">' +
+                '<div class="timeline-badge success">' +
+                '<img src="../assets/images/fire-joypixels.gif" alt="img" class="img-fluid">' +
+                '</div>' +
+                '<div class="timeline-panel">' +
+                '<div class="timeline-heading">' +
+                // '<h4 class="timeline-title">' + address + '</h4>' +
+                '<p>' +
+                '<small class="text-muted"><i class="fa fa-clock-o"></i> ' + label + '</small>' +
+                '</p>' +
+                '</div>' +
+                '<div class="timeline-body">' +
+                '<p>' + address + '</p>' +
+                '</div>' +
+                '</div>' +
+                '</li>';
+            $("#result").prepend(li_label);
+        }
+
 
         // circle_radius = 15;
         // var circle = new google.maps.Circle({
@@ -195,23 +228,20 @@
 
         //document.getElementById("result").innerHTML += label + "<br>";
         // const address = await getCoordinates3(lat + "," + lng);
-        var li_label = '<li class="timeline-inverted timeline-item">' +
-            '<div class="timeline-badge success">' +
-            '<img src="../assets/images/fire-joypixels.gif" alt="img" class="img-fluid">' +
-            '</div>' +
-            '<div class="timeline-panel">' +
-            '<div class="timeline-heading">' +
-            // '<h4 class="timeline-title">' + address + '</h4>' +
-            '<p>' +
-            '<small class="text-muted"><i class="fa fa-clock-o"></i> ' + label + '</small>' +
-            '</p>' +
-            '</div>' +
-            '<div class="timeline-body">' +
-            '<p>' + address + '</p>' +
-            '</div>' +
-            '</div>' +
-            '</li>';
-        $("#result").prepend(li_label);
+    }
+
+    function location_marker() {
+
+        $.post("controller/ajax.php?q=Users&m=rnPcoordinates", {}, function(data, status) {
+
+            var response = JSON.parse(data);
+            for (let mapIndex = 0; mapIndex < response.length; mapIndex++) {
+                const mapElem = response[mapIndex];
+
+                dashboard_map_marker(mapElem.lat, mapElem.lng, mapElem.marker, 'mapElem.address', 1, mapElem.radius);
+            }
+
+        });
     }
 
     function dashboard_init_map() {
@@ -241,6 +271,7 @@
         };
 
         dashboard_map = new google.maps.Map(document.getElementById("dashboard_map_canvas"), options);
+        location_marker();
         var marker;
 
         $.post("controller/ajax.php?q=Notifications&m=dailyAlert", {}, function(data, status) {

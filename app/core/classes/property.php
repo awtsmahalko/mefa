@@ -58,6 +58,7 @@ class Properties extends Connection
                 'property_id'   => $row['property_id'],
                 'property_code' => $row['property_code'],
                 'property_name' => $row['property_name'],
+                'property_radius' => $row['property_radius'],
                 'holder'        => Users::name($row['user_id']),
                 'address'       => $row['property_address'],
                 'coordinates'   => $row['property_coordinates'],

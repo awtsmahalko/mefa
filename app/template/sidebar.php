@@ -46,18 +46,6 @@
                         <i class="mdi mdi-dots-horizontal"></i>
                         <span class="hide-menu">MASTER DATA</span>
                     </li>
-                    <!-- <li class="sidebar-item">
-                        <a class="sidebar-link waves-effect waves-dark" href="index.php?q=properties">
-                            <i class="mdi mdi-home-modern"></i>
-                            <span class="hide-menu">PROPERTIES </span>
-                        </a>
-                    </li> -->
-                    <!-- <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark" href="index.php?q=properties_location&property_id=2">
-                        <i class="mdi mdi-home-modern"></i>
-                        <span class="hide-menu">PROPERTIES </span>
-                    </a>
-                </li> -->
                     <li class="sidebar-item">
                         <a class="sidebar-link waves-effect waves-dark" href="index.php?q=department">
                             <i class="mdi mdi-office"></i>
@@ -94,6 +82,18 @@
                         </a>
                     </li>
 
+                <?php } ?>
+                <?php if ($_SESSION['user']['category'] == 'F') { ?>
+                    <li class="nav-small-cap">
+                        <i class="mdi mdi-dots-horizontal"></i>
+                        <span class="hide-menu">MASTER DATA</span>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark" href="index.php?q=post">
+                            <i class="mdi mdi-content-paste"></i>
+                            <span class="hide-menu">POSTS </span>
+                        </a>
+                    </li>
                 <?php } ?>
             </ul>
         </nav>

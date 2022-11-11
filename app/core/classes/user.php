@@ -6,6 +6,28 @@ class Users extends Connection
     public $name = 'user_fullname';
     public $session = array();
 
+    public function addFireOfficer()
+    {
+        $username = $this->clean($this->inputs['username']);
+        $fullname = $this->clean($this->inputs['user_fullname']);
+        $department_id = $this->clean($this->inputs['department_id']);
+
+        $fetch = $this->select($this->table, "user_id", "username = '$username'");
+        if ($fetch->num_rows > 0) {
+            return 2;
+        } else {
+            $form = array(
+                'username'      => $username,
+                'password'      => md5($this->inputs['password']),
+                'department_id' => $department_id,
+                'user_fullname' => $fullname,
+                'user_address'  => "",
+                'user_category' => 'F'
+            );
+            return $this->insert($this->table, $form);
+        }
+    }
+
     public function datatable()
     {
         $response['data'] = [];
@@ -17,20 +39,57 @@ class Users extends Connection
                 'user_id' => $row['user_id'],
                 'user_fullname' => $row['user_fullname'],
                 'user_address' => $row['user_address'],
-                'user_location' => $row['user_location'],
+                'user_resident_coordinates' => $row['user_resident_coordinates'],
                 'user_category' => $row['user_category'],
                 'user_mobile' => $row['user_mobile'],
+                'department' => Departments::dataOf($row['department_id']),
                 'date_added' => date("F d, Y", strtotime($row['date_added'])),
             ]);
         }
 
         return json_encode($response);
     }
+
     public function updateCurrenLocation()
     {
         $coordinates = $this->clean($this->inputs['coordinates']);
         $user_id = $_SESSION['user']['id'];
         return $this->update($this->table, ['coordinates' => $coordinates], "user_id = '$user_id'");
+    }
+
+    public function updateResidentCoordinates()
+    {
+        $coordinates = $this->clean($this->inputs['user_resident_coordinates']);
+        $user_id = $_SESSION['user']['id'];
+        return $this->update($this->table, ['user_resident_coordinates' => $coordinates], "user_id = '$user_id'");
+    }
+
+    public function rnPcoordinates()
+    {
+        $response = array();
+        if ($_SESSION['user']['category'] == 'R') {
+            $data_ = $this->dataOf($_SESSION['user']['id']);
+            $explode = explode(",", $data_['user_resident_coordinates']);
+            array_push($response, [
+                'lat' => (float) $explode[0],
+                'lng' => (float) $explode[1],
+                'marker' => "Resident",
+                'radius' => (float) $data_['user_radius'],
+            ]);
+
+            $Property = new Properties();
+            $dt = json_decode($Property->datatable());
+            foreach ($dt->data as $row) {
+                $explode = explode(",", $row->coordinates);
+                array_push($response, [
+                    'lat' => (float) $explode[0],
+                    'lng' => (float) $explode[1],
+                    'marker' => $row->property_name,
+                    'radius' => (float) $row->property_radius,
+                ]);
+            }
+        }
+        return json_encode($response);
     }
 
     public function updateProfile()

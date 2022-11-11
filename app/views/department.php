@@ -47,7 +47,6 @@
                                     <th>Code</th>
                                     <th>Name</th>
                                     <th>Address</th>
-                                    <th>Map</th>
                                     <th>Date Added</th>
                                 </tr>
                             </thead>
@@ -145,11 +144,15 @@
                     "data": "department_name"
                 },
                 {
-                    "data": "address"
-                },
-                {
                     "render": function(data, type, row, meta) {
-                        return '<button class="btn btn-success rounded-pill" onclick="showLocation(' + row.department_id + ')"><span class="fa fa-map-marker"></span></button>';
+                        return '<div class="d-flex align-items-center">' +
+                            '<button class="btn btn-success rounded-pill" onclick="showLocation(' + row.department_id + ')"><span class="fa fa-map-marker"></span></button>' +
+                            '<div class="ms-3">' +
+                            '<div class="user-meta-info">' +
+                            '<h6 class="user-name mb-0 font-weight-medium">' + row.address + '</h6>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>';
                     },
                 },
                 {

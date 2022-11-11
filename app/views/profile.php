@@ -34,21 +34,24 @@ $user_data = Users::dataOf($_SESSION['user']['id']);
                     <center class="mt-4">
                         <img src="../assets/images/users/default-user.jpeg" class="rounded-circle" width="150" height="150" />
                         <h4 class="card-title mt-2"><?= $_SESSION['user']['name'] ?></h4>
-                        <h6 class="card-subtitle"><?= $_SESSION['user']['category'] == 'R' ? "Resident" : "Admin"; ?></h6>
+                        <h6 class="card-subtitle"><?= $_SESSION['user']['category'] == 'R' ? "Resident" : ($_SESSION['user']['category'] == 'F' ? 'Fire Officer' : "Admin"); ?></h6>
                     </center>
                 </div>
-                <div>
-                    <hr />
-                </div>
-                <div class="card-body">
-                    <small class="text-muted pt-4 db">Username</small>
-                    <h6><?= $user_data['username'] ?></h6>
-                    <small class="text-muted pt-4 db">Address</small>
-                    <h6><?= $user_data['user_address'] ?></h6>
-                    <div class="map-box">
-                        <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d470029.1604841957!2d72.29955005258641!3d23.019996818380896!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e848aba5bd449%3A0x4fcedd11614f6516!2sAhmedabad%2C+Gujarat!5e0!3m2!1sen!2sin!4v1493204785508" width="100%" height="150" frameborder="0" style="border: 0" allowfullscreen></iframe> -->
+                <?php if ($_SESSION['user']['category'] == 'R') { ?>
+                    <div>
+                        <hr />
                     </div>
-                </div>
+                    <div class="card-body">
+                        <small class="text-muted pt-2 db">Address</small>
+                        <h6><?= $user_data['user_address'] ?></h6>
+                        <div class="map-box">
+                            <iframe src="https://www.google.com/maps/embed/v1/view?key=AIzaSyC232qKEVqI5x0scuj9UGEVUNdB98PiMX0&center=<?= $user_data['user_resident_coordinates'] ?>&zoom=18&maptype=satellite" width="100%" height="150" frameborder="0" style="border: 0" allowfullscreen></iframe>
+                        </div>
+                        <button class="btn btn-success btn-block" onclick="showResident(<?= $user_data['user_id'] ?>)" type="button">
+                            <span class="fa fa-map-marker"></span> Change Resident Location
+                        </button>
+                    </div>
+                <?php } ?>
             </div>
         </div>
         <!-- Column -->
@@ -65,6 +68,9 @@ $user_data = Users::dataOf($_SESSION['user']['id']);
                             <a class="nav-link" id="pills-property-tab" data-bs-toggle="pill" href="#user-property" role="tab" aria-controls="pills-setting" aria-selected="false">Properties</a>
                         </li>
                     <?php } ?>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-settings-tab" data-bs-toggle="pill" href="#account-settings" role="tab" aria-controls="pills-settings" aria-selected="false">Account Settings</a>
+                    </li>
                 </ul>
                 <!-- Tabs -->
                 <div class="tab-content" id="pills-tabContent">
@@ -119,7 +125,6 @@ $user_data = Users::dataOf($_SESSION['user']['id']);
                                                 <th></th>
                                                 <th>Name</th>
                                                 <th>Address</th>
-                                                <th>Map</th>
                                                 <th>Date Added</th>
                                             </tr>
                                         </thead>
@@ -128,6 +133,38 @@ $user_data = Users::dataOf($_SESSION['user']['id']);
                                     </table>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="account-settings" role="tabpanel" aria-labelledby="pills-settings-tab">
+                        <div class="card-body">
+                            <form id="frm_settings" class="form-horizontal form-material" autocomplete="off">
+                                <input type="hidden" value="<?= $user_data['user_id'] ?>" name="user_id">
+                                <div class="mb-3">
+                                    <label class="col-md-12">Username</label>
+                                    <div class="col-md-12">
+                                        <input type="text" value="<?= $user_data['username'] ?>" class="form-control form-control-line" name="user_fullname" required />
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="col-md-12">Password</label>
+                                    <div class="col-md-12">
+                                        <input type="password" class="form-control form-control-line" name="password" required />
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="col-md-12">Retype Password</label>
+                                    <div class="col-md-12">
+                                        <input type="password" class="form-control form-control-line" name="password2" required />
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="col-sm-12">
+                                        <button class="btn btn-success" type="submit">
+                                            Update Account
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -218,11 +255,15 @@ $user_data = Users::dataOf($_SESSION['user']['id']);
                     "data": "property_name"
                 },
                 {
-                    "data": "address"
-                },
-                {
                     "render": function(data, type, row, meta) {
-                        return '<button class="btn btn-success rounded-pill" onclick="showLocation(' + row.property_id + ')"><span class="fa fa-map-marker"></span></button>';
+                        return '<div class="d-flex align-items-center">' +
+                            '<button class="btn btn-success rounded-pill" onclick="showLocation(' + row.property_id + ')"><span class="fa fa-map-marker"></span></button>' +
+                            '<div class="ms-3">' +
+                            '<div class="user-meta-info">' +
+                            '<h6 class="user-name mb-0 font-weight-medium">' + row.address + '</h6>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>';
                     },
                 },
                 {
@@ -299,6 +340,9 @@ $user_data = Users::dataOf($_SESSION['user']['id']);
         document.getElementById("property-has-address").value = address;
     }
 
+    function showResident(user_id) {
+        window.location = "index.php?q=resident_location&user_id=" + user_id;
+    }
 
     function showLocation(property_id) {
         window.location = "index.php?q=properties_location&property_id=" + property_id;

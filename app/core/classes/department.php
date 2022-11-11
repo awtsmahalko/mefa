@@ -66,6 +66,19 @@ class Departments extends Connection
 
         return json_encode($response);
     }
+
+    public static function option()
+    {
+        $self = new self;
+        $option = "";
+        $datatable = json_decode($self->datatable());
+        $loop_options = $datatable->data;
+        foreach ($loop_options as $row) {
+            $option .= "<option value='" . $row->department_id . "'> " . $row->department_name . " </option>";
+        }
+        return $option;
+    }
+
     public static function dataOf($primary_id, $field = '*')
     {
         $self = new self;
