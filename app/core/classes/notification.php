@@ -104,23 +104,23 @@ class Notifications extends Connection
                 if ($this->getDistance($fire_lat, $fire_lng, $_lat, $_lng, $property_radius) == 1) {
                     $user_token = Users::token($row2['user_id']);
                     $message = "There is a fire near in your property " . $row2['property_name'];
-                    $response[] = $message;
                     $response[] = $this->pushNotif($row['notif_title'], $message, $user_token);
                     $this->webNotif($row['notif_id'], $row2['user_id']);
                 }
             }
 
-            // $result3 = $this->select('tbl_users', '*', "user_category = 'R' AND user_coordinates !=''");
-            // while ($row3 = $result3->fetch_assoc()) {
-            //     $user_coordinates = explode(",", $row3['user_coordinates']);
-            //     $_lat = $user_coordinates[0] * 1;
-            //     $_lng = $user_coordinates[1] * 1;
+            $result3 = $this->select('tbl_users', '*', "user_category = 'R' AND user_resident_coordinates !=''");
+            while ($row3 = $result3->fetch_assoc()) {
+                $user_coordinates = explode(",", $row3['user_resident_coordinates']);
+                $_lat = $user_coordinates[0] * 1;
+                $_lng = $user_coordinates[1] * 1;
+                $resident_radius = $row2['user_radius'] * 1;
 
-            //     if ($this->getDistance($fire_lat, $fire_lng, $_lat, $_lng, 2) == 1) {
-            //         $message = "There is a fire near in your location.";
-            //         $response[] = $this->pushNotif($row['notif_title'], $message, $row3['user_token']);
-            //     }
-            // }
+                if ($this->getDistance($fire_lat, $fire_lng, $_lat, $_lng, $resident_radius) == 1) {
+                    $message = "There is a fire near in your location.";
+                    $response[] = $this->pushNotif($row['notif_title'], $message, $row3['user_token']);
+                }
+            }
 
 
             $this->update($this->table, ['notif_status' => 1], "notif_id = '$row[notif_id]'");
