@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.5-10.1.21-MariaDB)
 # Database: mefa_db
-# Generation Time: 2022-12-13 06:44:34 +0000
+# Generation Time: 2022-12-13 08:38:12 +0000
 # ************************************************************
 
 
@@ -30,6 +30,7 @@ CREATE TABLE `tbl_departments` (
   `department_code` varchar(5) NOT NULL DEFAULT '',
   `department_name` varchar(150) NOT NULL DEFAULT '',
   `department_coordinates` text NOT NULL,
+  `department_radius` decimal(12,2) NOT NULL DEFAULT '5.00',
   `department_address` varchar(250) NOT NULL DEFAULT '',
   `user_id` int(11) NOT NULL,
   `date_added` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -40,10 +41,10 @@ CREATE TABLE `tbl_departments` (
 LOCK TABLES `tbl_departments` WRITE;
 /*!40000 ALTER TABLE `tbl_departments` DISABLE KEYS */;
 
-INSERT INTO `tbl_departments` (`department_id`, `department_code`, `department_name`, `department_coordinates`, `department_address`, `user_id`, `date_added`, `date_updated`)
+INSERT INTO `tbl_departments` (`department_id`, `department_code`, `department_name`, `department_coordinates`, `department_radius`, `department_address`, `user_id`, `date_added`, `date_updated`)
 VALUES
-	(1,'QMna8','Fire Officer','100.234','sadasd',0,'2022-07-19 10:07:00','0000-00-00 00:00:00'),
-	(2,'xSEP7','fgh','fgh','fgh',0,'2022-07-19 10:17:03','0000-00-00 00:00:00');
+	(1,'QMna8','Fire Officer','10.741399542762423,122.99976570888673',5.00,'sadasd',0,'2022-07-19 10:07:00','2022-12-13 16:13:04'),
+	(2,'xSEP7','fgh','10.66077239247037,123.08456642910157',5.00,'fgh',0,'2022-07-19 10:17:03','2022-12-13 16:12:51');
 
 /*!40000 ALTER TABLE `tbl_departments` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -64,33 +65,40 @@ CREATE TABLE `tbl_notifications` (
   `date_updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `sensor_smoke` float NOT NULL DEFAULT '0',
   `sensor_heat` float NOT NULL DEFAULT '0',
+  `notif_address` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`notif_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `tbl_notifications` WRITE;
 /*!40000 ALTER TABLE `tbl_notifications` DISABLE KEYS */;
 
-INSERT INTO `tbl_notifications` (`notif_id`, `notif_title`, `notif_message`, `notif_status`, `coordinates`, `date_added`, `date_updated`, `sensor_smoke`, `sensor_heat`)
+INSERT INTO `tbl_notifications` (`notif_id`, `notif_title`, `notif_message`, `notif_status`, `coordinates`, `date_added`, `date_updated`, `sensor_smoke`, `sensor_heat`, `notif_address`)
 VALUES
-	(1,'Fire Alert','There is a fire in your area',1,'10.6826927,122.9438081','2022-11-07 11:53:31','2022-11-07 12:21:12',0,0),
-	(2,'Fire Alert','There is a fire in your area',1,'10.6826927,122.9438081','2022-11-07 12:15:21','2022-11-07 12:21:12',0,0),
-	(3,'Fire Alert','There is a fire in your area',1,'10.6826927,122.9438081','2022-11-07 12:24:41','2022-11-07 12:24:44',0,0),
-	(4,'Fire Alert','There is a fire in your area',1,'10.6826927,122.9438081','2022-11-07 12:25:02','2022-11-07 12:25:06',0,0),
-	(5,'Fire Alert','There is a fire in your area',1,'10.6826927,122.9438081','2022-11-07 12:25:02','2022-11-07 12:25:06',0,0),
-	(6,'Fire Alert','There is a fire in your area',1,'10.6826927,122.9438081','2022-11-07 12:25:03','2022-11-07 12:25:06',0,0),
-	(7,'Fire Alert','There is a fire in your area',1,'10.6826927,122.9438081','2022-11-07 12:25:03','2022-11-07 12:25:06',0,0),
-	(8,'Fire Alert','There is a fire in your area',1,'10.6826927,122.9438081','2022-11-07 12:26:47','2022-11-07 12:26:49',0,0),
-	(9,'Fire Alert','There is a fire in your area',1,'10.63629241849944,122.9585436492834','2022-11-07 12:27:41','2022-11-07 12:27:45',0,0),
-	(10,'Fire Alert','There is a fire in your area',1,'10.63629241849944,122.9585436492834','2022-11-07 12:27:43','2022-11-07 12:27:46',0,0),
-	(11,'Fire Alert','There is a fire in your area',1,'10.63629241849944,122.9585436492834','2022-11-07 12:27:43','2022-11-07 12:27:46',0,0),
-	(12,'Fire Alert','There is a fire in your area',1,'10.63629241849944,122.9585436492834','2022-11-07 12:29:14','2022-11-07 12:29:17',0,0),
-	(13,'Fire Alert','There is a fire in your area',1,'10.63629241849944,122.9585436492834','2022-11-07 12:29:15','2022-11-07 12:29:18',0,0),
-	(14,'Fire Alert','There is a fire in your area',1,'10.63629241849944,122.9585436492834','2022-11-07 12:36:26','2022-11-07 12:37:03',0,0),
-	(15,'Fire Alert','There is a fire in your area',1,'10.6826927,122.9438081','2022-11-08 13:55:54','2022-11-08 13:55:56',0,0),
-	(16,'Fire Alert','There is a fire in your area',1,'10.6826927,122.9438081','2022-11-08 13:56:59','2022-11-08 13:57:01',0,0),
-	(17,'Fire Alert','There is a fire in your area',1,'10.6826927,122.9438081','2022-11-08 13:57:30','2022-11-08 13:57:31',1,0),
-	(18,'Fire Alert','There is a fire in your area',1,'10.6826927,122.9438081','2022-11-08 13:58:13','2022-11-08 13:58:15',15,0),
-	(19,'Fire Alert','There is a fire in your area',1,'10.6826927,122.9438081','2022-11-08 13:58:32','2022-11-08 13:58:34',15,0);
+	(1,'Fire Alert','There is a fire in your area',1,'10.6826927,122.9438081','2022-11-07 11:53:31','2022-11-07 12:21:12',0,0,''),
+	(2,'Fire Alert','There is a fire in your area',1,'10.6826927,122.9438081','2022-11-07 12:15:21','2022-11-07 12:21:12',0,0,''),
+	(3,'Fire Alert','There is a fire in your area',1,'10.6826927,122.9438081','2022-11-07 12:24:41','2022-11-07 12:24:44',0,0,''),
+	(4,'Fire Alert','There is a fire in your area',1,'10.6826927,122.9438081','2022-11-07 12:25:02','2022-11-07 12:25:06',0,0,''),
+	(5,'Fire Alert','There is a fire in your area',1,'10.6826927,122.9438081','2022-11-07 12:25:02','2022-11-07 12:25:06',0,0,''),
+	(6,'Fire Alert','There is a fire in your area',1,'10.6826927,122.9438081','2022-11-07 12:25:03','2022-11-07 12:25:06',0,0,''),
+	(7,'Fire Alert','There is a fire in your area',1,'10.6826927,122.9438081','2022-11-07 12:25:03','2022-11-07 12:25:06',0,0,''),
+	(8,'Fire Alert','There is a fire in your area',1,'10.6826927,122.9438081','2022-11-07 12:26:47','2022-11-07 12:26:49',0,0,''),
+	(9,'Fire Alert','There is a fire in your area',1,'10.63629241849944,122.9585436492834','2022-11-07 12:27:41','2022-11-07 12:27:45',0,0,''),
+	(10,'Fire Alert','There is a fire in your area',1,'10.63629241849944,122.9585436492834','2022-11-07 12:27:43','2022-11-07 12:27:46',0,0,''),
+	(11,'Fire Alert','There is a fire in your area',1,'10.63629241849944,122.9585436492834','2022-11-07 12:27:43','2022-11-07 12:27:46',0,0,''),
+	(12,'Fire Alert','There is a fire in your area',1,'10.63629241849944,122.9585436492834','2022-11-07 12:29:14','2022-11-07 12:29:17',0,0,''),
+	(13,'Fire Alert','There is a fire in your area',1,'10.63629241849944,122.9585436492834','2022-11-07 12:29:15','2022-11-07 12:29:18',0,0,''),
+	(14,'Fire Alert','There is a fire in your area',1,'10.63629241849944,122.9585436492834','2022-11-07 12:36:26','2022-11-07 12:37:03',0,0,''),
+	(15,'Fire Alert','There is a fire in your area',1,'10.6826927,122.9438081','2022-11-08 13:55:54','2022-11-08 13:55:56',0,0,''),
+	(16,'Fire Alert','There is a fire in your area',1,'10.6826927,122.9438081','2022-11-08 13:56:59','2022-11-08 13:57:01',0,0,''),
+	(17,'Fire Alert','There is a fire in your area',1,'10.6826927,122.9438081','2022-11-08 13:57:30','2022-11-08 13:57:31',1,0,''),
+	(18,'Fire Alert','There is a fire in your area',1,'10.6826927,122.9438081','2022-11-08 13:58:13','2022-11-08 13:58:15',15,0,''),
+	(19,'Fire Alert','There is a fire in your area',1,'10.6826927,122.9438081','2022-11-08 13:58:32','2022-11-08 13:58:34',15,0,''),
+	(22,'Fire Alert','There is a fire in your area',1,'10.659410201591001,122.96530804000155','2022-12-13 16:24:56','2022-12-13 16:24:56',0,0,'Bacolod City'),
+	(23,'Fire Alert','There is a fire in your area',1,'10.659410201591001,122.96530804000155','2022-12-13 16:27:56','2022-12-13 16:27:56',0,0,'Bacolod City'),
+	(24,'Fire Alert','There is a fire in your area',1,'10.659410201591001,122.96530804000155','2022-12-13 16:30:06','2022-12-13 16:30:06',0,0,'Bacolod City'),
+	(25,'Fire Alert','There is a fire in your area',1,'10.659410201591001,122.96530804000155','2022-12-13 16:33:41','2022-12-13 16:33:41',0,0,'Bacolod City'),
+	(26,'Fire Alert','There is a fire in your area',1,'10.659410201591001,122.96530804000155','2022-12-13 16:35:54','2022-12-13 16:35:54',0,0,'Bacolod City'),
+	(27,'Fire Alert','There is a fire in your area',1,'10.659410201591001,122.96530804000155','2022-12-13 16:36:23','2022-12-13 16:36:24',0,0,'Bacolod City');
 
 /*!40000 ALTER TABLE `tbl_notifications` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -151,8 +159,8 @@ LOCK TABLES `tbl_properties` WRITE;
 
 INSERT INTO `tbl_properties` (`property_id`, `property_code`, `property_name`, `property_coordinates`, `property_radius`, `property_address`, `user_id`, `date_added`, `date_updated`)
 VALUES
-	(2,'asf','Sabu','10.63629241849944,122.9585436492834',2.00,'asda',3,'2022-07-15 14:10:38','2022-11-07 11:31:47'),
-	(7,'1pEza','H2 Buldinf','10.6826927,122.9438081',2.00,'H2 Buldinf',4,'2022-11-07 11:49:58','0000-00-00 00:00:00');
+	(2,'asf','Sabu','10.63629241849944,122.9585436492834',5.00,'asda',3,'2022-07-15 14:10:38','2022-12-13 16:36:19'),
+	(7,'1pEza','H2 Buldinf','10.6826927,122.9438081',5.00,'H2 Buldinf',4,'2022-11-07 11:49:58','2022-12-13 16:36:18');
 
 /*!40000 ALTER TABLE `tbl_properties` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -206,19 +214,20 @@ CREATE TABLE `tbl_users` (
   `user_category` varchar(1) NOT NULL DEFAULT '',
   `user_mobile` varchar(15) NOT NULL DEFAULT '',
   `user_token` text NOT NULL,
-  `user_coordinates` varchar(255) NOT NULL DEFAULT '',
+  `user_resident_coordinates` varchar(255) NOT NULL DEFAULT '',
+  `user_radius` decimal(12,2) NOT NULL DEFAULT '2.00',
+  `department_id` int(11) NOT NULL,
+  `date_added` datetime NOT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `tbl_users` WRITE;
 /*!40000 ALTER TABLE `tbl_users` DISABLE KEYS */;
 
-INSERT INTO `tbl_users` (`user_id`, `username`, `password`, `user_fullname`, `user_address`, `user_location`, `user_category`, `user_mobile`, `user_token`, `user_coordinates`)
+INSERT INTO `tbl_users` (`user_id`, `username`, `password`, `user_fullname`, `user_address`, `user_location`, `user_category`, `user_mobile`, `user_token`, `user_resident_coordinates`, `user_radius`, `department_id`, `date_added`)
 VALUES
-	(1,'admin','0cc175b9c0f1b6a831c399e269772661','Onir C. Arton','Back Call Load',NULL,'A','s','',''),
-	(2,'onir','4b38514829beb9b919f29d94a3dcf602','Onir C. Arton','Back Call Load',NULL,'R','','',''),
-	(3,'eduard','0cc175b9c0f1b6a831c399e269772661','Eduard Rino Carton','Purok Torrecampo Village',NULL,'R','09096836075','f0hxhYNZRuyZPbmP-3vK5P:APA91bEOECS1WKD1yRASNWEiHmwKkjQMRW2ztKies9P8QSAbXdxgyQPH8mPR-8J7VcfUiRU-StLHQ2Uuo_lnYmdfi9PsRcQ5LiuZF4z-OgAB4B46N_MvIR7lfw_USsVm_MJsIItnDINB','10.6827004,122.9438061'),
-	(4,'jeff','0cc175b9c0f1b6a831c399e269772661','Jeff Lim','bacolod',NULL,'R','','fGFGgwwVRui-0TEFkjhSRg:APA91bFQN0GpG0QIgtA8_001UvyhxGycndNCx6zUZKlu3_FaZ2R4xOHSz3NkQts-hWCkCfTsOsOE7BlT9W03IMtfOqL9cFTZsgIDonC6E7KHFJogo-MfLsYQWX3XPqiqRWFBH5S6lTAP','');
+	(1,'admin','0cc175b9c0f1b6a831c399e269772661','Onir C. Arton','Back Call Load',NULL,'A','s','','',5.00,0,'0000-00-00 00:00:00'),
+	(3,'eduard','0cc175b9c0f1b6a831c399e269772661','Eduard Rino Carton','Purok Torrecampo Village',NULL,'R','09096836075','f0hxhYNZRuyZPbmP-3vK5P:APA91bEOECS1WKD1yRASNWEiHmwKkjQMRW2ztKies9P8QSAbXdxgyQPH8mPR-8J7VcfUiRU-StLHQ2Uuo_lnYmdfi9PsRcQ5LiuZF4z-OgAB4B46N_MvIR7lfw_USsVm_MJsIItnDINB','10.6827004,122.9438061',5.00,0,'0000-00-00 00:00:00');
 
 /*!40000 ALTER TABLE `tbl_users` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -238,6 +247,16 @@ CREATE TABLE `tbl_web_notifications` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+LOCK TABLES `tbl_web_notifications` WRITE;
+/*!40000 ALTER TABLE `tbl_web_notifications` DISABLE KEYS */;
+
+INSERT INTO `tbl_web_notifications` (`id`, `notif_id`, `user_id`, `date_added`, `date_updated`)
+VALUES
+	(1,27,3,'2022-12-13 16:36:24','0000-00-00 00:00:00'),
+	(2,27,4,'2022-12-13 16:36:24','0000-00-00 00:00:00');
+
+/*!40000 ALTER TABLE `tbl_web_notifications` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 

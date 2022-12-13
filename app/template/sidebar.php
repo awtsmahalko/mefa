@@ -65,7 +65,7 @@
                         </a>
                     </li>
 
-                    <li class="nav-small-cap">
+                    <!--                     <li class="nav-small-cap">
                         <i class="mdi mdi-dots-horizontal"></i>
                         <span class="hide-menu">DEVICES</span>
                     </li>
@@ -80,7 +80,7 @@
                             <i class="mdi mdi-google-maps"></i>
                             <span class="hide-menu">SENSOR MAPPING </span>
                         </a>
-                    </li>
+                    </li> -->
 
                 <?php } ?>
                 <?php if ($_SESSION['user']['category'] == 'F') { ?>

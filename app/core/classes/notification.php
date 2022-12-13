@@ -104,6 +104,7 @@ class Notifications extends Connection
                 if ($this->getDistance($fire_lat, $fire_lng, $_lat, $_lng, $property_radius) == 1) {
                     $user_token = Users::token($row2['user_id']);
                     $message = "There is a fire near in your property " . $row2['property_name'];
+                    $response[] = $message;
                     $response[] = $this->pushNotif($row['notif_title'], $message, $user_token);
                     $this->webNotif($row['notif_id'], $row2['user_id']);
                 }
