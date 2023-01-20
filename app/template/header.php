@@ -11,11 +11,11 @@
                 <b class="logo-icon">
                     <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                     <!-- Dark Logo icon -->
-                    <span class="round rounded-circle text-white d-inline-block text-center bg-primary">M</span>
+                    <span class="round rounded-circle text-white d-inline-block text-center bg-primary">R</span>
                 </b>
                 <!--End Logo icon -->
                 <!-- Logo text -->
-                <span class="logo-text" style="font-weight: 900;font-size: xx-large;">MEFA</span>
+                <span class="logo-text" style="font-weight: 900;font-size: xx-large;">RTFAA</span>
             </a>
             <!-- ============================================================== -->
             <!-- End Logo -->

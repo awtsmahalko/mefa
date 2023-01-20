@@ -6,6 +6,8 @@ class Users extends Connection
     public $name = 'user_fullname';
     public $session = array();
 
+    public $inputs = array();
+
     public function addFireOfficer()
     {
         $username = $this->clean($this->inputs['username']);
@@ -98,12 +100,14 @@ class Users extends Connection
         $user_fullname  = $this->clean($this->inputs['user_fullname']);
         $user_address   = $this->clean($this->inputs['user_address']);
         $user_mobile    = $this->clean($this->inputs['user_mobile']);
+        $user_email    = $this->clean($this->inputs['user_email']);
 
         $form = array(
             'user_id' => $user_id,
             'user_fullname' => $user_fullname,
             'user_address' => $user_address,
             'user_mobile' => $user_mobile,
+            'user_email' => $user_email,
         );
 
         return $this->update($this->table, $form, "user_id = '$user_id'");

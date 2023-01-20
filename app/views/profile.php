@@ -97,6 +97,12 @@ $user_data = Users::dataOf($_SESSION['user']['id']);
                                     </div>
                                 </div>
                                 <div class="mb-3">
+                                    <label class="col-md-12">Email</label>
+                                    <div class="col-md-12">
+                                        <input type="email" value="<?= $user_data['user_email'] ?>" class="form-control form-control-line" name="user_email" required />
+                                    </div>
+                                </div>
+                                <div class="mb-3">
                                     <div class="col-sm-12">
                                         <button class="btn btn-success" type="submit">
                                             Update Profile

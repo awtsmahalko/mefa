@@ -13,7 +13,7 @@ if (isset($_SESSION['signup_error'])) {
     $old_value = $_SESSION['signup'];
 } else {
     $signup_error = '';
-    $old_value = ['username' => '', 'name' => '', 'address' => ''];
+    $old_value = ['username' => '', 'name' => '', 'address' => '', 'email' => ''];
 }
 session_destroy();
 ?>
@@ -28,7 +28,7 @@ session_destroy();
     <meta name="keywords" content="wrappixel, admin dashboard, html css dashboard, web dashboard, bootstrap 5 admin, bootstrap 5, css3 dashboard, bootstrap 5 dashboard, material pro admin bootstrap 5 dashboard, frontend, responsive bootstrap 5 admin template, material design, material dashboard bootstrap 5 dashboard template" />
     <meta name="description" content="MaterialPro is powerful and clean admin dashboard template, inpired from Google's Material Design" />
     <meta name="robots" content="noindex,nofollow" />
-    <title>MEFA: Main Emergency Fire Alert</title>
+    <title>RTFAA: Real Time Fire Alert Application</title>
     <link rel="canonical" href="https://www.wrappixel.com/templates/materialpro/" />
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png" />
@@ -71,10 +71,10 @@ session_destroy();
                                 <span class="db"><img src="../assets/images/background/bfp.png" width="200px" alt="logo" /></span>
                             </div>
                             <h2 class="text-white mt-4 fw-light">
-                                <span class="font-weight-medium">MEFA: </span> MAIN EMERGENCY FIRE ALERT
+                                <span class="font-weight-medium">RTFAA: </span> REAL TIME FIRE ALERT APPLICATION
                             </h2>
                             <p class="op-5 text-white fs-4 mt-4">
-                                MEFA: Main Emergency Fire Alert Application is an application responsible for notifying residents and authorities about a Fire being detected through device with smoke sensor.
+                                RTFAA: Real Time Fire Alert Application is an application responsible for notifying residents and authorities about a Fire being detected through device with smoke sensor, heat sensor and fire detector.
                             </p>
                         </div>
                     </div>
@@ -99,6 +99,11 @@ session_destroy();
                                         <input type="text" class="form-control form-input-bg" autocomplete="off" id="tb-raddress" placeholder="john deo" name="user_address" value="<?= $old_value['address']; ?>" required />
                                         <label for="tb-raddress">Address</label>
                                         <div class="invalid-feedback">Address is required</div>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input type="email" class="form-control form-input-bg" autocomplete="off" id="tb-raddress" placeholder="john deo" name="user_email" value="<?= $old_value['email']; ?>" required />
+                                        <label for="tb-raddress">Email</label>
+                                        <div class="invalid-feedback">Email is required</div>
                                     </div>
                                     <div class="form-floating mb-3">
                                         <input type="text" class="form-control form-input-bg" autocomplete="off" id="tb-remail" placeholder="john@gmail.com" name="username" value="<?= $old_value['username']; ?>" required />
@@ -139,7 +144,7 @@ session_destroy();
                         </div>
                         <div class="card" id="loginform">
                             <div class="card-body">
-                                <h2>Welcome to MEFA</h2>
+                                <h2>Welcome to RTFAA</h2>
                                 <p class="text-muted fs-4">
                                     New Here?
                                     <a href="javascript:void(0)" id="to-register">Create an account</a>
@@ -160,10 +165,17 @@ session_destroy();
                                     <div class="d-flex align-items-center mb-3">
                                         <div><?= $login_error; ?></div>
                                     </div>
-                                    <div class="d-flex align-items-stretch button-group mt-4 pt-2">
-                                        <button type="submit" class="btn btn-info btn-lg px-4">
-                                            Sign in
-                                        </button>
+                                    <div class="form">
+                                        <div class="d-flex">
+                                            <div class="checkbox checkbox-info pt-0">
+                                                <button type="submit" class="btn btn-info btn-lg px-4">
+                                                    Sign in
+                                                </button>
+                                            </div>
+                                            <div class="ms-auto">
+                                                <a href="javascript:void(0)" id="to-recover" class="link font-weight-medium"><i class="fa fa-lock me-1"></i> Forgot pwd?</a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </form>
                             </div>
@@ -178,11 +190,11 @@ session_destroy();
                                 </div>
                                 <div class="mt-4 pt-4">
                                     <!-- Form -->
-                                    <form action="index.html">
+                                    <form action="auth/recover.php" method="POST">
                                         <!-- email -->
                                         <div class="mb-4 pb-2">
                                             <div class="form-floating">
-                                                <input class="form-control form-input-bg" type="email" required="" placeholder="Email address" />
+                                                <input class="form-control form-input-bg" type="email" name="user_email" required="" placeholder="Email address" />
                                                 <label for="tb-email">Email</label>
                                             </div>
                                         </div>
