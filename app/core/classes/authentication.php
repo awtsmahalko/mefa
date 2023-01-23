@@ -77,17 +77,29 @@ class Authentication extends Connection
     public function recover()
     {
         $user_email = $this->clean($this->inputs['user_email']);
+        $this->old = ['user_email' => $user_email];
         $fetch = $this->select($this->table, "user_id", "user_email = '$user_email' AND user_category = 'R'");
         if ($fetch->num_rows > 0) {
             $row = $fetch->fetch_assoc();
             $user_id = $row['user_id'];
             $otp = $this->generateRandomString(6);
             $this->update($this->table, ['user_otp' => $this->clean($otp)], "user_id = '$user_id'");
+            $is_success = 1;
+        } else {
+            $is_success = 0;
+            $user_id = 0;
+        }
+        $this->old['is_success'] = $is_success;
+        $this->old['user_id'] = $user_id;
+        return $is_success;
+    }
 
-            $to = $user_email;
-            $subject = "HTML email";
+    public function emailSender($user_email)
+    {
+        $to = $user_email;
+        $subject = "HTML email";
 
-            $message = "
+        $message = "
                 <html>
                 <head>
                 <title>HTML email</title>
@@ -108,22 +120,15 @@ class Authentication extends Connection
                 </html>
                 ";
 
-            // Always set content-type when sending HTML email
-            $headers = "MIME-Version: 1.0" . "\r\n";
-            $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+        // Always set content-type when sending HTML email
+        $headers = "MIME-Version: 1.0" . "\r\n";
+        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
-            // More headers
-            // $headers .= 'From: <webmaster@example.com>' . "\r\n";
-            // $headers .= 'Cc: myboss@example.com' . "\r\n";
+        // More headers
+        // $headers .= 'From: <webmaster@example.com>' . "\r\n";
+        // $headers .= 'Cc: myboss@example.com' . "\r\n";
 
-            mail($to, $subject, $message, $headers);
-            return 1;
-        } else {
-            $this->old = [
-                'user_email' => $user_email,
-            ];
-            return 0;
-        }
+        mail($to, $subject, $message, $headers);
     }
 
     public function logout()

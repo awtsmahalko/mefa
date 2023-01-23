@@ -15,6 +15,17 @@ if (isset($_SESSION['signup_error'])) {
     $signup_error = '';
     $old_value = ['username' => '', 'name' => '', 'address' => '', 'email' => ''];
 }
+
+if (isset($_SESSION['recover'])) {
+    $show_recover = true;
+    $recover_error = $_SESSION['recover_error'];
+    $recovery_value = $_SESSION['recover'];
+} else {
+    $show_recover = '';
+    $recover_error = '';
+    $recovery_value = ['user_email' => '', 'user_id' => '', 'is_success' => 0];
+}
+$recovery_steps = ['Step 1: Enter your Email and instructions will be sent to you!', 'Step 2: Enter your OTP', 'Step 3: Assign new password'];
 session_destroy();
 ?>
 <!DOCTYPE html>
@@ -184,29 +195,35 @@ session_destroy();
                             <div class="card-body">
                                 <div class="logo">
                                     <h3>Recover Password</h3>
-                                    <p class="text-muted fs-4">
-                                        Enter your Email and instructions will be sent to you!
-                                    </p>
+                                    <p class="text-muted fs-4"><?= $recovery_steps[$recovery_value['is_success']] ?></p>
                                 </div>
                                 <div class="mt-4 pt-4">
                                     <!-- Form -->
                                     <form action="auth/recover.php" method="POST">
-                                        <!-- email -->
-                                        <div class="mb-4 pb-2">
-                                            <div class="form-floating">
-                                                <input class="form-control form-input-bg" type="email" name="user_email" required="" placeholder="Email address" />
-                                                <label for="tb-email">Email</label>
+                                        <?php if ($recovery_value['is_success'] == 1) { ?>
+                                            <div class="mb-4 pb-2">
+                                                <div class="form-floating">
+                                                    <input class="form-control form-input-bg" type="text" name="user_otp" placeholder="OTP" value="" />
+                                                    <label for="tb-otp">OTP</label>
+                                                </div>
                                             </div>
+                                        <?php } else { ?>
+                                            <div class="mb-4 pb-2">
+                                                <div class="form-floating">
+                                                    <input class="form-control form-input-bg" type="email" name="user_email" required="" placeholder="Email address" value="<?= $recovery_value['user_email'] ?>" />
+                                                    <label for="tb-email">Email</label>
+                                                </div>
+                                            </div>
+                                        <?php } ?>
+                                        <input type="text" value="<?= $recovery_value['is_success'] ?>" name="recovery_step">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <div><?= $recover_error ?></div>
                                         </div>
                                         <div class="d-flex align-items-stretch button-group">
                                             <button type="submit" class="btn btn-info btn-lg px-4">
                                                 Submit
                                             </button>
-                                            <a href="javascript:void(0)" id="to-login" class="
-                            btn btn-lg btn-light-secondary
-                            text-secondary
-                            font-weight-medium
-                          ">Cancel</a>
+                                            <a href="javascript:void(0)" id="to-login" class="btn btn-lg btn-light-secondary text-secondary font-weight-medium">Cancel</a>
                                         </div>
                                     </form>
                                 </div>
@@ -235,6 +252,11 @@ session_destroy();
         <?php if ($signup_error != '') { ?>
             $("#loginform").hide();
             $("#registerform").fadeIn();
+        <?php } ?>
+
+        <?php if ($show_recover != '') { ?>
+            $("#loginform").hide();
+            $("#recoverform").fadeIn();
         <?php } ?>
 
         $("#to-recover").on("click", function() {
