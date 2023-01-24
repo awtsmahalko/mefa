@@ -23,7 +23,7 @@ if (isset($_SESSION['recover'])) {
 } else {
     $show_recover = '';
     $recover_error = '';
-    $recovery_value = ['user_email' => '', 'user_id' => '', 'is_success' => 0];
+    $recovery_value = ['user_email' => '', 'user_id' => '', 'is_success' => 0, 'step' => 0, 'user_otp' => ''];
 }
 $recovery_steps = ['Step 1: Enter your Email and instructions will be sent to you!', 'Step 2: Enter your OTP', 'Step 3: Assign new password'];
 session_destroy();
@@ -195,19 +195,12 @@ session_destroy();
                             <div class="card-body">
                                 <div class="logo">
                                     <h3>Recover Password</h3>
-                                    <p class="text-muted fs-4"><?= $recovery_steps[$recovery_value['is_success']] ?></p>
+                                    <p class="text-muted fs-4"><?= $recovery_steps[$recovery_value['step']] ?></p>
                                 </div>
                                 <div class="mt-4 pt-4">
                                     <!-- Form -->
                                     <form action="auth/recover.php" method="POST">
-                                        <?php if ($recovery_value['is_success'] == 1) { ?>
-                                            <div class="mb-4 pb-2">
-                                                <div class="form-floating">
-                                                    <input class="form-control form-input-bg" type="text" name="user_otp" placeholder="OTP" value="" />
-                                                    <label for="tb-otp">OTP</label>
-                                                </div>
-                                            </div>
-                                        <?php } else { ?>
+                                        <?php if ($recovery_value['step'] == 0) { ?>
                                             <div class="mb-4 pb-2">
                                                 <div class="form-floating">
                                                     <input class="form-control form-input-bg" type="email" name="user_email" required="" placeholder="Email address" value="<?= $recovery_value['user_email'] ?>" />
@@ -215,7 +208,32 @@ session_destroy();
                                                 </div>
                                             </div>
                                         <?php } ?>
-                                        <input type="text" value="<?= $recovery_value['is_success'] ?>" name="recovery_step">
+                                        <?php if ($recovery_value['step'] == 1) { ?>
+                                            <div class="mb-4 pb-2">
+                                                <div class="form-floating">
+                                                    <input class="form-control form-input-bg" type="text" name="user_otp" placeholder="OTP" value="<?= $recovery_value['user_otp'] ?>" required />
+                                                    <label for="tb-otp">OTP</label>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" value="<?= $recovery_value['user_id'] ?>" name="user_id">
+                                        <?php } ?>
+
+                                        <?php if ($recovery_value['step'] == 2) { ?>
+                                            <div class="mb-4 pb-2">
+                                                <div class="form-floating">
+                                                    <input class="form-control form-input-bg" type="password" name="password1" required />
+                                                    <label for="tb-pass1">Password</label>
+                                                </div>
+                                            </div>
+                                            <div class="mb-4 pb-2">
+                                                <div class="form-floating">
+                                                    <input class="form-control form-input-bg" type="password" name="password2" placeholder="OTP" />
+                                                    <label for="tb-pass2">Confirm Password</label>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" value="<?= $recovery_value['user_id'] ?>" name="user_id">
+                                        <?php } ?>
+                                        <input type="hidden" value="<?= $recovery_value['step'] ?>" name="recovery_step">
                                         <div class="d-flex align-items-center mb-3">
                                             <div><?= $recover_error ?></div>
                                         </div>
@@ -265,8 +283,7 @@ session_destroy();
         });
 
         $("#to-login").on("click", function() {
-            $("#loginform").fadeIn();
-            $("#recoverform").hide();
+            location.reload();
         });
 
         $("#to-register").on("click", function() {

@@ -76,46 +76,93 @@ class Authentication extends Connection
 
     public function recover()
     {
-        $user_email = $this->clean($this->inputs['user_email']);
-        $this->old = ['user_email' => $user_email];
-        $fetch = $this->select($this->table, "user_id", "user_email = '$user_email' AND user_category = 'R'");
-        if ($fetch->num_rows > 0) {
-            $row = $fetch->fetch_assoc();
-            $user_id = $row['user_id'];
-            $otp = $this->generateRandomString(6);
-            $this->update($this->table, ['user_otp' => $this->clean($otp)], "user_id = '$user_id'");
-            $is_success = 1;
-        } else {
-            $is_success = 0;
-            $user_id = 0;
-        }
-        $this->old['is_success'] = $is_success;
-        $this->old['user_id'] = $user_id;
-        return $is_success;
+        $step = $this->clean($this->inputs['recovery_step']);
+
+        $this->old = [
+            'user_email' => '',
+            'is_success' => 0,
+            'user_id' => 0,
+            'step' => $step,
+            'user_otp' => '',
+            'error' => ''
+        ];
+
+        $stepMe = "step" . $step;
+        $this->$stepMe();
     }
 
-    public function emailSender($user_email)
+    public function step0()
+    {
+        $user_email = $this->clean($this->inputs['user_email']);
+        $this->old['user_email'] = $user_email;
+
+        $fetch = $this->select($this->table, "user_id", "user_email = '$user_email' AND user_category = 'R'");
+
+        if ($fetch->num_rows < 1) {
+            $this->old['error'] = 'Credentials does not match to our records.';
+            return 0;
+        }
+
+        $row = $fetch->fetch_assoc();
+        $user_id = $row['user_id'];
+        $user_otp = $this->generateRandomString(6);
+        $this->update($this->table, ['user_otp' => $this->clean($user_otp)], "user_id = '$user_id'");
+        $this->emailSender($user_email, $user_otp);
+
+        $this->old['is_success'] = 1;
+        $this->old['user_id'] = $user_id;
+        $this->old['step'] = 1;
+    }
+
+    public function step1()
+    {
+        $user_id = $this->clean($this->inputs['user_id']);
+        $user_otp = $this->clean($this->inputs['user_otp']);
+
+        $this->old['user_id'] = $user_id;
+        $this->old['user_otp'] = $user_otp;
+
+        $fetch = $this->select($this->table, "user_otp", "user_id = '$user_id' AND user_otp = '$user_otp'");
+
+        if ($fetch->num_rows < 1) {
+            $this->old['error'] = 'OTP does not match to our records.';
+            return 0;
+        }
+
+        $this->old['is_success'] = 1;
+        $this->old['step'] = 2;
+    }
+
+    public function step2()
+    {
+        $user_id = $this->clean($this->inputs['user_id']);
+        $password1 = $this->clean($this->inputs['password1']);
+        $password2 = $this->clean($this->inputs['password2']);
+
+        $this->old['user_id'] = $user_id;
+
+        if ($password1 != $password2) {
+            $this->old['error'] = 'Password does not match.';
+            return 0;
+        }
+
+        $this->update($this->table, ['password' => md5($password1)], "user_id = '$user_id'");
+        $this->old['is_success'] = 1;
+        $this->old['step'] = 3;
+    }
+
+    public function emailSender($user_email, $user_otp)
     {
         $to = $user_email;
-        $subject = "HTML email";
+        $subject = "RTFAA: Reset Password";
 
         $message = "
                 <html>
                 <head>
-                <title>HTML email</title>
+                <title>RTFAA: Reset Password</title>
                 </head>
                 <body>
-                <p>This email contains HTML Tags!</p>
-                <table>
-                <tr>
-                <th>Firstname</th>
-                <th>Lastname</th>
-                </tr>
-                <tr>
-                <td>John</td>
-                <td>Doe</td>
-                </tr>
-                </table>
+                <p>Your OTP is : <b>$user_otp</b></p>
                 </body>
                 </html>
                 ";
