@@ -65,7 +65,7 @@ $user_data = Users::dataOf($_SESSION['user']['id']);
                     </li>
                     <?php if ($_SESSION['user']['category'] == 'R') { ?>
                         <li class="nav-item">
-                            <a class="nav-link" id="pills-property-tab" data-bs-toggle="pill" href="#user-property" role="tab" aria-controls="pills-setting" aria-selected="false">Properties</a>
+                            <a class="nav-link" id="pills-property-tab" data-bs-toggle="pill" href="#user-property" role="tab" aria-controls="pills-setting" aria-selected="false">Locations</a>
                         </li>
                     <?php } ?>
                     <li class="nav-item">
@@ -116,10 +116,10 @@ $user_data = Users::dataOf($_SESSION['user']['id']);
                         <div class="card-body">
                             <div class="row col-md-12">
                                 <div class="col-md-6">
-                                    <h4 class="card-title mb-0">Manage Properties</h4>
+                                    <h4 class="card-title mb-0">Manage Location</h4>
                                 </div>
                                 <div class="col-md-6">
-                                    <button class="btn btn-primary rounded-pill" id="add-property"><i data-feather="plus" class="feather-sm fill-white me-0 me-md-1"></i> <span class="font-weight-medium fs-3">Add Properties</span></button>
+                                    <button class="btn btn-primary rounded-pill" id="add-property"><i data-feather="plus" class="feather-sm fill-white me-0 me-md-1"></i> <span class="font-weight-medium fs-3">Add Location</span></button>
                                 </div>
                             </div>
                             <div class="row col-md-12 mt-4">
@@ -198,7 +198,7 @@ $user_data = Users::dataOf($_SESSION['user']['id']);
                                 <input type="hidden" id="property_id" />
                                 <div class="col-md-12 mb-3">
                                     <div class="property-name">
-                                        <label>Property Name</label>
+                                        <label>Location Name</label>
                                         <input type="text" id="property-has-name" class="form-control" minlength="6" autocomplete="off" placeholder="Property Name" />
                                     </div>
                                 </div>

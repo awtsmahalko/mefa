@@ -7,6 +7,8 @@ class Notifications extends Connection
 
     private $table_web = 'tbl_web_notifications';
 
+    public $inputs = [];
+
     public function pushNotif($title, $message, $device_id)
     {
         //API URL of FCM
@@ -103,7 +105,7 @@ class Notifications extends Connection
 
                 if ($this->getDistance($fire_lat, $fire_lng, $_lat, $_lng, $property_radius) == 1) {
                     $user_token = Users::token($row2['user_id']);
-                    $message = "There is a fire near in your property " . $row2['property_name'];
+                    $message = "There is a fire near in your location " . $row2['property_name'];
                     $response[] = $this->pushNotif($row['notif_title'], $message, $user_token);
                     $this->webNotif($row['notif_id'], $row2['user_id']);
                 }
@@ -117,8 +119,25 @@ class Notifications extends Connection
                 $resident_radius = $row2['user_radius'] * 1;
 
                 if ($this->getDistance($fire_lat, $fire_lng, $_lat, $_lng, $resident_radius) == 1) {
-                    $message = "There is a fire near in your location.";
+                    $message = "There is a fire near in your resident location.";
                     $response[] = $this->pushNotif($row['notif_title'], $message, $row3['user_token']);
+                    $this->webNotif($row['notif_id'], $row3['user_id']);
+                }
+            }
+
+            $result4 = $this->select('tbl_users', '*', "user_category = 'F' AND department_id > 0");
+            while ($row4 = $result4->fetch_assoc()) {
+                $data_ = Departments::dataOf($row4['department_id']);
+
+                $user_coordinates = explode(",", $data_['department_coordinates']);
+                $_lat = $user_coordinates[0] * 1;
+                $_lng = $user_coordinates[1] * 1;
+                $resident_radius = $data_['department_radius'] * 1;
+
+                if ($this->getDistance($fire_lat, $fire_lng, $_lat, $_lng, $resident_radius) == 1) {
+                    $message = "There is a fire near in your fire department.";
+                    $response[] = $this->pushNotif($row['notif_title'], $message, $row4['user_token']);
+                    $this->webNotif($row['notif_id'], $row4['user_id']);
                 }
             }
 
@@ -130,19 +149,21 @@ class Notifications extends Connection
 
     public function dailyAlert()
     {
+        $last_time = date("Y-m-d 00:00:00");
+
         $response['data']['lists'] = array();
         if ($_SESSION['user']['category'] == 'R') {
             $result = $this->table("tbl_web_notifications AS w")
                 ->join("tbl_notifications AS n", "w.notif_id", "=", "n.notif_id")
                 ->selectRaw("coordinates", "n.date_added", "notif_address")
                 ->where("w.user_id", $_SESSION['user']['id'])
+                ->where("n.date_added", ">", $last_time)
                 ->orderBy("n.date_added ASC")
                 ->get();
         } else {
-            $result = $this->select($this->table, "*", "notif_id > 0 ORDER BY date_added ASC");
+            $result = $this->select($this->table, "*", "notif_id > 0 AND date_added > '$last_time' ORDER BY date_added ASC");
         }
 
-        $last_time = date("Y-m-d H:i:s");
         while ($row = $result->fetch_assoc()) {
             $coords = explode(",", $row['coordinates']);
             $form = [
@@ -227,5 +248,31 @@ class Notifications extends Connection
         $json = json_decode($geocode);
         $address = $json->status == 'REQUEST_DENIED' ? "Bacolod City" : $json->results[0]->formatted_address;
         return $this->clean($address);
+    }
+
+    public function yearlyReport()
+    {
+        $response = array();
+        $current_year = date('Y');
+        $last_year = $current_year - 1;
+
+        $years = [$last_year, $current_year];
+
+        foreach ($years as $year) {
+            $data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+            $result = $this->select($this->table, 'COUNT(notif_id) AS count,MONTH(date_added) - 1 AS mo', "YEAR(date_added) = $year GROUP BY MONTH(date_added)");
+            while ($row = $result->fetch_assoc()) {
+                $data[$row['mo']] = (int) $row['count'];
+            }
+
+            $_year = array(
+                'name' => "Year $year",
+                'data' => $data,
+            );
+            array_push($response, $_year);
+        }
+
+        return json_encode($response);
     }
 }

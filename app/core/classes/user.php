@@ -91,6 +91,17 @@ class Users extends Connection
                 ]);
             }
         }
+
+        if ($_SESSION['user']['category'] == 'F') {
+            $data_ = Departments::dataOf($_SESSION['user']['department_id']);
+            $explode = explode(",", $data_['department_coordinates']);
+            array_push($response, [
+                'lat' => (float) $explode[0],
+                'lng' => (float) $explode[1],
+                'marker' => $data_['department_name'],
+                'radius' => (float) $data_['department_radius'],
+            ]);
+        }
         return json_encode($response);
     }
 

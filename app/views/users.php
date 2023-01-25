@@ -79,7 +79,7 @@
                                     </div>
                                     <div class="col-md-12 mb-3">
                                         <div class="user-department-id">
-                                            <label>Fire user</label>
+                                            <label>Fire Department</label>
                                             <select name="department_id" id="user-has-department-id" class="form-control select2" required>
                                                 <option value="">&mdash; Please Select &mdash;</option>
                                                 <?= Departments::option() ?>
