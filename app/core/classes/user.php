@@ -62,8 +62,9 @@ class Users extends Connection
     public function updateResidentCoordinates()
     {
         $coordinates = $this->clean($this->inputs['user_resident_coordinates']);
+        $user_radius = $this->clean($this->inputs['user_radius']);
         $user_id = $_SESSION['user']['id'];
-        return $this->update($this->table, ['user_resident_coordinates' => $coordinates], "user_id = '$user_id'");
+        return $this->update($this->table, ['user_resident_coordinates' => $coordinates,'user_radius'=>$user_radius], "user_id = '$user_id'");
     }
 
     public function rnPcoordinates()

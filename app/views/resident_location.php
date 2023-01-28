@@ -1,5 +1,6 @@
 <?php
 $user_data = Users::dataOf($_GET['user_id']);
+$latLng = $user_data['user_resident_coordinates'] == '' ? '10.642612789500305,122.93891728037974': $user_data['user_resident_coordinates'];
 
 $is_same_user = $user_data['user_id'] == $_SESSION['user']['id'];
 ?>
@@ -31,7 +32,7 @@ $is_same_user = $user_data['user_id'] == $_SESSION['user']['id'];
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">Coordinates</div>
                                 </div>
-                                <input type="text" class="form-control" id="user_coordinates" value="<?= $user_data['user_resident_coordinates'] ?>" readonly>
+                                <input type="text" class="form-control" id="user_coordinates" value="<?= $latLng ?>" readonly>
                             </div>
                             <!-- <button class="btn btn-primary rounded-pill" id="add-user"><i data-feather="plus" class="feather-sm fill-white me-0 me-md-1"></i> <span class="font-weight-medium fs-3">Add Users</span></button> -->
                         </div>

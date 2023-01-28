@@ -58,11 +58,12 @@ class Notifications extends Connection
         return $result;
     }
 
-    public function webNotif($notif_id, $user_id)
+    public function webNotif($notif_id, $user_id, $message = '')
     {
         $form = array(
             'notif_id'  => $notif_id,
             'user_id'   => $user_id,
+            'message'   => $this->clean($message),
         );
         return $this->insert($this->table_web, $form);
     }
@@ -96,55 +97,73 @@ class Notifications extends Connection
             $fire_lat = $fire_coordinates[0] * 1;
             $fire_lng = $fire_coordinates[1] * 1;
 
-            $result2 = $this->select('tbl_properties');
-            while ($row2 = $result2->fetch_assoc()) {
-                $property_coordinates = explode(",", $row2['property_coordinates']);
-                $_lat = $property_coordinates[0] * 1;
-                $_lng = $property_coordinates[1] * 1;
-                $property_radius = $row2['property_radius'] * 1;
-
-                if ($this->getDistance($fire_lat, $fire_lng, $_lat, $_lng, $property_radius) == 1) {
-                    $user_token = Users::token($row2['user_id']);
-                    $message = "There is a fire near in your location " . $row2['property_name'];
-                    $response[] = $this->pushNotif($row['notif_title'], $message, $user_token);
-                    $this->webNotif($row['notif_id'], $row2['user_id']);
-                }
-            }
-
-            $result3 = $this->select('tbl_users', '*', "user_category = 'R' AND user_resident_coordinates !=''");
-            while ($row3 = $result3->fetch_assoc()) {
-                $user_coordinates = explode(",", $row3['user_resident_coordinates']);
-                $_lat = $user_coordinates[0] * 1;
-                $_lng = $user_coordinates[1] * 1;
-                $resident_radius = $row2['user_radius'] * 1;
-
-                if ($this->getDistance($fire_lat, $fire_lng, $_lat, $_lng, $resident_radius) == 1) {
-                    $message = "There is a fire near in your resident location.";
-                    $response[] = $this->pushNotif($row['notif_title'], $message, $row3['user_token']);
-                    $this->webNotif($row['notif_id'], $row3['user_id']);
-                }
-            }
-
-            $result4 = $this->select('tbl_users', '*', "user_category = 'F' AND department_id > 0");
-            while ($row4 = $result4->fetch_assoc()) {
-                $data_ = Departments::dataOf($row4['department_id']);
-
-                $user_coordinates = explode(",", $data_['department_coordinates']);
-                $_lat = $user_coordinates[0] * 1;
-                $_lng = $user_coordinates[1] * 1;
-                $resident_radius = $data_['department_radius'] * 1;
-
-                if ($this->getDistance($fire_lat, $fire_lng, $_lat, $_lng, $resident_radius) == 1) {
-                    $message = "There is a fire near in your fire department.";
-                    $response[] = $this->pushNotif($row['notif_title'], $message, $row4['user_token']);
-                    $this->webNotif($row['notif_id'], $row4['user_id']);
-                }
-            }
-
+            $response[] = $this->checkLocations($fire_lat,$fire_lng,$row['notif_id'],$row['notif_title'],$row['notif_address']);
+            $response[] = $this->checkResidentLocation($fire_lat,$fire_lng,$row['notif_id'],$row['notif_title'],$row['notif_address']);
+            $response[] = $this->checkDepartments($fire_lat,$fire_lng,$row['notif_id'],$row['notif_title'],$row['notif_address']);
 
             $this->update($this->table, ['notif_status' => 1], "notif_id = '$row[notif_id]'");
         }
         echo json_encode($response);
+    }
+
+    public function checkLocations($fire_lat,$fire_lng,$notif_id,$notif_title,$notif_address)
+    {
+        $response = [];
+        $result = $this->select('tbl_properties');
+        while ($row = $result->fetch_assoc()) {
+            $property_coordinates = explode(",", $row['property_coordinates']);
+            $_lat = $property_coordinates[0] * 1;
+            $_lng = $property_coordinates[1] * 1;
+            $property_radius = $row['property_radius'] * 1;
+
+            if ($this->getDistance($fire_lat, $fire_lng, $_lat, $_lng, $property_radius) == 1) {
+                $user_token = Users::token($row['user_id']);
+                $message = "There is a fire in $notif_address near in your " . $row['property_name']."'s location";
+                $response[] = $this->pushNotif($notif_title, $message, $user_token);
+                $this->webNotif($notif_id, $row['user_id'], $message);
+            }
+        }
+        return $response;
+    }
+
+    public function checkResidentLocation($fire_lat,$fire_lng,$notif_id,$notif_title,$notif_address)
+    {
+        $response = [];
+        $result = $this->select('tbl_users', '*', "user_category = 'R' AND user_resident_coordinates !=''");
+        while ($row = $result->fetch_assoc()) {
+            $user_coordinates = explode(",", $row['user_resident_coordinates']);
+            $_lat = $user_coordinates[0] * 1;
+            $_lng = $user_coordinates[1] * 1;
+            $resident_radius = $row['user_radius'] * 1;
+
+            if ($this->getDistance($fire_lat, $fire_lng, $_lat, $_lng, $resident_radius) == 1) {
+                $message = "There is a fire in $notif_address near in your Resident";
+                $response[] = $this->pushNotif($notif_title, $message, $row['user_token']);
+                $this->webNotif($notif_id, $row['user_id'], $message);
+            }
+        }
+        return $response;
+    }
+
+    public function checkDepartments($fire_lat,$fire_lng,$notif_id,$notif_title,$notif_address)
+    {
+        $response = [];
+        $result = $this->select('tbl_users', '*', "user_category = 'F' AND department_id > 0");
+        while ($row = $result->fetch_assoc()) {
+            $data_ = Departments::dataOf($row['department_id']);
+
+            $user_coordinates = explode(",", $data_['department_coordinates']);
+            $_lat = $user_coordinates[0] * 1;
+            $_lng = $user_coordinates[1] * 1;
+            $resident_radius = $data_['department_radius'] * 1;
+
+            if ($this->getDistance($fire_lat, $fire_lng, $_lat, $_lng, $resident_radius) == 1) {
+                $message = "There is a fire in $notif_address near in your Fire Department : ".$data_['department_name'];
+                $response[] = $this->pushNotif($notif_title, $message, $row['user_token']);
+                $this->webNotif($notif_id, $row['user_id'], $message);
+            }
+        }
+        return $response;
     }
 
     public function dailyAlert()
@@ -155,7 +174,7 @@ class Notifications extends Connection
         if ($_SESSION['user']['category'] == 'R') {
             $result = $this->table("tbl_web_notifications AS w")
                 ->join("tbl_notifications AS n", "w.notif_id", "=", "n.notif_id")
-                ->selectRaw("coordinates", "n.date_added", "notif_address")
+                ->selectRaw("coordinates", "n.date_added", "notif_address", "message")
                 ->where("w.user_id", $_SESSION['user']['id'])
                 ->where("n.date_added", ">", $last_time)
                 ->orderBy("n.date_added ASC")
@@ -171,7 +190,8 @@ class Notifications extends Connection
                 'lng' => (float) $coords[1],
                 'label' => date("h:i A", strtotime($row['date_added'])),
                 'date_time' => date("F d, Y h:i A", strtotime($row['date_added'])),
-                'address' => $row['notif_address']
+                'address' => $row['notif_address'],
+                'message' => $_SESSION['user']['category'] == 'R' ? $row['message'] : $row['notif_message']
             ];
             array_push($response['data']['lists'], $form);
             $last_time = $row['date_added'];
@@ -188,7 +208,7 @@ class Notifications extends Connection
         if ($_SESSION['user']['category'] == 'R') {
             $result = $this->table("tbl_web_notifications AS w")
                 ->join("tbl_notifications AS n", "w.notif_id", "=", "n.notif_id")
-                ->selectRaw("coordinates", "n.date_added", "notif_address")
+                ->selectRaw("coordinates", "n.date_added", "notif_address", "message")
                 ->where("w.user_id", $_SESSION['user']['id'])
                 ->where("n.date_added", ">", $last_time)
                 ->orderBy("n.date_added ASC")
@@ -206,6 +226,7 @@ class Notifications extends Connection
                 'label' => date("h:i A", strtotime($row['date_added'])),
                 'date_time' => date("F d, Y h:i A", strtotime($row['date_added'])),
                 'address' => $row['notif_address'], //$this->getAddress($coords[0], $coords[1])
+                'message' => $_SESSION['user']['category'] == 'R' ? $row['message'] : $row['notif_message']
             ];
             array_push($response['data']['lists'], $form);
             $last_time = $row['date_added'];

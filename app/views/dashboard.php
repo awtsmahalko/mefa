@@ -203,7 +203,7 @@
 
     function dashboard_init_map() {
         var property_radius = 2;
-        var coordinates = global_coords != '' ? global_coords : "10.64321246383103,122.93943335498288";
+        var coordinates = global_coords != '' ? global_coords : "10.642612789500305,122.93891728037974";
         var split_coords = coordinates.split(",");
         var lat = split_coords[0] * 1;
         var lng = split_coords[1] * 1;

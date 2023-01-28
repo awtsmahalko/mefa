@@ -218,6 +218,55 @@ $views_file = isset($_GET['q']) ?  $_GET['q'] : 'dashboard';
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
+    <?php if($views_file != 'dashboard') { ?>
+    <script>
+        if (typeof(EventSource) !== "undefined") {
+            var source = new EventSource("api/sse.php");
+            source.onmessage = function(event) {
+                var json_data = JSON.parse(event.data);
+                if (json_data.lists.length > 0) {
+                    for (let listIndex = 0; listIndex < json_data.lists.length; listIndex++) {
+                        const listElem = json_data.lists[listIndex];
+                        var notif_messages = '<a href="index.php?q=dashboard" class="message-item d-flex align-items-center border-bottom px-3 py-2">'+
+                            '<span class="btn btn-light-danger text-danger btn-circle">'+
+                                '<img src="../assets/images/fire-joypixels.gif" alt="img" class="img-fluid">'+
+                            '</span>'+
+                            '<div class="w-75 d-inline-block v-middle ps-3">'+
+                                '<h5 class="message-title mb-0 mt-1 fs-3 fw-bold">Fire Alert</h5>'+
+                                '<span class="fs-2 text-nowrap d-block time text-truncate fw-normal text-muted mt-1">'+listElem.message+'</span>'+
+                                '<span class="fs-2 text-nowrap d-block subtext text-muted">'+listElem.date_time+'</span>'+
+                            '</div>'+
+                        '</a>';
+                        $("#notif_messages").prepend(notif_messages);
+                    }
+                    swal("Fire Alert!", "New Fire alert is being detected!", "warning");
+                }
+            };
+        } else {
+            swal("Oops!", "SSE is not supported!", "warning");
+        }
+        loadNotifications();
+        function loadNotifications(){
+            $.post("controller/ajax.php?q=Notifications&m=dailyAlert", {}, function(data, status) {
+                var response = JSON.parse(data);
+                for (let mapIndex = 0; mapIndex < response.data.lists.length; mapIndex++) {
+                    const mapElem = response.data.lists[mapIndex];
+                    var notif_messages = '<a href="index.php?q=dashboard" class="message-item d-flex align-items-center border-bottom px-3 py-2">'+
+                        '<span class="btn btn-light-danger text-danger btn-circle">'+
+                            '<img src="../assets/images/fire-joypixels.gif" alt="img" class="img-fluid">'+
+                        '</span>'+
+                        '<div class="w-75 d-inline-block v-middle ps-3">'+
+                            '<h5 class="message-title mb-0 mt-1 fs-3 fw-bold">Fire Alert</h5>'+
+                            '<span class="fs-2 text-nowrap d-block time text-truncate fw-normal text-muted mt-1">'+mapElem.message+'</span>'+
+                            '<span class="fs-2 text-nowrap d-block subtext text-muted">'+mapElem.date_time+'</span>'+
+                        '</div>'+
+                    '</a>';
+                    $("#notif_messages").prepend(notif_messages);
+                }
+            });
+        }
+    </script>
+    <?php } ?>
 </body>
 
 </html>
