@@ -64,6 +64,7 @@ class Notifications extends Connection
             'notif_id'  => $notif_id,
             'user_id'   => $user_id,
             'message'   => $this->clean($message),
+            'date_added' => $this->getCurrentDate(),
         );
         return $this->insert($this->table_web, $form);
     }
@@ -83,7 +84,8 @@ class Notifications extends Connection
             'notif_title'   => $notif_title,
             'notif_message' => $notif_message,
             'coordinates'   => $coordinates,
-            'notif_address' => $notif_address
+            'notif_address' => $notif_address,
+            'date_added'    => $this->getCurrentDate(),
         );
         return $this->insert($this->table, $form);
     }
@@ -262,7 +264,7 @@ class Notifications extends Connection
     public function getAddress($latitude, $longitude)
     {
         //google map api url
-        $url = "http://maps.google.com/maps/api/geocode/json?latlng=$latitude,$longitude&key=AIzaSyC232qKEVqI5x0scuj9UGEVUNdB98PiMX0&sensor=false";
+        $url = "https://maps.google.com/maps/api/geocode/json?latlng=$latitude,$longitude&key=AIzaSyC232qKEVqI5x0scuj9UGEVUNdB98PiMX0&sensor=false";
 
         // send http request
         $geocode = file_get_contents($url);
