@@ -12,8 +12,8 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 //longitude
 
 if (isset($_GET['latitude']) && isset($_GET['longitude'])) {
-    $lat = $_GET['latitude'];
-    $lng = $_GET['longitude'];
+    $lat = $_GET['latitude'] == 0 ? '10.642612789500305': $_GET['latitude'];
+    $lng = $_GET['longitude'] == 0 ? '122.93891728037974': $_GET['longitude'];
 } else {
     $lat = '10.642612789500305';
     $lng = '122.93891728037974';
