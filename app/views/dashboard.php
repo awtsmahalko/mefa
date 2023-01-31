@@ -117,7 +117,7 @@
         // })
     });
 
-    function dashboard_map_marker(lat, lng, label, address = '', is_location = 0, radius = 2) {
+    function dashboard_map_marker(lat, lng, label, address = '', is_location = 0, radius = 2, notif_id = 0) {
         var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
         var pos = {
             lat: lat,
@@ -160,6 +160,7 @@
                 // '<h4 class="timeline-title">' + address + '</h4>' +
                 '<p>' +
                 '<small class="text-muted"><i class="fa fa-clock-o"></i> ' + label + '</small>' +
+                '<button class="btn btn-default btn-xs" style="float:right;" onclick="fireOut('+notif_id+')"><span class="fa fa-check"></span> Fire Out</button>'+
                 '</p>' +
                 '</div>' +
                 '<div class="timeline-body">' +
@@ -230,22 +231,47 @@
         dashboard_map = new google.maps.Map(document.getElementById("dashboard_map_canvas"), options);
         location_marker();
         var marker;
-
         $.post("controller/ajax.php?q=Notifications&m=dailyAlert", {}, function(data, status) {
 
+            $("#result").html("");
             var response = JSON.parse(data);
             for (let mapIndex = 0; mapIndex < response.data.lists.length; mapIndex++) {
                 const mapElem = response.data.lists[mapIndex];
 
-                dashboard_map_marker(mapElem.lat, mapElem.lng, mapElem.label, mapElem.address);
+                dashboard_map_marker(mapElem.lat, mapElem.lng, mapElem.label, mapElem.address, 0, 0,mapElem.id);
                 newSeries();
             }
 
         });
     }
+
+    function fireOut(notif_id){
+        swal({
+            title: "Are you sure?",
+            text: "You are about to fire out this alert!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Yes, fire out!",
+            cancelButtonText: "No",
+        },
+        function(isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    type: "POST",
+                    data:{
+                        notif_id:notif_id
+                    },
+                    url: "controller/ajax.php?q=Notifications&m=fire_out",
+                    success: function(data) {
+                        dashboard_init_map();
+                    }
+                });
+            }
+        });
+    }
 </script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC232qKEVqI5x0scuj9UGEVUNdB98PiMX0"></script>
 <!--This page JavaScript -->
 <!-- chartist chart -->
 <script src="../assets/libs/apexcharts/dist/apexcharts.min.js"></script>
@@ -333,7 +359,6 @@
             },
         },
     };
-    newSeries();
 
     function renderGraph() {
         $("#sales-of-ample-vs-pixel").html("");
@@ -352,3 +377,5 @@
         });
     }
 </script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC232qKEVqI5x0scuj9UGEVUNdB98PiMX0&callback=dashboard_init_map"></script>

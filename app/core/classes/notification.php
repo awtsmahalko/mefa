@@ -176,7 +176,7 @@ class Notifications extends Connection
         if ($_SESSION['user']['category'] == 'R') {
             $result = $this->table("tbl_web_notifications AS w")
                 ->join("tbl_notifications AS n", "w.notif_id", "=", "n.notif_id")
-                ->selectRaw("coordinates", "n.date_added", "notif_address", "message")
+                ->selectRaw("n.notif_id","coordinates", "n.date_added", "notif_address", "message")
                 ->where("w.user_id", $_SESSION['user']['id'])
                 ->where("n.date_added", ">", $last_time)
                 ->orderBy("n.date_added ASC")
@@ -188,6 +188,7 @@ class Notifications extends Connection
         while ($row = $result->fetch_assoc()) {
             $coords = explode(",", $row['coordinates']);
             $form = [
+                'id' => $row['notif_id'],
                 'lat' => (float) $coords[0],
                 'lng' => (float) $coords[1],
                 'label' => date("h:i A", strtotime($row['date_added'])),
@@ -297,5 +298,11 @@ class Notifications extends Connection
         }
 
         return json_encode($response);
+    }
+
+    public function fire_out()
+    {
+        $notif_id = $this->clean($this->inputs['notif_id']);
+        return $this->update($this->table, ['fire_out' => 1], "notif_id = '$notif_id'");
     }
 }

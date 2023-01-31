@@ -40,7 +40,7 @@ class Authentication extends Connection
                 $this->session = [
                     'id'        => $user_id,
                     'name'      => $fullname,
-                    'category'  => 'Resident',
+                    'category'  => 'R',
                     'email'     => $email
                 ];
                 return 1;
@@ -63,6 +63,7 @@ class Authentication extends Connection
                 'name'      => $row['user_fullname'],
                 'category'  => $row['user_category'],
                 'username'  => $row['username'],
+                'department_id' => $row['department_id'],
             ];
             return 1;
         } else {
