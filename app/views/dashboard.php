@@ -83,6 +83,7 @@
 </style>
 
 <script>
+    var session_user_category = "<?=$_SESSION['user']['category']?>";
     if (typeof(EventSource) !== "undefined") {
         var source = new EventSource("api/sse.php");
         source.onmessage = function(event) {
@@ -117,7 +118,7 @@
         // })
     });
 
-    function dashboard_map_marker(lat, lng, label, address = '', is_location = 0, radius = 2, notif_id = 0) {
+    function dashboard_map_marker(lat, lng, label, address = '', is_location = 0, radius = 2, notif_id = 0, status = 0) {
         var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
         var pos = {
             lat: lat,
@@ -150,21 +151,28 @@
             circle.setMap(dashboard_map);
         } else {
             marker_option['icon'] = icon;
-            marker = new google.maps.Marker(marker_option);
+            if(status == 0){
+                marker = new google.maps.Marker(marker_option);
+                var button_fire_out = session_user_category == 'F'? '<button class="btn btn-default btn-xs" style="float:right;" onclick="fireOut('+notif_id+')"><span class="fa fa-check"></span> Fire Out</button>':'';
+                var fire_responded = '<span class="badge bg-warning text-dark">Fire not yet responded</span>';
+            }else{
+                var button_fire_out = '';
+                var fire_responded = '<span class="badge bg-success">Fire already responded</span>';
+            }
+
             var li_label = '<li class="timeline-inverted timeline-item">' +
                 '<div class="timeline-badge success">' +
                 '<img src="../assets/images/fire-joypixels.gif" alt="img" class="img-fluid">' +
                 '</div>' +
                 '<div class="timeline-panel">' +
-                '<div class="timeline-heading">' +
                 // '<h4 class="timeline-title">' + address + '</h4>' +
+                '<div class="timeline-heading">' +
                 '<p>' +
-                '<small class="text-muted"><i class="fa fa-clock-o"></i> ' + label + '</small>' +
-                '<button class="btn btn-default btn-xs" style="float:right;" onclick="fireOut('+notif_id+')"><span class="fa fa-check"></span> Fire Out</button>'+
+                '<small class="text-muted"><i class="fa fa-clock-o"></i> ' + label + '</small>' +button_fire_out +
                 '</p>' +
                 '</div>' +
                 '<div class="timeline-body">' +
-                '<p>' + address + '</p>' +
+                '<p>' + address + '</p>' +fire_responded+
                 '</div>' +
                 '</div>' +
                 '</li>';
@@ -238,7 +246,7 @@
             for (let mapIndex = 0; mapIndex < response.data.lists.length; mapIndex++) {
                 const mapElem = response.data.lists[mapIndex];
 
-                dashboard_map_marker(mapElem.lat, mapElem.lng, mapElem.label, mapElem.address, 0, 0,mapElem.id);
+                dashboard_map_marker(mapElem.lat, mapElem.lng, mapElem.label, mapElem.address, 0, 0,mapElem.id,mapElem.status);
                 newSeries();
             }
 
@@ -376,6 +384,7 @@
             renderGraph();
         });
     }
+    newSeries();
 </script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC232qKEVqI5x0scuj9UGEVUNdB98PiMX0&callback=dashboard_init_map"></script>
