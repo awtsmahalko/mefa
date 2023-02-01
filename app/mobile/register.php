@@ -27,7 +27,7 @@ if(isset($data->username) && !empty($data->username) ){
 	if($count_rows[0] > 0){
 		echo -1;
 	}else{
-		$sql= $mysqli_connect->query("INSERT INTO `tbl_users`(`user_fullname`, `user_address`, `username`, `password`, `user_category`, `date_added`, user_mobile, user_email) VALUES ('$user_fullname','$user_address','$username',md5('$password'),'$category','$date', '$user_mobile', '$user_email')");
+		$sql= $mysqli_connect->query("INSERT INTO `tbl_users`(`user_fullname`, `user_address`, `username`, `password`, `user_category`, `date_added`, user_mobile, user_email) VALUES ('$user_fullname','$user_address','$username',md5('$password'),'$category','$date', '$user_mobile', '$user_email')") or die(mysqli_error());
 			
 		if($sql){
 			$user_id = $mysqli_connect->insert_id;
