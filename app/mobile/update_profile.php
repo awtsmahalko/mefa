@@ -11,23 +11,19 @@ $data = json_decode(file_get_contents("php://input"));
 
 if(isset($data->user_id) && $data->user_id > 0){
 	$user_id = $mysqli_connect->real_escape_string($data->user_id);
+	$user_fullname = $mysqli_connect->real_escape_string($data->user_fullname);
+	$user_mobile = $mysqli_connect->real_escape_string($data->user_mobile);
+	$user_address = $mysqli_connect->real_escape_string($data->user_address);
+	$user_email = $mysqli_connect->real_escape_string($data->user_email);
 	$username = $mysqli_connect->real_escape_string($data->username);
-	$password = $mysqli_connect->real_escape_string($data->password);
 	$date = getCurrentDate();
 
-	$fetch_count = $mysqli_connect->query("SELECT count(user_id) from tbl_users where password=md5('$password') and user_id='$user_id' ");
-	$count_row = $fetch_count->fetch_array();
+	$sql = $mysqli_connect->query("UPDATE `tbl_users` SET `username`='$username', user_fullname='$user_fullname', user_mobile='$user_mobile', user_address='$user_address', user_email='$user_email' WHERE user_id='$user_id' ");
 
-	if($count_row[0] == 0){
-		echo -1;
+	if($sql){
+		echo 1;
 	}else{
-		$sql = $mysqli_connect->query("UPDATE `tbl_users` SET `username`='$username' WHERE user_id='$user_id' ");
-
-		if($sql){
-			echo 1;
-		}else{
-			echo 0;
-		}
+		echo 0;
 	}
 
 }
