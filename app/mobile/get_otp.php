@@ -23,7 +23,7 @@ if(isset($data->user_email) && !empty($data->user_email) ){
 
 	if($row[0] > 0){
 	    $generated_otp = generateRandomString(6);
-	    $sql = $mysqli_connect->query("UPDATE tbl_users SET user_otp='$generated_otp' WHERE user_id='$row[0]'  ");
+	    $sql = $mysqli_connect->query("UPDATE tbl_users SET user_otp='$generated_otp' WHERE user_id='$row[0]' ") or die(mysqli_error());
 	    
 	    if($sql){
 	        emailSender($user_email, $generated_otp);
