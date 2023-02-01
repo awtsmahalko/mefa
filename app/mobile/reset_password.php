@@ -9,6 +9,7 @@ require_once 'core/config.php';
 
 $data = json_decode(file_get_contents("php://input"));
 
+
 if(isset($data->username) && !empty($data->username) ){
 	
 	$username = $mysqli_connect->real_escape_string($data->username);

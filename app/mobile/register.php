@@ -12,6 +12,8 @@ $data = json_decode(file_get_contents("php://input"));
 if(isset($data->username) && !empty($data->username) ){
 	$user_fullname = $mysqli_connect->real_escape_string($data->user_fullname);
     $user_address = $mysqli_connect->real_escape_string($data->user_address);
+	$user_mobile = $mysqli_connect->real_escape_string($data->user_mobile);
+	$user_email = $mysqli_connect->real_escape_string($data->user_email);
     $category = "R";
 	
 	$username = $mysqli_connect->real_escape_string($data->username);
@@ -25,7 +27,7 @@ if(isset($data->username) && !empty($data->username) ){
 	if($count_rows[0] > 0){
 		echo -1;
 	}else{
-		$sql= $mysqli_connect->query("INSERT INTO `tbl_users`(`user_fullname`, `user_address`, `username`, `password`, `user_category`, `date_updated`) VALUES ('$user_fullname','$user_address','$username',md5('$password'),'$category','$date')");
+		$sql= $mysqli_connect->query("INSERT INTO `tbl_users`(`user_fullname`, `user_address`, `username`, `password`, `user_category`, `date_added`, user_mobile, user_email) VALUES ('$user_fullname','$user_address','$username',md5('$password'),'$category','$date', '$user_mobile', '$user_email')");
 			
 		if($sql){
 			$user_id = $mysqli_connect->insert_id;

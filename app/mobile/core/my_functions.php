@@ -117,4 +117,43 @@ function get_time_ago_string($time_stamp, $divisor, $time_unit)
     }
 }
 
+
+function emailSender($user_email, $user_otp)
+{
+    $to = $user_email;
+    $subject = "RTFAA: Reset Password";
+
+    $message = "
+            <html>
+            <head>
+            <title>RTFAA: Reset Password</title>
+            </head>
+            <body>
+            <p>Your OTP is : <b>$user_otp</b></p>
+            </body>
+            </html>
+            ";
+
+    // Always set content-type when sending HTML email
+    $headers = "MIME-Version: 1.0" . "\r\n";
+    $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+
+    // More headers
+    // $headers .= 'From: <webmaster@example.com>' . "\r\n";
+    // $headers .= 'Cc: myboss@example.com' . "\r\n";
+
+    mail($to, $subject, $message, $headers);
+}
+
+function generateRandomString($length = 10)
+{
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
+}
+
 ?>
