@@ -29,7 +29,7 @@ if(isset($data->user_email) && !empty($data->user_email) ){
 	        emailSender($user_email, $generated_otp);
 	        $res = 1;
 	    }else{
-	         $res = 0;
+	        $res = 0;
 	    }
 	    
 	    $response['response'] = $res;
