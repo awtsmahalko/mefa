@@ -21,11 +21,13 @@ if(isset($data->username) && !empty($data->username) ){
 
 	$date = getCurrentDate();
 
-	$fetch_rows = $mysqli_connect->query("SELECT count(user_id) from tbl_users where username='$username' ") or die(mysqli_error());
-	$count_rows = $fetch_rows->fetch_array();
+	$fetch_rows = $mysqli_connect->query("SELECT username, user_email from tbl_users where (username='$username' or user_email='$user_email') ") or die(mysqli_error());
+	$rows = $fetch_rows->fetch_array();
 
-	if($count_rows[0] > 0){
+	if($rows['username'] == $username){
 		echo -1;
+	}else if($rows['user_email'] == $user_email){
+		echo -2;
 	}else{
 		$sql= $mysqli_connect->query("INSERT INTO `tbl_users`(`user_fullname`, `user_address`, `username`, `password`, `user_category`, `date_added`, user_mobile, user_email) VALUES ('$user_fullname','$user_address','$username',md5('$password'),'$category','$date', '$user_mobile', '$user_email')") or die(mysqli_error());
 			
