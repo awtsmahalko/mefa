@@ -51,8 +51,6 @@ if(isset($data->property_id) && !empty($data->property_id) ){
         }
     }
 	
-}else{
-    echo -2;
 }
 
 ?>
