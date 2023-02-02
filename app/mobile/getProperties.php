@@ -14,10 +14,12 @@ if(isset($data->user_id) && !empty($data->user_id )){
 	$user_id = $mysqli_connect->real_escape_string($data->user_id);
 
 	$response = array();
+    $list = array();
 	$fetch = $mysqli_connect->query("SELECT * FROM tbl_properties where user_id='$user_id' ") or die(mysql_error());
-	$rows[] = $fetch->fetch_array();
-
-    array_push($response, $rows);
+	while($row = $fetch->fetch_array()){
+        $list = $row;
+        array_push($response, $list);
+    }
 
 	echo json_encode($response);
 
