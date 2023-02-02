@@ -9,7 +9,7 @@ require_once 'core/config.php';
 
 $data = json_decode(file_get_contents("php://input"));
 
-if(isset($data->user_id) && !empty($data->user_id) ){
+if(isset($data->property_id) && !empty($data->property_id) ){
 	$property_id = $mysqli_connect->real_escape_string($data->property_id);
     $property_name = $mysqli_connect->real_escape_string($data->property_name);
 	$property_address = $mysqli_connect->real_escape_string($data->property_address);
@@ -51,6 +51,8 @@ if(isset($data->user_id) && !empty($data->user_id) ){
         }
     }
 	
+}else{
+    echo -2;
 }
 
 ?>
