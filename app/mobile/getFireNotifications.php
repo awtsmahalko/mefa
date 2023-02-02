@@ -15,7 +15,7 @@ if(isset($data->user_id) && !empty($data->user_id )){
 
 	$response = array();
     
-	$fetch = $mysqli_connect->query("SELECT w.id, w.message, n.coordinaates FROM tbl_web_notifications w LEFT JOIN tbl_notifications n ON w.notif_id=n.notif_id where w.user_id='$user_id' ") or die(mysql_error());
+	$fetch = $mysqli_connect->query("SELECT w.id, w.message, n.coordinates FROM tbl_web_notifications w LEFT JOIN tbl_notifications n ON w.notif_id=n.notif_id where w.user_id='$user_id' ") or die(mysql_error());
 	while($row = $fetch->fetch_array()){
         $list = array();
         $list['notif_id'] = $row[0];
