@@ -22,6 +22,7 @@ if(isset($data->property_id) && !empty($data->property_id )){
     $list['property_id'] = $row['property_id'];
     $list['property_name'] = $row['property_name'];
     $list['property_address'] = $row['property_address'];
+    $list['property_radius'] = $row['property_radius'];
 
     $coordinates = explode(",",$row['property_coordinates']);
 
