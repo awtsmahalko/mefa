@@ -41,7 +41,7 @@ if(isset($data->property_id) && !empty($data->property_id) ){
 
     }else{
         // add
-        $property_code = generateRandomString(6);
+        $property_code = generateRandomString(5);
         $sql = $mysqli_connect->query("INSERT INTO `tbl_properties`(`property_code`, `property_name`, `property_coordinates`, `property_radius`, `property_address`, `user_id`, `date_added`, `date_updated`) VALUES ('$property_code','$property_name','$property_coordinates','$property_radius','$property_address', '$user_id', '$date', '$date')") or die(mysql_error());
 
         if($sql){
