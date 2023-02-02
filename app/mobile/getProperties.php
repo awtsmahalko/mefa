@@ -17,8 +17,8 @@ if(isset($data->user_id) && !empty($data->user_id )){
     
 	$fetch = $mysqli_connect->query("SELECT * FROM tbl_properties where user_id='$user_id' ") or die(mysql_error());
 	while($row = $fetch->fetch_assoc()){
-        $list[] = array();
-        $list = $row;
+        $list = array();
+        $list[] = $row;
         array_push($response, $list);
     }
 
