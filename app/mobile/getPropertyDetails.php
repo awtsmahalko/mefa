@@ -29,9 +29,7 @@ if(isset($data->property_id) && !empty($data->property_id )){
     $list['property_lat'] = $coordinates[0];
     $list['property_lng'] = $coordinates[1];
 
-    array_push($response, $list);
-
-	echo json_encode($response);
+	echo json_encode($list);
 
 }
 
