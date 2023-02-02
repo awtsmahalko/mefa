@@ -18,7 +18,15 @@ if(isset($data->user_id) && !empty($data->user_id )){
 	$fetch = $mysqli_connect->query("SELECT * FROM tbl_properties where user_id='$user_id' ") or die(mysql_error());
 	while($row = $fetch->fetch_assoc()){
         $list = array();
-        $list[] = $row;
+        $list['property_id'] = $row['property_id'];
+        $list['property_name'] = $row['property_name'];
+        $list['property_address'] = $row['property_address'];
+
+        $coordinates = explode(",",$row['property_coordinates']);
+
+        $list['property_coordinates_lat'] = $coordinates[0];
+        $list['property_coordinates_lng'] = $coordinates[1];
+
         array_push($response, $list);
     }
 
