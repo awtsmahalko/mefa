@@ -24,8 +24,8 @@ if(isset($data->user_id) && !empty($data->user_id )){
 
         $coordinates = explode(",",$row['property_coordinates']);
 
-        $list['property_coordinates_lat'] = $coordinates[0];
-        $list['property_coordinates_lng'] = $coordinates[1];
+        $list['property_lat'] = $coordinates[0];
+        $list['property_lng'] = $coordinates[1];
 
         array_push($response, $list);
     }
