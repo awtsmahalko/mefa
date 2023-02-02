@@ -15,7 +15,9 @@ if(isset($data->user_id) && !empty($data->user_id )){
 
 	$response = array();
 	$fetch = $mysqli_connect->query("SELECT * FROM tbl_properties where user_id='$user_id' ") or die(mysql_error());
-	$response = $fetch->fetch_array();
+	$rows[] = $fetch->fetch_array();
+
+    array_push($response, $rows);
 
 	echo json_encode($response);
 
