@@ -139,7 +139,7 @@ class Notifications extends Connection
             $resident_radius = $row['user_radius'] * 1;
 
             if ($this->getDistance($fire_lat, $fire_lng, $_lat, $_lng, $resident_radius) == 1) {
-                $message = "There is a fire in $notif_address near in your Resident";
+                $message = "There is a fire in $notif_address near your residence";
                 $response[] = $this->pushNotif($notif_title, $message, $row['user_token']);
                 $this->webNotif($notif_id, $row['user_id'], $message);
             }
