@@ -1,8 +1,13 @@
 <?php
 $user_data = Users::dataOf($_SESSION['user']['id']);
+if($user_data['user_category'] == 'R'){
+    $latLng = $user_data['user_resident_coordinates'] == '' ? '10.642612789500305,122.93891728037974': $user_data['user_resident_coordinates'];
+}
 
-$latLng = $user_data['user_resident_coordinates'] == '' ? '10.642612789500305,122.93891728037974': $user_data['user_resident_coordinates'];
-
+if($user_data['user_category'] == 'F'){
+    $data_ = Departments::dataOf($user_data['department_id']);
+    $latLng = $data_['department_coordinates'];
+}
 ?>
 
 <!-- ============================================================== -->
@@ -51,6 +56,21 @@ $latLng = $user_data['user_resident_coordinates'] == '' ? '10.642612789500305,12
                         </div>
                         <button class="btn btn-success btn-block" onclick="showResident(<?= $user_data['user_id'] ?>)" type="button">
                             <span class="fa fa-map-marker"></span> Change Resident Location
+                        </button>
+                    </div>
+                <?php } ?>
+                <?php if ($_SESSION['user']['category'] == 'R') { ?>
+                    <div>
+                        <hr />
+                    </div>
+                    <div class="card-body">
+                        <small class="text-muted pt-2 db">Address</small>
+                        <h6><?= $user_data['user_address'] ?></h6>
+                        <div class="map-box">
+                            <iframe src="https://www.google.com/maps/embed/v1/view?key=AIzaSyC232qKEVqI5x0scuj9UGEVUNdB98PiMX0&center=<?= $latLng ?>&zoom=18&maptype=satellite" width="100%" height="150" frameborder="0" style="border: 0" allowfullscreen></iframe>
+                        </div>
+                        <button class="btn btn-success btn-block" onclick="showDepartment(<?= $user_data['department_id'] ?>)" type="button">
+                            <span class="fa fa-map-marker"></span> Change Fire Station Location
                         </button>
                     </div>
                 <?php } ?>
@@ -354,5 +374,9 @@ $latLng = $user_data['user_resident_coordinates'] == '' ? '10.642612789500305,12
 
     function showLocation(property_id) {
         window.location = "index.php?q=properties_location&property_id=" + property_id;
+    }
+
+    function showDepartment(department_id) {
+        window.location = "index.php?q=department_location&department_id=" + department_id;
     }
 </script>

@@ -122,6 +122,7 @@ class Users extends Connection
             'user_email' => $user_email,
         );
 
+        $_SESSION['user']['name'] = $user_fullname;
         return $this->update($this->table, $form, "user_id = '$user_id'");
     }
 

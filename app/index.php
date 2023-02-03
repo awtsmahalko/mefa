@@ -198,7 +198,7 @@ $views_file = isset($_GET['q']) ?  $_GET['q'] : 'dashboard';
             <!-- footer -->
             <!-- ============================================================== -->
             <footer class="footer">
-                All Rights Reserved by MEFA.
+                All Rights Reserved by RTFAA.
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->
