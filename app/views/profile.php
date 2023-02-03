@@ -59,7 +59,7 @@ if($user_data['user_category'] == 'F'){
                         </button>
                     </div>
                 <?php } ?>
-                <?php if ($_SESSION['user']['category'] == 'R') { ?>
+                <?php if ($_SESSION['user']['category'] == 'F') { ?>
                     <div>
                         <hr />
                     </div>
