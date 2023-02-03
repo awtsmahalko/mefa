@@ -304,6 +304,27 @@ class Notifications extends Connection
     public function fire_out()
     {
         $notif_id = $this->clean($this->inputs['notif_id']);
+
+        $result = $this->select($this->table,'*',"notif_id = '$notif_id'");
+        while ($row = $result->fetch_assoc()) {
+            $user_id = $row['user_id'];
+            $notif_address = $row['notif_address'];
+
+            if(Users::dataOf($user_id,'user_category') == 'R'){
+                $message = "The fire alert in $notif_address has been put out.";
+                $this->pushNotif("Fire Alert",$message,Users::dataOf($user_id,'user_token'));
+            }
+
+        }
+
         return $this->update($this->table, ['fire_out' => 1], "notif_id = '$notif_id'");
+    }
+
+    public static function dataOf($primary_id, $field = '*')
+    {
+        $self = new self;
+        $result = $self->select($self->table, $field, "$self->pk = '$primary_id'");
+        $row = $result->fetch_assoc();
+        return $field == '*' ? $row : $row[$field];
     }
 }

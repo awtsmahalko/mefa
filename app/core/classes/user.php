@@ -76,7 +76,7 @@ class Users extends Connection
             array_push($response, [
                 'lat' => (float) $explode[0],
                 'lng' => (float) $explode[1],
-                'marker' => "Resident",
+                'marker' => "Residence",
                 'radius' => (float) $data_['user_radius'],
             ]);
 
