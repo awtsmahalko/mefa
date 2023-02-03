@@ -153,7 +153,7 @@
             marker_option['icon'] = icon;
             if(status == 0){
                 marker = new google.maps.Marker(marker_option);
-                var button_fire_out = session_user_category == 'A'? '':'<button class="btn btn-default btn-xs" style="float:right;" onclick="fireOut('+notif_id+')"><span class="fa fa-check"></span> Fire Out</button>';
+                var button_fire_out = session_user_category != 'A'? '':'<button class="btn btn-default btn-xs" style="float:right;" onclick="fireOut('+notif_id+')"><span class="fa fa-check"></span> Fire Out</button>';
                 var fire_responded = '<span class="badge bg-warning text-dark">Fire not yet responded</span>';
             }else{
                 var button_fire_out = '';
