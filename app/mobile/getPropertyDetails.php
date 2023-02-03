@@ -11,7 +11,7 @@ $data = json_decode(file_get_contents("php://input"));
 
 if(isset($data->property_id) && !empty($data->property_id )){
 
-	$property_id = $mysqli_connect->real_escape_string($data->property_id) * 1;
+	$property_id = $mysqli_connect->real_escape_string($data->property_id);
     $user_id = $mysqli_connect->real_escape_string($data->user_id);
 
 	$response = array();
