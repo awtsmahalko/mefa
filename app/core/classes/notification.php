@@ -120,7 +120,7 @@ class Notifications extends Connection
 
             if ($this->getDistance($fire_lat, $fire_lng, $_lat, $_lng, $property_radius) == 1) {
                 $user_token = Users::token($row['user_id']);
-                $message = "There is a fire in $notif_address near in your " . $row['property_name']."'s location";
+                $message = "There is a fire in $notif_address near your " . $row['property_name']."'s location";
                 $response[] = $this->pushNotif($notif_title, $message, $user_token);
                 $this->webNotif($notif_id, $row['user_id'], $message);
             }
@@ -160,7 +160,7 @@ class Notifications extends Connection
             $resident_radius = $data_['department_radius'] * 1;
 
             if ($this->getDistance($fire_lat, $fire_lng, $_lat, $_lng, $resident_radius) == 1) {
-                $message = "There is a fire in $notif_address near in your Fire Department : ".$data_['department_name'];
+                $message = "There is a fire in $notif_address near your Fire Department : ".$data_['department_name'];
                 $response[] = $this->pushNotif($notif_title, $message, $row['user_token']);
                 $this->webNotif($notif_id, $row['user_id'], $message);
             }
