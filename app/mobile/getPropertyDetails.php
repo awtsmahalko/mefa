@@ -16,7 +16,23 @@ if(isset($data->property_id) && !empty($data->property_id )){
 
 	$response = array();
 
-    if($property_id == -1){
+    if($property_id > 0){
+
+        $fetch = $mysqli_connect->query("SELECT * FROM tbl_properties where property_id='$property_id' ") or die(mysql_error());
+	    $row = $fetch->fetch_assoc();
+        $list = array();
+        $list['property_id'] = $row['property_id'];
+        $list['property_name'] = $row['property_name'];
+        $list['property_address'] = $row['property_address'];
+        $list['property_radius'] = $row['property_radius'];
+
+        $coordinates = explode(",",$row['property_coordinates']);
+
+        $list['property_lat'] = $coordinates[0];
+        $list['property_lng'] = $coordinates[1];
+
+    }else{
+
         $fetch = $mysqli_connect->query("SELECT user_resident_coordinates, user_radius FROM tbl_users where user_id='$user_id' ") or die(mysql_error());
 	    $row = $fetch->fetch_assoc();
 
@@ -31,19 +47,6 @@ if(isset($data->property_id) && !empty($data->property_id )){
         $list['property_lat'] = $coordinates[0];
         $list['property_lng'] = $coordinates[1];
 
-    }else{
-        $fetch = $mysqli_connect->query("SELECT * FROM tbl_properties where property_id='$property_id' ") or die(mysql_error());
-	    $row = $fetch->fetch_assoc();
-        $list = array();
-        $list['property_id'] = $row['property_id'];
-        $list['property_name'] = $row['property_name'];
-        $list['property_address'] = $row['property_address'];
-        $list['property_radius'] = $row['property_radius'];
-
-        $coordinates = explode(",",$row['property_coordinates']);
-
-        $list['property_lat'] = $coordinates[0];
-        $list['property_lng'] = $coordinates[1];
     }
 
 	echo json_encode($list);
