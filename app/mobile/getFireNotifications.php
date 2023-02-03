@@ -22,7 +22,7 @@ if(isset($data->user_id) && !empty($data->user_id )){
         $list['notif_message'] = $row[1];
 
         $coordinates = explode(",",$row[2]);
-        $list['fire_out'] = $row[2];
+        $list['fire_out'] = $row[3];
 
         $list['notif_lat'] = $coordinates[0];
         $list['notif_lng'] = $coordinates[1];
