@@ -87,13 +87,13 @@ class Notifications extends Connection
             'notif_address' => $notif_address,
             'date_added'    => $this->getCurrentDate(),
         );
-        return $this->insert($this->table, $form);
+        return $this->insert($this->table, $form, 'Y');
     }
 
-    public function checker()
+    public function checker($notif_id)
     {
         $response = [];
-        $result = $this->select($this->table, '*', "notif_status = 0 ORDER BY date_added ASC");
+        $result = $this->select($this->table, '*', "notif_id = '$notif_id' AND notif_status = 0 ORDER BY date_added ASC");
         while ($row = $result->fetch_assoc()) {
             $fire_coordinates = explode(",", $row['coordinates']);
             $fire_lat = $fire_coordinates[0] * 1;

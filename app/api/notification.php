@@ -32,6 +32,6 @@ $form = array(
 );
 
 $Notif->inputs = $form; //$_POST;
-$Notif->add();
-$Notif->checker();
+$notif_id = $Notif->add();
+$Notif->checker($notif_id);
 echo $notif_address;
