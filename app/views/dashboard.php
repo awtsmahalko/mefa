@@ -153,7 +153,7 @@
             marker_option['icon'] = icon;
             if(status == 0){
                 marker = new google.maps.Marker(marker_option);
-                var button_fire_out = session_user_category == 'R'? '':'<button class="btn btn-default btn-xs" style="float:right;" onclick="fireOut('+notif_id+')"><span class="fa fa-check"></span> Fire Out</button>';
+                var button_fire_out = session_user_category == 'R'? '':'<button class="btn btn-default btn-xs" onclick="fireOut('+notif_id+')"><span class="fa fa-check"></span> Fire Out</button>';
                 var fire_responded = '<span class="badge bg-warning text-dark">Fire not yet responded</span>';
             }else{
                 var button_fire_out = '';
@@ -167,8 +167,9 @@
                 '<div class="timeline-panel">' +
                 // '<h4 class="timeline-title">' + address + '</h4>' +
                 '<div class="timeline-heading">' +
+                '<p>' +button_fire_out + '</p>' +
                 '<p>' +
-                '<small class="text-muted"><i class="fa fa-clock-o"></i> ' + label + '</small>' +button_fire_out +
+                '<small class="text-muted"><i class="fa fa-clock-o"></i> ' + label + '</small>' +
                 '</p>' +
                 '</div>' +
                 '<div class="timeline-body">' +

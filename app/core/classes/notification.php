@@ -178,11 +178,11 @@ class Notifications extends Connection
                 ->join("tbl_notifications AS n", "w.notif_id", "=", "n.notif_id")
                 ->selectRaw("n.notif_id", "coordinates", "n.date_added", "notif_address", "message", "n.fire_out")
                 ->where("w.user_id", $_SESSION['user']['id'])
-                ->where("n.date_added", ">", $last_time)
+                ->where("(n.fire_out = 0 OR n.date_added", ">", "'$last_time')", 1)
                 ->orderBy("n.date_added ASC")
                 ->get();
         } else {
-            $result = $this->select($this->table, "*", "notif_id > 0 AND date_added > '$last_time' ORDER BY date_added ASC");
+            $result = $this->select($this->table, "*", "notif_id > 0 AND (fire_out = 0 OR date_added > '$last_time') ORDER BY date_added ASC");
         }
 
         while ($row = $result->fetch_assoc()) {
@@ -192,7 +192,7 @@ class Notifications extends Connection
                 'id' => $row['notif_id'],
                 'lat' => (float) $coords[0],
                 'lng' => (float) $coords[1],
-                'label' => date("h:i A", strtotime($row['date_added'])),
+                'label' => date("M d, Y h:i A", strtotime($row['date_added'])),
                 'date_time' => date("F d, Y h:i A", strtotime($row['date_added'])),
                 'address' => $row['notif_address'],
                 'message' => $_SESSION['user']['category'] == 'R' ? $row['message'] : $row['notif_message']
@@ -227,7 +227,7 @@ class Notifications extends Connection
             $form = [
                 'lat' => (float) $coords[0],
                 'lng' => (float) $coords[1],
-                'label' => date("h:i A", strtotime($row['date_added'])),
+                'label' => date("M d, Y h:i A", strtotime($row['date_added'])),
                 'date_time' => date("F d, Y h:i A", strtotime($row['date_added'])),
                 'address' => $row['notif_address'], //$this->getAddress($coords[0], $coords[1])
                 'message' => $_SESSION['user']['category'] == 'R' ? $row['message'] : $row['notif_message']

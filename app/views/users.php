@@ -45,7 +45,7 @@
                                     <th>#</th>
                                     <th>Name</th>
                                     <th>Address</th>
-                                    <th>Date Added</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -172,7 +172,11 @@
                     },
                 },
                 {
-                    "data": "date_added"
+                    "render": function(data, type, row) {
+                        return '<div class="d-flex align-items-center">' +
+                            '<button class="btn btn-danger rounded-pill" onclick="deleteUser('+row.user_id+')"><span class="fa fa-trash"></span></button>' +
+                            '</div>';
+                    },
                 }
             ]
         });
@@ -227,4 +231,35 @@
         // });
 
     });
+
+
+    function deleteUser(user_id) {
+        swal({
+            title: "Are you sure?",
+            text: "Data will be deleted permanently!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Yes",
+            cancelButtonText: "No",
+            closeOnConfirm: false,
+        },
+        function(isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    type: "POST",
+                    data:{user_id:user_id},
+                    url: "controller/ajax.php?q=Users&m=destroy",
+                    success: function(data) {
+                        showUsers();
+                        if(data == 1){
+                            success_delete();
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+
 </script>

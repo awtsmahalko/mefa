@@ -33,7 +33,7 @@ class Users extends Connection
     public function datatable()
     {
         $response['data'] = [];
-        $result = $this->select($this->table);
+        $result = $this->select($this->table,"*","user_category != 'A'");
         $count = 1;
         while ($row = $result->fetch_assoc()) {
             array_push($response['data'], [
@@ -124,6 +124,16 @@ class Users extends Connection
 
         $_SESSION['user']['name'] = $user_fullname;
         return $this->update($this->table, $form, "user_id = '$user_id'");
+    }
+
+    public function destroy()
+    {
+        $user_id = $this->clean($this->inputs['user_id']);
+        $tables = ['tbl_web_notifications','tbl_properties', $this->table];
+        foreach($tables as $table){
+            $this->delete($table,"user_id = '$user_id'");
+        }
+        return 1;
     }
 
     public static function combo()

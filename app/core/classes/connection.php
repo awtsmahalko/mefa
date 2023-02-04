@@ -242,9 +242,10 @@ class Connection
         return $this;
     }
 
-    public function where($column, $equal, $to = '')
+    public function where($column, $equal, $to = '', $no_string = 0)
     {
-        $where = ($to != '') ? "$equal '$to'" : "= '$equal'";
+        $_to = $no_string == 1 ? "$to":"'$to'";
+        $where = ($to != '') ? "$equal $_to" : "= '$equal'";
         $this->where[] = "$column $where";
         return $this;
     }
