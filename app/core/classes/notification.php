@@ -32,7 +32,10 @@ class Notifications extends Connection
                 "title" => $title
             ),
             'data' => array(
-                'priority' => 10
+                'priority' => 10,
+                "message" => $message,
+                "body" => $message,
+                "title" => $title
             )
         );
 
@@ -312,7 +315,7 @@ class Notifications extends Connection
 
             if(Users::dataOf($user_id,'user_category') == 'R'){
                 $message = "The fire alert in $notif_address has been put out.";
-                $this->pushNotif("Fire Alert",$message,Users::dataOf($user_id,'user_token'));
+                $this->pushNotif("Fire Out",$message,Users::dataOf($user_id,'user_token'));
             }
 
         }
