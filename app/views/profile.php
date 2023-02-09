@@ -170,19 +170,19 @@ if($user_data['user_category'] == 'F'){
                                 <div class="mb-3">
                                     <label class="col-md-12">Username</label>
                                     <div class="col-md-12">
-                                        <input type="text" value="<?= $user_data['username'] ?>" class="form-control form-control-line" name="user_fullname" required />
+                                        <input type="text" value="<?= $user_data['username'] ?>" class="form-control form-control-line" name="username" required />
                                     </div>
                                 </div>
                                 <div class="mb-3">
                                     <label class="col-md-12">Password</label>
                                     <div class="col-md-12">
-                                        <input type="password" class="form-control form-control-line" name="password" required />
+                                        <input type="password" class="form-control form-control-line" name="password" minlength="8" required />
                                     </div>
                                 </div>
                                 <div class="mb-3">
                                     <label class="col-md-12">Retype Password</label>
                                     <div class="col-md-12">
-                                        <input type="password" class="form-control form-control-line" name="password2" required />
+                                        <input type="password" class="form-control form-control-line" name="password2" minlength="8" required />
                                     </div>
                                 </div>
                                 <div class="mb-3">
@@ -316,6 +316,21 @@ if($user_data['user_category'] == 'F'){
         $.post("controller/ajax.php?q=Users&m=updateProfile", $("#frm_profile").serialize(), function(data, status) {
             if (data == 1) {
                 success_update();
+            } else {
+                failed_query(data);
+            }
+        });
+    });
+
+    $("#frm_settings").on("submit", function(e) {
+        e.preventDefault();
+        $.post("controller/ajax.php?q=Users&m=updatePassword", $("#frm_settings").serialize(), function(data, status) {
+            if (data == 1) {
+                success_update();
+            }else if (data == 2) {
+                swal("Cannot proceed!", "Username already taken!", "warning");
+            }else if (data == -1) {
+                swal("Cannot proceed!", "Password mismatch!", "warning");
             } else {
                 failed_query(data);
             }

@@ -45,6 +45,7 @@
                                     <th>#</th>
                                     <th>Name</th>
                                     <th>Address</th>
+                                    <th>Mobile</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -170,6 +171,8 @@
                             '</div>' +
                             '</div>';
                     },
+                },{
+                    "data": "user_mobile"
                 },
                 {
                     "render": function(data, type, row) {

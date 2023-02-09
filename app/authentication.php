@@ -124,14 +124,14 @@ session_destroy();
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-floating mb-3">
-                                                <input type="password" name="password" autocomplete="off" class="form-control form-input-bg" id="text-rpassword" placeholder="*****" required />
+                                                <input type="password" name="password" autocomplete="off" class="form-control form-input-bg" id="text-rpassword" placeholder="*****" minlength="8"  required />
                                                 <label for="text-rpassword">Password</label>
                                                 <div class="invalid-feedback">Password is required</div>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-floating mb-3">
-                                                <input type="password" class="form-control form-input-bg" autocomplete="off" id="text-rcpassword" placeholder="*****" required />
+                                                <input type="password" class="form-control form-input-bg" autocomplete="off" id="text-rcpassword" placeholder="*****" minlength="8"  required />
                                                 <label for="text-rcpassword">Confirm Password</label>
                                                 <div class="invalid-feedback">Password is required</div>
                                             </div>

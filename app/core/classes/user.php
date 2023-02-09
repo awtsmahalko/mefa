@@ -126,6 +126,28 @@ class Users extends Connection
         return $this->update($this->table, $form, "user_id = '$user_id'");
     }
 
+    public function updatePassword()
+    {
+        $user_id        = $this->clean($this->inputs['user_id']);
+        $username       = $this->clean($this->inputs['username']);
+        $password       = $this->clean($this->inputs['password']);
+        $password2      = $this->clean($this->inputs['password2']);
+
+        if($password != $password2)
+            return -1;
+
+        $fetch = $this->select($this->table, "user_id,username", "username = '$username' AND user_id != '$user_id'");
+        if ($fetch->num_rows > 0)
+            return 2;
+     
+        $form = array(
+            'username' => $username,
+            'password' => md5($password)
+        );
+        return $this->update($this->table, $form, "user_id = '$user_id'");
+        
+    }
+
     public function destroy()
     {
         $user_id = $this->clean($this->inputs['user_id']);
