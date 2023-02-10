@@ -79,7 +79,7 @@ session_destroy();
                     <div class="row justify-content-center text-center">
                         <div class="col-md-7 col-lg-12 col-xl-9">
                             <div>
-                                <span class="db"><img src="../assets/images/background/bfp.png" width="200px" alt="logo" /></span>
+                                <span class="db"><img src="../assets/images/background/rtfaa.webp" width="200px" alt="logo" /></span>
                             </div>
                             <h2 class="text-white mt-4 fw-light">
                                 <span class="font-weight-medium">RTFAA: </span> REAL TIME FIRE ALERT APPLICATION

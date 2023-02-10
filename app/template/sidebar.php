@@ -3,7 +3,7 @@
     <div class="scroll-sidebar">
         <!-- User profile -->
         <div class="user-profile position-relative" style="
-              background: url(../assets/images/background/user-info.jpg)
+              background: url(../assets/images/background/rtfaa-user-info.png)
                 no-repeat;
             ">
             <!-- User profile image -->
