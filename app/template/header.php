@@ -11,7 +11,7 @@
                 <b class="logo-icon">
                     <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                     <!-- Dark Logo icon -->
-                    <span class="round rounded-circle text-white d-inline-block text-center bg-primary"><img src="../assets/images/fire-joypixels.gif" alt="img" class="img-fluid"></span>
+                    <span class="round rounded-circle text-white d-inline-block text-center"><img src="../assets/images/background/rtfaa.webp" alt="img" class="img-fluid"></span>
                 </b>
                 <!--End Logo icon -->
                 <!-- Logo text -->

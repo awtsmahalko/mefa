@@ -19,7 +19,7 @@ $views_file = isset($_GET['q']) ?  $_GET['q'] : 'dashboard';
     <title>RTFAA</title>
     <link rel="canonical" href="https://www.wrappixel.com/templates/materialpro/" />
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/background/rtfaa.webp" />
     <link rel="stylesheet" href="../assets/libs/apexcharts/dist/apexcharts.css" />
 
     <link href="../assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet" />
