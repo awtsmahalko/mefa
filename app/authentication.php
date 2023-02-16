@@ -39,7 +39,7 @@ session_destroy();
     <meta name="keywords" content="wrappixel, admin dashboard, html css dashboard, web dashboard, bootstrap 5 admin, bootstrap 5, css3 dashboard, bootstrap 5 dashboard, material pro admin bootstrap 5 dashboard, frontend, responsive bootstrap 5 admin template, material design, material dashboard bootstrap 5 dashboard template" />
     <meta name="description" content="MaterialPro is powerful and clean admin dashboard template, inpired from Google's Material Design" />
     <meta name="robots" content="noindex,nofollow" />
-    <title>RTFAA: Real Time Fire Alert Application</title>
+    <title>RTFAA: Real Time Fire Alarm Application</title>
     <link rel="canonical" href="https://www.wrappixel.com/templates/materialpro/" />
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png" />
@@ -82,10 +82,10 @@ session_destroy();
                                 <span class="db"><img src="../assets/images/background/rtfaa.webp" width="200px" alt="logo" /></span>
                             </div>
                             <h2 class="text-white mt-4 fw-light">
-                                <span class="font-weight-medium">RTFAA: </span> REAL TIME FIRE ALERT APPLICATION
+                                <span class="font-weight-medium">RTFAA: </span> REAL TIME FIRE ALARM APPLICATION
                             </h2>
                             <p class="op-5 text-white fs-4 mt-4">
-                                RTFAA: Real Time Fire Alert Application is an application responsible for notifying residents and authorities about a Fire being detected through device with smoke sensor, heat sensor and fire detector.
+                                RTFAA: Real Time Fire Alarm Application is an application responsible for notifying residents and authorities about a Fire being detected through device with smoke sensor, heat sensor and fire detector.
                             </p>
                         </div>
                     </div>
