@@ -43,6 +43,12 @@
                     </a>
                 </li>
                 <?php } ?>
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark" href="index.php?q=manual">
+                        <i class="mdi mdi-book"></i>
+                        <span class="hide-menu">User Manual </span>
+                    </a>
+                </li>
                 <?php if ($_SESSION['user']['category'] == 'A') { ?>
                     <li class="nav-small-cap">
                         <i class="mdi mdi-dots-horizontal"></i>
