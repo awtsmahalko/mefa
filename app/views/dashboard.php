@@ -70,6 +70,55 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="modalFileIR" tabindex="-1" role="dialog" aria-labelledby="addFileIR" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content border-0">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title text-white">File Incident Report</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="notes-box">
+                    <div class="notes-content">
+                        <form action="javascript:void(0);" id="addFileIR">
+                            <input type="hidden" id="notif_id" />
+                            <div class="row">
+                                <div class="col-md-12 mb-3">
+                                    <div class="ir-area">
+                                        <label>Area of fire</label>
+                                        <input type="text" id="ir-has-area" class="form-control"  autocomplete="off" placeholder="Barangay 1" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 mb-3">
+                                    <div class="ir-fireoutdate">
+                                        <label>Fireout Datetime</label>
+                                        <input type="datetime-local" id="ir-has-fireoutdate" class="form-control" autocomplete="off"  />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="ir-report">
+                                        <label>Narative Report</label>
+                                        <textarea id="ir-has-report" class="form-control" minlength="10" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button id="btn-add-ir" class="btn btn-info">
+                    Add
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 <style type="text/css">
     .labels {
         color: white;
@@ -154,9 +203,11 @@
             if(status == 0){
                 marker = new google.maps.Marker(marker_option);
                 var button_fire_out = session_user_category == 'R'? '':'<button class="btn btn-default btn-xs" onclick="fireOut('+notif_id+')"><span class="fa fa-check"></span> Fire Out</button>';
+                var button_ir = session_user_category == 'F' ? '<button class="btn btn-secondary btn-xs" onclick="fileIR('+notif_id+')"><span class="fa fa-file"></span> File IR</button>':'';
                 var fire_responded = '<span class="badge bg-warning text-dark">Fire not yet responded</span>';
             }else{
                 var button_fire_out = '';
+                var button_ir = '';
                 var fire_responded = '<span class="badge bg-success">Fire already responded</span>';
             }
 
@@ -167,7 +218,7 @@
                 '<div class="timeline-panel">' +
                 // '<h4 class="timeline-title">' + address + '</h4>' +
                 '<div class="timeline-heading">' +
-                '<p>' +button_fire_out + '</p>' +
+                '<p>' +button_fire_out + " " + button_ir +'</p>' +
                 '<p>' +
                 '<small class="text-muted"><i class="fa fa-clock-o"></i> ' + label + '</small>' +
                 '</p>' +
@@ -279,6 +330,32 @@
             }
         });
     }
+
+    function fileIR(notif_id){
+        $("#modalFileIR").modal('show');
+    }
+
+        // Button add
+    $("#btn-add-ir").on("click", function(event) {
+        event.preventDefault();
+        /* Act on the event */
+
+        var $notif_id = document.getElementById("notif_id").value;
+        var $area = document.getElementById("ir-has-area").value;
+        var $fireout = document.getElementById("ir-has-fireoutdate").value;
+        var $report = document.getElementById("ir-has-report").value;
+
+        $.post("controller/ajax.php?q=Departments&m=add", {
+            notif_id: $notif_id,
+            area: $area,
+            fireout: $fireout,
+            report: $report,
+        }, function(data, status) {
+            $("#modalFileIR").modal("hide");
+            location.reload();
+        });
+
+    });
 </script>
 
 <!--This page JavaScript -->
