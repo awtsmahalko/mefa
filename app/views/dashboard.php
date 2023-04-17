@@ -75,7 +75,8 @@
         <div class="modal-content border-0">
             <div class="modal-header bg-danger text-white">
                 <h5 class="modal-title text-white">File Incident Report</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="notes-box">
@@ -86,21 +87,24 @@
                                 <div class="col-md-12 mb-3">
                                     <div class="ir-area">
                                         <label>Area of fire</label>
-                                        <input type="text" id="ir-has-area" class="form-control"  autocomplete="off" placeholder="Barangay 1" />
+                                        <input type="text" id="ir-has-area" class="form-control" autocomplete="off"
+                                            placeholder="Barangay 1" />
                                     </div>
                                 </div>
 
                                 <div class="col-md-12 mb-3">
                                     <div class="ir-fireoutdate">
                                         <label>Fireout Datetime</label>
-                                        <input type="datetime-local" id="ir-has-fireoutdate" class="form-control" autocomplete="off"  />
+                                        <input type="datetime-local" id="ir-has-fireoutdate" class="form-control"
+                                            autocomplete="off" />
                                     </div>
                                 </div>
 
                                 <div class="col-md-12">
                                     <div class="ir-report">
                                         <label>Narative Report</label>
-                                        <textarea id="ir-has-report" class="form-control" minlength="10" rows="3"></textarea>
+                                        <textarea id="ir-has-report" class="form-control" minlength="10"
+                                            rows="5"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -133,7 +137,7 @@
 
 <script>
     var session_user_category = "<?=$_SESSION['user']['category']?>";
-    if (typeof(EventSource) !== "undefined") {
+    if (typeof (EventSource) !== "undefined") {
         var source = new EventSource("api/sse.php");
         source.onmessage = function(event) {
             var json_data = JSON.parse(event.data);
@@ -167,7 +171,7 @@
         // })
     });
 
-    function dashboard_map_marker(lat, lng, label, address = '', is_location = 0, radius = 2, notif_id = 0, status = 0) {
+    function dashboard_map_marker(lat, lng, label, address = '', is_location = 0, radius = 2, notif_id = 0, status = 0, has_notif = 0) {
         var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
         var pos = {
             lat: lat,
@@ -200,15 +204,21 @@
             circle.setMap(dashboard_map);
         } else {
             marker_option['icon'] = icon;
-            if(status == 0){
+            if (status == 0) {
                 marker = new google.maps.Marker(marker_option);
-                var button_fire_out = session_user_category == 'R'? '':'<button class="btn btn-default btn-xs" onclick="fireOut('+notif_id+')"><span class="fa fa-check"></span> Fire Out</button>';
-                var button_ir = session_user_category == 'F' ? '<button class="btn btn-secondary btn-xs" onclick="fileIR('+notif_id+')"><span class="fa fa-file"></span> File IR</button>':'';
+                var button_fire_out = session_user_category == 'R' ? '' : '<button class="btn btn-default btn-xs" onclick="fireOut(' + notif_id + ')"><span class="fa fa-check"></span> Fire Out</button>';
                 var fire_responded = '<span class="badge bg-warning text-dark">Fire not yet responded</span>';
-            }else{
+            } else {
                 var button_fire_out = '';
                 var button_ir = '';
                 var fire_responded = '<span class="badge bg-success">Fire already responded</span>';
+            }
+
+            if (has_notif == 0) {
+                var button_ir = '';
+                if (session_user_category == 'F') {
+                    button_ir = '<button class="btn btn-secondary btn-xs" onclick="fileIR(' + notif_id + ')"><span class="fa fa-file"></span> File IR</button>';
+                }
             }
 
             var li_label = '<li class="timeline-inverted timeline-item">' +
@@ -218,13 +228,13 @@
                 '<div class="timeline-panel">' +
                 // '<h4 class="timeline-title">' + address + '</h4>' +
                 '<div class="timeline-heading">' +
-                '<p>' +button_fire_out + " " + button_ir +'</p>' +
+                '<p>' + button_fire_out + " " + button_ir + '</p>' +
                 '<p>' +
                 '<small class="text-muted"><i class="fa fa-clock-o"></i> ' + label + '</small>' +
                 '</p>' +
                 '</div>' +
                 '<div class="timeline-body">' +
-                '<p>' + address + '</p>' +fire_responded+
+                '<p>' + address + '</p>' + fire_responded +
                 '</div>' +
                 '</div>' +
                 '</li>';
@@ -298,14 +308,14 @@
             for (let mapIndex = 0; mapIndex < response.data.lists.length; mapIndex++) {
                 const mapElem = response.data.lists[mapIndex];
 
-                dashboard_map_marker(mapElem.lat, mapElem.lng, mapElem.label, mapElem.address, 0, 0,mapElem.id,mapElem.status);
+                dashboard_map_marker(mapElem.lat, mapElem.lng, mapElem.label, mapElem.address, 0, 0, mapElem.id, mapElem.status);
                 newSeries();
             }
 
         });
     }
 
-    function fireOut(notif_id){
+    function fireOut(notif_id) {
         swal({
             title: "Are you sure?",
             text: "You are about to fire out this alert!",
@@ -315,27 +325,31 @@
             confirmButtonText: "Yes, fire out!",
             cancelButtonText: "No",
         },
-        function(isConfirm) {
-            if (isConfirm) {
-                $.ajax({
-                    type: "POST",
-                    data:{
-                        notif_id:notif_id
-                    },
-                    url: "controller/ajax.php?q=Notifications&m=fire_out",
-                    success: function(data) {
-                        dashboard_init_map();
-                    }
-                });
-            }
-        });
+            function(isConfirm) {
+                if (isConfirm) {
+                    $.ajax({
+                        type: "POST",
+                        data: {
+                            notif_id: notif_id
+                        },
+                        url: "controller/ajax.php?q=Notifications&m=fire_out",
+                        success: function(data) {
+                            dashboard_init_map();
+                        }
+                    });
+                }
+            });
     }
 
-    function fileIR(notif_id){
+    function fileIR(notif_id) {
+        document.getElementById("notif_id").value = notif_id;
+        document.getElementById("ir-has-area").value = '';
+        document.getElementById("ir-has-fireoutdate").value = '';
+        document.getElementById("ir-has-report").value = '';
         $("#modalFileIR").modal('show');
     }
 
-        // Button add
+    // Button add
     $("#btn-add-ir").on("click", function(event) {
         event.preventDefault();
         /* Act on the event */
@@ -345,13 +359,14 @@
         var $fireout = document.getElementById("ir-has-fireoutdate").value;
         var $report = document.getElementById("ir-has-report").value;
 
-        $.post("controller/ajax.php?q=Departments&m=add", {
+        $.post("controller/ajax.php?q=IncidentReport&m=add", {
             notif_id: $notif_id,
             area: $area,
             fireout: $fireout,
             report: $report,
         }, function(data, status) {
             $("#modalFileIR").modal("hide");
+            success_add();
             location.reload();
         });
 
@@ -367,7 +382,7 @@
         series: [{
             name: "Year 2021 ",
             data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        }, ],
+        },],
         chart: {
             height: 350,
             type: "area",
@@ -465,4 +480,5 @@
     newSeries();
 </script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC232qKEVqI5x0scuj9UGEVUNdB98PiMX0&callback=dashboard_init_map"></script>
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC232qKEVqI5x0scuj9UGEVUNdB98PiMX0&callback=dashboard_init_map"></script>

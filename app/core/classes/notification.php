@@ -102,16 +102,16 @@ class Notifications extends Connection
             $fire_lat = $fire_coordinates[0] * 1;
             $fire_lng = $fire_coordinates[1] * 1;
 
-            $response[] = $this->checkLocations($fire_lat,$fire_lng,$row['notif_id'],$row['notif_title'],$row['notif_address']);
-            $response[] = $this->checkResidentLocation($fire_lat,$fire_lng,$row['notif_id'],$row['notif_title'],$row['notif_address']);
-            $response[] = $this->checkDepartments($fire_lat,$fire_lng,$row['notif_id'],$row['notif_title'],$row['notif_address']);
+            $response[] = $this->checkLocations($fire_lat, $fire_lng, $row['notif_id'], $row['notif_title'], $row['notif_address']);
+            $response[] = $this->checkResidentLocation($fire_lat, $fire_lng, $row['notif_id'], $row['notif_title'], $row['notif_address']);
+            $response[] = $this->checkDepartments($fire_lat, $fire_lng, $row['notif_id'], $row['notif_title'], $row['notif_address']);
 
             $this->update($this->table, ['notif_status' => 1], "notif_id = '$row[notif_id]'");
         }
         echo json_encode($response);
     }
 
-    public function checkLocations($fire_lat,$fire_lng,$notif_id,$notif_title,$notif_address)
+    public function checkLocations($fire_lat, $fire_lng, $notif_id, $notif_title, $notif_address)
     {
         $response = [];
         $result = $this->select('tbl_properties');
@@ -123,7 +123,7 @@ class Notifications extends Connection
 
             if ($this->getDistance($fire_lat, $fire_lng, $_lat, $_lng, $property_radius) == 1) {
                 $user_token = Users::token($row['user_id']);
-                $message = "There is a fire in $notif_address near your " . $row['property_name']."'s location";
+                $message = "There is a fire in $notif_address near your " . $row['property_name'] . "'s location";
                 $response[] = $this->pushNotif($notif_title, $message, $user_token);
                 $this->webNotif($notif_id, $row['user_id'], $message);
             }
@@ -131,7 +131,7 @@ class Notifications extends Connection
         return $response;
     }
 
-    public function checkResidentLocation($fire_lat,$fire_lng,$notif_id,$notif_title,$notif_address)
+    public function checkResidentLocation($fire_lat, $fire_lng, $notif_id, $notif_title, $notif_address)
     {
         $response = [];
         $result = $this->select('tbl_users', '*', "user_category = 'R' AND user_resident_coordinates !=''");
@@ -150,7 +150,7 @@ class Notifications extends Connection
         return $response;
     }
 
-    public function checkDepartments($fire_lat,$fire_lng,$notif_id,$notif_title,$notif_address)
+    public function checkDepartments($fire_lat, $fire_lng, $notif_id, $notif_title, $notif_address)
     {
         $response = [];
         $result = $this->select('tbl_users', '*', "user_category = 'F' AND department_id > 0");
@@ -163,7 +163,7 @@ class Notifications extends Connection
             $resident_radius = $data_['department_radius'] * 1;
 
             if ($this->getDistance($fire_lat, $fire_lng, $_lat, $_lng, $resident_radius) == 1) {
-                $message = "There is a fire in $notif_address near your Fire Department : ".$data_['department_name'];
+                $message = "There is a fire in $notif_address near your Fire Department : " . $data_['department_name'];
                 $response[] = $this->pushNotif($notif_title, $message, $row['user_token']);
                 $this->webNotif($notif_id, $row['user_id'], $message);
             }
@@ -192,6 +192,7 @@ class Notifications extends Connection
             $coords = explode(",", $row['coordinates']);
             $form = [
                 'status' => $row['fire_out'],
+                'has_notif' => IncidentReport::hasNotif($row['notif_id']),
                 'id' => $row['notif_id'],
                 'lat' => (float) $coords[0],
                 'lng' => (float) $coords[1],
@@ -307,17 +308,16 @@ class Notifications extends Connection
     public function fire_out()
     {
         $notif_id = $this->clean($this->inputs['notif_id']);
-        $notif_address = self::dataOf($notif_id,'notif_address');
+        $notif_address = self::dataOf($notif_id, 'notif_address');
 
-        $result = $this->select($this->table_web,'*',"notif_id = '$notif_id'");
+        $result = $this->select($this->table_web, '*', "notif_id = '$notif_id'");
         while ($row = $result->fetch_assoc()) {
             $user_id = $row['user_id'];
 
-            if(Users::dataOf($user_id,'user_category') == 'R'){
+            if (Users::dataOf($user_id, 'user_category') == 'R') {
                 $message = "The fire alert in $notif_address has been put out.";
-                $this->pushNotif("Fire Out",$message,Users::dataOf($user_id,'user_token'));
+                $this->pushNotif("Fire Out", $message, Users::dataOf($user_id, 'user_token'));
             }
-
         }
 
         return $this->update($this->table, ['fire_out' => 1], "notif_id = '$notif_id'");

@@ -1,0 +1,200 @@
+<div class="row page-titles">
+    <div class="col-md-5 col-12 align-self-center">
+        <h3 class="text-themecolor mb-0">Incident Report</h3>
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item">
+                <a href="javascript:void(0)">Home</a>
+            </li>
+            <li class="breadcrumb-item active">Incident Report</li>
+        </ol>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<!-- -------------------------------------------------------------- -->
+<!-- Container fluid  -->
+<!-- -------------------------------------------------------------- -->
+<div class="container-fluid">
+    <!-- -------------------------------------------------------------- -->
+    <!-- Start Page Content -->
+    <!-- -------------------------------------------------------------- -->
+    <!-- basic table -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="border-bottom title-part-padding">
+                    <div class="row col-md-12">
+                        <div class="col-md-9">
+                            <h4 class="card-title mb-0">Manage Incident Reports</h4>
+                        </div>
+                        <div class="col-md-3">
+                            <!-- <a href="javascript:void(0)" class="nav-link btn-primary rounded-pill d-flex align-items-center px-3" id="add-department">
+                                <i data-feather="plus" class="feather-sm fill-white me-0 me-md-1"></i><span class="d-none d-md-block font-weight-medium fs-3">Add Department</span></a>
+                            <a href="javascript:void(0)" class="nav-link btn-primary rounded-pill d-flex align-items-center px-3" id="add-department">
+                                <i data-feather="plus" class="feather-sm fill-white me-0 me-md-1"></i><span class="d-none d-md-block font-weight-medium fs-3">Add Department</span></a> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="dt_department" class="table table-striped table-bordered" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th></th>
+                                    <th>Area</th>
+                                    <th>Fire In</th>
+                                    <th>Fireout</th>
+                                    <th>Narative Report</th>
+                                    <th>Filed By</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- -------------------------------------------------------------- -->
+    <!-- End PAge Content -->
+    <!-- -------------------------------------------------------------- -->
+
+</div>
+<div class="modal fade" id="modalFileIR" tabindex="-1" role="dialog" aria-labelledby="addFileIR" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content border-0">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title text-white">File Incident Report</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="notes-box">
+                    <div class="notes-content">
+                        <form action="javascript:void(0);" id="addFileIR">
+                            <input type="hidden" id="ir_id" />
+                            <div class="row">
+                                <div class="col-md-12 mb-3">
+                                    <div class="ir-area">
+                                        <label>Area of fire</label>
+                                        <input type="text" id="ir-has-area" class="form-control" autocomplete="off"
+                                            placeholder="Barangay 1" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 mb-3">
+                                    <div class="ir-fireoutdate">
+                                        <label>Fireout Datetime</label>
+                                        <input type="datetime-local" id="ir-has-fireoutdate" class="form-control"
+                                            autocomplete="off" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="ir-report">
+                                        <label>Narative Report</label>
+                                        <textarea id="ir-has-report" class="form-control" minlength="10"
+                                            rows="5"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button id="btn-add-ir" class="btn btn-info">
+                    Add
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--This page plugins -->
+<script src="../assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="../assets/extra-libs/datatables.net-bs4/js/dataTables.responsive.min.js"></script>
+<!-- <script src="../dist/js/pages/datatable/datatable-basic.init.js"></script> -->
+<script>
+    showIRs();
+
+    function showIRs() {
+        $("#dt_department").DataTable().destroy();
+        $('#dt_department').DataTable({
+            "processing": true,
+            "ajax": {
+                "type": "POST",
+                "url": "controller/ajax.php?q=IncidentReport&m=datatable",
+                "dataSrc": "data",
+            },
+            "columns": [{
+                "data": "count"
+            },
+            {
+                "render": function(data, type, row, meta) {
+                    return '<button class="btn btn-info rounded-pill" onclick=\'viewIR(' + row.ir_id + ',"' + row.ir_area + '","' + row.ir_fireout + '","' + row.ir_report + '")\'><span class="fa fa-file"></span></button>';
+                },
+            },
+            {
+                "data": "ir_area"
+            },
+            {
+                "data": "ir_firein_"
+            },
+            {
+                "data": "ir_fireout_"
+            },
+            {
+                "data": "ir_report"
+            },
+            {
+                "data": "reported_by"
+            }
+            ]
+        });
+    }
+
+    function viewIR(ir_id, area, fireout, report) {
+        var btn_department = document.getElementById("btn-add-ir");
+        btn_department.innerHTML = "Edit";
+
+        assignValues(ir_id, area, fireout, report);
+        $("#modalFileIR").modal("show");
+
+    }
+
+    function assignValues(ir_id = 0, area = "", fireout = "", report = '') {
+        document.getElementById("ir_id").value = ir_id;
+        document.getElementById("ir-has-area").value = area;
+        document.getElementById("ir-has-fireoutdate").value = fireout;
+        document.getElementById("ir-has-report").value = report;
+    }
+
+    // Button add
+    $("#btn-add-ir").on("click", function(event) {
+        event.preventDefault();
+        /* Act on the event */
+
+        var $ir_id = document.getElementById("ir_id").value;
+        var $area = document.getElementById("ir-has-area").value;
+        var $fireout = document.getElementById("ir-has-fireoutdate").value;
+        var $report = document.getElementById("ir-has-report").value;
+
+        $.post("controller/ajax.php?q=IncidentReport&m=edit", {
+            ir_id: $ir_id,
+            area: $area,
+            fireout: $fireout,
+            report: $report,
+        }, function(data, status) {
+            $("#modalFileIR").modal("hide");
+            showIRs();
+            success_update();
+        });
+
+    });
+</script>
