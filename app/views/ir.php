@@ -216,7 +216,9 @@
             '</html>';
         var newWindow = window.open('', '', 'width=1300,height=400');
         newWindow.document.write(html_page);
-        newWindow.print();
+        setTimeout(function() {
+            newWindow.print();
+        }, 500)
     }
 
     function assignValues(ir_id = 0, area = "", fireout = "", report = '') {
