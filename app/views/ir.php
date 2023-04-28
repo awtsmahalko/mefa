@@ -137,7 +137,7 @@
             },
             {
                 "render": function(data, type, row, meta) {
-                    return '<button class="btn btn-info rounded-pill" onclick=\'viewIR(' + row.ir_id + ',"' + row.ir_area + '","' + row.ir_fireout + '","' + row.ir_report + '")\'><span class="fa fa-file"></span></button>';
+                    return '<button class="btn btn-info rounded-pill" onclick=\'viewIR(' + row.ir_id + ',"' + row.ir_area + '","' + row.ir_fireout + '","' + row.ir_report + '")\'><span class="fa fa-file"></span></button> <button class="btn btn-secondary rounded-pill" data-items=\'' + JSON.stringify(row) + '\' onclick=\'printIR(this)\'><span class="fa fa-print"></span></button>';
                 },
             },
             {
@@ -166,6 +166,57 @@
         assignValues(ir_id, area, fireout, report);
         $("#modalFileIR").modal("show");
 
+    }
+
+    function printIR(el) {
+        const srcValue = el.getAttribute("data-items");
+        const row_data = JSON.parse(srcValue);
+        console.log(row_data);
+        var html_page = '<!DOCTYPE html>' +
+            '<html>' +
+            '<head>' +
+            '<title>Fire Incident Report</title>' +
+            '<style>' +
+            'body {font-family: Arial, sans-serif;}' +
+            'h1 {text-align: center;text-transform: uppercase;font-size: 28px;margin-top: 30px;margin-bottom: 30px;}' +
+            'h2 {text-align: center;text-transform: uppercase;font-size: 15px;margin-top: unset;margin-bottom: unset;}' +
+            'h4 {text-align: center;font-size: 15px;margin-top: unset;margin-bottom: unset;font-weight: unset;}' +
+            '.img-left {float: left;width: 100px;margin-top: 30px;margin-left: 30px;}' +
+            '.img-right {float: right;width: 100px;margin-top: 30px;margin-right: 30px;}' +
+            'label {font-weight: bold;display: block;margin-top: 20px;margin-bottom: 5px;}' +
+            'input[type="text"],input[type="date"],input[type="time"] {display: block;width: 100%;padding: 10px;border: 1px solid #ccc;border-radius: 5px;font-size: 16px;margin-bottom: 20px;}' +
+            'textarea {display: block;width: 100%;padding: 10px;border: 1px solid #ccc;border-radius: 5px;font-size: 16px;margin-bottom: 20px;}' +
+            'input[type="submit"] {background-color: #4CAF50;color: #fff;border: none;border-radius: 5px;padding: 10px 20px;font-size: 16px;cursor: pointer;margin-top: 20px;}' +
+            'form {padding:0 10%}' +
+            '@media print {input[type="submit"] {display: none;}}' +
+            '</style>' +
+            '</head>' +
+            '<body>' +
+            '<img src="../assets/images/background/bfp.png" class="img-left">' +
+            '<img src="../assets/images/background/dilg.png" class="img-right">' +
+            '<h4>Republic of the Philippines</h4>' +
+            '<h4>Department of the Interior and Local Government</h4>' +
+            '<h2>BUREAU OF FIRE PROTECTION</h2>' +
+            '<h4>Regional Office - VI</h4>' +
+            '<h4>Blk 19A, 4th Main Avenue, Phase 3</h4>' +
+            '<h4>Alta Tierra Village, Brgy. M. V. Hechanova, Jaro, Iloilo City</h4>' +
+            '<h4>Tel / Fax No. (033) 337-69-18</h4>' +
+            '<h1>Fire Incident Report</h1>' +
+            '<form>' +
+            '<p>Fire In     : ' + row_data.ir_firein_ + '</p>' +
+            '<p>Area        : ' + row_data.ir_area + '</p>' +
+            '<p>Fire Out    : ' + row_data.ir_fireout_ + '</p>' +
+            '<hr>' +
+            '<label>Narative Report:</label>' +
+            '<p>' + row_data.ir_report + '</p><br>' +
+            '<label>Filed by:</label>' +
+            '<p>' + row_data.reported_by + '</p><br>' +
+            '</form>' +
+            '</body>' +
+            '</html>';
+        var newWindow = window.open('', '', 'width=1300,height=400');
+        newWindow.document.write(html_page);
+        newWindow.print();
     }
 
     function assignValues(ir_id = 0, area = "", fireout = "", report = '') {
